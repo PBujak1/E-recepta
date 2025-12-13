@@ -1,0 +1,83 @@
+/* LEWY PANEL */
+.left-panel {
+    -fx-background-color: #2C3E50;
+    -fx-pref-width: 300;
+    -fx-padding: 20;
+}
+.left-btn-panel{
+    -fx-pref-height: 380;
+}
+
+.left-btn-panel .button {
+    -fx-background-color: #34495E;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-background-radius: 5;
+    -fx-padding: 20 0 20 0;
+}
+
+.left-btn-panel .button:hover {
+    -fx-background-color: #3E5A72;
+    -fx-font-size: 20px;
+}
+
+.left-panel .logout-btn {
+    -fx-background-color: #C0392B;
+    -fx-text-fill: white;
+}
+
+.left-panel .logout-btn:hover {
+    -fx-background-color: #F08080;
+}
+
+.left-panel .doctor-info {
+    -fx-font-size: 15px;
+    -fx-text-fill: #ECF0F1;
+}
+
+
+/* PANEL ŚRODKOWY */
+.center-panel {
+    -fx-padding: 25;
+}
+
+.center-panel .dane-pacjenta {
+    -fx-vgap: 10;
+    -fx-hgap: 10;
+}
+
+.center-panel .center-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.center-panel .subtitle {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 10 0 5 0;
+}
+
+.center-panel .blue-btn {
+    -fx-background-color: #2980B9;
+    -fx-text-fill: white;
+    -fx-background-radius: 5;
+    -fx-pref-width: 150;
+    -fx-font-size: 15px;
+    -fx-padding: 20 0 20 0;
+}
+
+.center-panel .blue-btn:hover {
+    -fx-background-color: #3498DB;
+}
+
+/* PANEL PRAWY */
+.right-panel {
+    -fx-background-color: #ECF0F1;
+    -fx-padding: 20;
+    -fx-pref-width: 300;
+}
+
+.right-panel .alert-box {
+    -fx-text-fill: red;
+    -fx-font-weight: bold;
+}
