@@ -1,5 +1,6 @@
 package com.example.erecepta;
 
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,13 +27,21 @@ public class mainLekPanel {
     private Label title = new Label("Wystawianie E-Recepty");
     private Label imieINazwiskoLabel = new Label("Imię i nazwisko:");
     private Label imieINazwiskoPacjenta = new Label("Piotr Bujak");
+    private Label plecLabel = new Label("Płeć:");
+    private Label plec = new Label("Mężczyzna");
+    private Label wiekLabel = new Label("Wiek:");
+    private Label wiek = new Label("21");
     private Label PESELLabel = new Label("PESEL:");
     private Label PESELPacjenta = new Label("0123456789");
     private Label adresLabel = new Label("Adres:");
     private Label adresPacjenta = new Label("ul. Kwaitowa 5, Warszawa");
+    private Label telefonLabel = new Label("Nr. Telefonu:");
+    private Label telefon = new Label("777 777 777");
+    private Label emailLabel = new Label("Adres e-mail:");
+    private Label email = new Label("piotr.bujak@student.pk.edu.pl");
     private Label typReceptyLabel = new Label("Leki do recepty");
     private Button wczytajBtn = new Button("Dodaj");
-    private Button skalujBtn = new Button("Skaluj!");
+    private Button wypiszBtn = new Button("Wypisz Receptę");
     private Button dodajLekBtn = new Button("Dodaj Lek");
     private TextField searchField = new TextField();
     private TextField lekField = new TextField();
@@ -91,49 +100,84 @@ public class mainLekPanel {
 
 
         /*
-           ŚRODKOWA KOLUMNA - FORMULARZ
+           ŚRODKOWA KOLUMNA
+           Podzielona jest na trzy panele
+           1.Górny zawierający wyszukiwanie pacjenta
+           2.Wypisujące dane pacjęnta
+           3.Wyszukujący dany lek i dodanie go do recepty
         */
+        VBox centerPanel = new VBox(20);
+
         HBox titleBox = new HBox(10);
         titleBox.setAlignment(Pos.CENTER);
         titleBox.getChildren().addAll(
                 title
         );
 
-
         Label searchIcon = new Label("\uD83D\uDD0D"); // 🔍
         searchIcon.getStyleClass().add("search-icon");
+        Label searchIcon2 = new Label("\uD83D\uDD0D"); // 🔍
+        searchIcon2.getStyleClass().add("search-icon2");
 
-        HBox searchBox = new HBox(8);
+        HBox searchBox1 = new HBox(8);
         searchField.setPromptText("Wyszukaj Pacjenta (PESEL / Imię i Nazwisko)");
-        searchBox.getChildren().addAll(searchIcon, searchField);
-        searchBox.getStyleClass().add("search-box");
-        searchBox.setAlignment(Pos.CENTER_LEFT);
+        searchBox1.getChildren().addAll(searchIcon, searchField);
+        searchBox1.getStyleClass().add("search-box");
+        searchBox1.setAlignment(Pos.CENTER_LEFT);
 
         HBox.setHgrow(searchField, Priority.ALWAYS);
         searchField.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(searchBox, Priority.ALWAYS);
-        searchField.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(searchBox1, Priority.ALWAYS);
 
         HBox topBox = new HBox(10);
         topBox.setAlignment(Pos.CENTER);
         topBox.getChildren().addAll(
-                searchBox,
+                searchBox1,
                 wczytajBtn
         );
-        //searchBox.setAlignment(Pos.CENTER);
-        VBox centerPanel = new VBox(20);
-        HBox lekBox = new HBox(10);
 
         /* Dane pacjenta */
         GridPane danePacjenta = new GridPane();
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setHalignment(HPos.RIGHT);
+        col1.setPercentWidth(25);
+        col1.setHalignment(HPos.RIGHT);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setHgrow(Priority.ALWAYS);
+        col2.setFillWidth(true);
+
+        danePacjenta.getColumnConstraints().addAll(col1, col2);
         danePacjenta.add(imieINazwiskoLabel, 0, 0);
         danePacjenta.add(imieINazwiskoPacjenta, 1, 0);
         danePacjenta.add(PESELLabel, 0, 1);
         danePacjenta.add(PESELPacjenta, 1, 1);
-        danePacjenta.add(adresLabel, 0, 2);
-        danePacjenta.add(adresPacjenta, 1, 2);
+        danePacjenta.add(plecLabel, 0, 2);
+        danePacjenta.add(plec, 1, 2);
+        danePacjenta.add(wiekLabel, 0, 3);
+        danePacjenta.add(wiek, 1, 3);
+        danePacjenta.add(adresLabel, 0, 4);
+        danePacjenta.add(adresPacjenta, 1, 4);
+        danePacjenta.add(telefonLabel, 0, 5);
+        danePacjenta.add(telefon, 1, 5);
+        danePacjenta.add(emailLabel, 0, 6);
+        danePacjenta.add(email, 1, 6);
 
+        HBox searchBox2 = new HBox(8);
         lekField.setPromptText("Wyszukaj lek...");
+        searchBox2.getChildren().addAll(searchIcon2, lekField);
+        searchBox2.getStyleClass().add("search-box2");
+        searchBox2.setAlignment(Pos.CENTER_LEFT);
+
+        HBox.setHgrow(lekField, Priority.ALWAYS);
+        lekField.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(searchBox2, Priority.ALWAYS);
+
+        HBox botoomBox = new HBox(10);
+        botoomBox.setAlignment(Pos.CENTER_LEFT);
+        botoomBox.getChildren().addAll(
+                searchBox2,
+                dodajLekBtn
+        );
 
         centerPanel.getStyleClass().add("center-panel");
         title.getStyleClass().add("center-title");
@@ -142,19 +186,21 @@ public class mainLekPanel {
         danePacjenta.getStyleClass().add("dane-pacjenta");
         dodajLekBtn.getStyleClass().add("blue-btn");
         searchField.getStyleClass().add("search-field");
+        lekField.getStyleClass().add("search-field2");
+
+        HBox bottomBtn = new HBox();
+        bottomBtn.setAlignment(Pos.CENTER);
+        VBox.setVgrow(bottomBtn, Priority.ALWAYS);
+        bottomBtn.getChildren().addAll(wypiszBtn);
+        wypiszBtn.getStyleClass().add("wypisz-recepte");
 
         centerPanel.getChildren().addAll(
                 titleBox,
                 topBox, new Separator(),
                 danePacjenta, new Separator(),
                 typReceptyLabel,
-                lekBox
-        );
-
-        lekBox.getChildren().addAll(
-                lekField,
-                skalujBtn,
-                dodajLekBtn
+                botoomBox, new Separator(),
+                bottomBtn
         );
 
 
