@@ -50,9 +50,9 @@ public class mainLekPanel {
 
     //Zmienne prawej kolumny
     private Label alergieTitle = new Label("ALERGIE PACJENTA:");
-    private Label alergia1 = new Label("Uczulenie na penicylinę!");
-    private Label alergia2 = new Label("Uczulenie na orzechy!");
-    private Label alergia3 = new Label("Uczulenie na metylomeksatoline!");
+    private Label alergia1 = new Label("penicylina");
+    private Label alergia2 = new Label("orzechy");
+    private Label alergia3 = new Label("metylomeksatolina");
     private Label historiaTitle = new Label("Historia Recept Pacjenta:");
     private Button zobaczWszystko = new Button("Zobacz Wszystko");
 
@@ -264,12 +264,18 @@ public class mainLekPanel {
         alergia2.getStyleClass().add("allergy-text2");
         alergia3.getStyleClass().add("allergy-text3");
 
+        VBox historyBox = new VBox(12);
+        historyBox.setAlignment(Pos.CENTER);
+        historyBox.getChildren().addAll(historiaTitle, zobaczWszystko);
+        historiaTitle.getStyleClass().add("historia-title");
+        zobaczWszystko.setMaxWidth(Double.MAX_VALUE);
+        zobaczWszystko.getStyleClass().add("zobacz-wszystko");
+
         VBox rightPanel = new VBox(20);
         rightPanel.getChildren().addAll(
                 titleBoxP,
                 allergyList, new Separator(),
-                historiaTitle,
-                zobaczWszystko
+                historyBox
         );
         rightPanel.getStyleClass().add("right-panel");
         alergieTitle.getStyleClass().add("subtitle");
