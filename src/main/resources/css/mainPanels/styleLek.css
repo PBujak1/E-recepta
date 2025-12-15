@@ -118,24 +118,19 @@
 
 /* PANEL PRAWY */
 .right-panel {
-    -fx-background-color: #64748B;
+    -fx-background-color: #34495E;
     -fx-padding: 20;
     -fx-pref-width: 300;
 }
 
-.allergy-alert-icon {
-    -fx-text-fill: #FF4D4D;
-    -fx-font-size: 50px;
-}
-
 .allergy-title {
-    -fx-text-fill: #FF4D4D;
+    -fx-text-fill: white;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
 }
 
 .allergy-container {
-    -fx-background-color: #34495E;
+    -fx-background-color: #64748B;
     -fx-padding: 16;
     -fx-background-radius: 16;
     -fx-border-radius: 16;
@@ -145,8 +140,8 @@
 .allergy-chip1, .allergy-chip2, .allergy-chip3 {
     -fx-background-color: linear-gradient(
             to bottom,
-            #2A1F1F,
-            #1C1515
+            #34495E,
+            #34495E
     );
     -fx-padding: 10 16 10 16;
     -fx-background-radius: 12;
@@ -169,6 +164,3 @@
 .allergy-remove:hover {
     -fx-text-fill: #FF8080;
 }
-
-
-

@@ -5,6 +5,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -218,15 +220,22 @@ public class mainLekPanel {
         Label removeIcon3 = new Label("✕");
         removeIcon3.getStyleClass().add("allergy-remove");
 
-        Label alertIcon = new Label("⚠");
-        alertIcon.getStyleClass().add("allergy-alert-icon");
+        Image warningImage = new Image(
+                getClass().getResourceAsStream("/icons/exclamation.png")
+        );
+
+        ImageView warningIcon = new ImageView(warningImage);
+        warningIcon.setFitWidth(50);
+        warningIcon.setFitHeight(50);
+        warningIcon.setPreserveRatio(true);
+        warningIcon.getStyleClass().add("allergy-alert-icon");
 
         Label allergyTitle = new Label("Alergie");
         allergyTitle.getStyleClass().add("allergy-title");
 
         HBox titleBoxP = new HBox(10);
         titleBoxP.setAlignment(Pos.CENTER);
-        titleBoxP.getChildren().addAll(alertIcon, allergyTitle);
+        titleBoxP.getChildren().addAll(warningIcon, allergyTitle);
 
         HBox allergyChip1 = new HBox(10);
         allergyChip1.getChildren().addAll(alergia1, removeIcon1);
