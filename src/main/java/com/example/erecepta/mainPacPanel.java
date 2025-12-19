@@ -28,6 +28,8 @@ public class mainPacPanel {
     private Button nadchodzaceWizyty = new Button("Nadchodzace wizyty");
     private Button dawkowanie = new Button("Dawkowanie");
 
+    private Label aktywneReceptyLabel = new Label("Aktywne e-recepty");
+
 
     mainPacPanel(String login, String password, String imie, String nazwisko) {
         this.login = login;
@@ -71,7 +73,9 @@ public class mainPacPanel {
         buttonPanel.add(historia, 0, 1);
         buttonPanel.add(dawkowanie, 1, 1);
 
-
+        VBox aktywneReceptyBox = new VBox();
+        szybkiDostepBox.setAlignment(Pos.CENTER_LEFT);
+        szybkiDostepBox.getChildren().add(aktywneReceptyLabel);
 
         /*
            SCENA
@@ -80,7 +84,8 @@ public class mainPacPanel {
                 nameBox,
                 receptyBox,
                 szybkiDostepBox,
-                buttonPanel
+                buttonPanel,
+                aktywneReceptyBox
         );
         Scene scene = new Scene(root, 1300, 780); //1300, 780
         scene.getStylesheets().add(
