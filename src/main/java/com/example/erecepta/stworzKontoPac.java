@@ -34,7 +34,6 @@ public class stworzKontoPac {
     public TextField textPesel = new TextField();
     public DatePicker dateUrodzenia = new DatePicker();
     public TextField textAdres = new TextField();
-xxx
     public TextField textTelefon = new TextField();
     public TextField textEmail = new TextField();
 
@@ -55,6 +54,7 @@ xxx
 
         // ===== Grid dane osobowe =====
         GridPane daneGrid = new GridPane();
+        daneGrid.getStyleClass().add("daneGrid");
         daneGrid.setHgap(30);
         daneGrid.setVgap(20);
 
@@ -75,6 +75,7 @@ xxx
 
         // ===== Grid kontakt =====
         GridPane kontaktGrid = new GridPane();
+        kontaktGrid.getStyleClass().add("kontaktGrid");
         kontaktGrid.setHgap(30);
         kontaktGrid.setVgap(20);
 
@@ -99,8 +100,7 @@ xxx
 
         Scene scene = new Scene(root, 1300, 780); // jak w Twoim kodzie
 
-        // CSS jeśli masz
-        // scene.getStylesheets().add(getClass().getResource("/css/mainPanels/styleLek.css").toExternalForm());
+        scene.getStylesheets().add(getClass().getResource("/css/tworzenieKont/noweKontoPac.css").toExternalForm());
 
         primaryStage.setTitle("E-Recepta");
         primaryStage.setScene(scene);
