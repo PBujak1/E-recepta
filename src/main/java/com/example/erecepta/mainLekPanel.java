@@ -322,7 +322,6 @@ public class mainLekPanel {
                 adresPacjenta.setText(imie + " " + nazwisko);
                 plec.setText(imie + " " + nazwisko);
                 wiek.setText(imie + " " + nazwisko);
-                adresPacjenta.setText(imie + " " + nazwisko);
                 telefon.setText(imie + " " + nazwisko);
                 email.setText(email1);
             } catch (IOException ex) {
