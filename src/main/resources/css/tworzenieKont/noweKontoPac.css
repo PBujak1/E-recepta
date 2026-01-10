@@ -19,7 +19,7 @@
     -fx-text-fill: white;
 }
 
-.kontaktGrid {
+.Vkontakt {
     -fx-background-color: #2C3E50;
     -fx-padding: 50;
     -fx-vgap: 10;
@@ -28,9 +28,8 @@
     -fx-max-height: 300;
     -fx-pref-height: 300;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
-    -fx-alignment: CENTER;
 }
 
-.kontaktGrid .label{
+.Vkontakt .label{
     -fx-text-fill: white;
 }

@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -74,8 +75,11 @@ public class stworzKontoPac {
         daneGrid.add(textAdres, 0, 5, 2, 1);
 
         // ===== Grid kontakt =====
+        VBox Vkontakt = new VBox();
+        Vkontakt.getStyleClass().add("Vkontakt");
+        Vkontakt.setAlignment(Pos.TOP_CENTER);
         GridPane kontaktGrid = new GridPane();
-        kontaktGrid.getStyleClass().add("kontaktGrid");
+        kontaktGrid.setAlignment(Pos.CENTER);
         kontaktGrid.setHgap(30);
         kontaktGrid.setVgap(20);
 
@@ -84,6 +88,10 @@ public class stworzKontoPac {
 
         kontaktGrid.add(labelEmail, 1, 0);
         kontaktGrid.add(textEmail, 1, 1);
+        Vkontakt.getChildren().addAll(
+                labelKontakt,
+                kontaktGrid
+        );
 
         // ===== Root =====
         VBox root = new VBox(30);
@@ -93,9 +101,8 @@ public class stworzKontoPac {
         root.getChildren().addAll(
                 labelTitle,
                 labelDane,
-                daneGrid,
-                labelKontakt,
-                kontaktGrid
+                daneGrid, new Separator(),
+                Vkontakt
         );
 
         Scene scene = new Scene(root, 1300, 780); // jak w Twoim kodzie
