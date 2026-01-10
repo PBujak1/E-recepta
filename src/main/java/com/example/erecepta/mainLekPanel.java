@@ -315,6 +315,7 @@ public class mainLekPanel {
                 String PESEL = searchField.getText();
                 String imie = serverConnection.getPacjent("getImie", PESEL);
                 String nazwisko = serverConnection.getPacjent("getNazwisko", PESEL);
+                String email1 = serverConnection.getPacjent("getEmail", PESEL);
 
                 imieINazwiskoPacjenta.setText(imie + " " + nazwisko);
                 PESELPacjenta.setText(PESEL);
@@ -323,7 +324,7 @@ public class mainLekPanel {
                 wiek.setText(imie + " " + nazwisko);
                 adresPacjenta.setText(imie + " " + nazwisko);
                 telefon.setText(imie + " " + nazwisko);
-                email.setText(imie + " " + nazwisko);
+                email.setText(email1);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
