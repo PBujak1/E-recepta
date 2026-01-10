@@ -19,7 +19,7 @@ public class ServerConnection {
         this.haslo = haslo;
     }
 
-    public String getPacjent(String data) throws IOException {
+    public String getPacjent(String data, String PESEL) throws IOException {
         try {
             Socket socket = new Socket(server, port);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));

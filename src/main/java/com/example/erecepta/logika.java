@@ -2,7 +2,6 @@ package com.example.erecepta;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -51,30 +50,37 @@ public class logika extends Application {
                 alert.setContentText("Hasło nie może być puste!");
                 alert.showAndWait();
             } else {
-                String login = logFX1.getLogin();
+                String PESEL = logFX1.getLogin();
                 String password = logFX1.getPassword();
                 int mode = logFX1.getChosenMode();
 
-                ServerConnection serverConnection = new ServerConnection(login, password);
+                ServerConnection serverConnection = new ServerConnection(PESEL, password);
+
 
                 switch (mode) {
                     case 1:
                         try {
-                            imie = serverConnection.getPacjent(getImie);
-                            nazwisko = serverConnection.getPacjent(getNazwisko);
-                            nazwaPacjenta = imie + nazwisko;
+                            String result = serverConnection.getPacjent("loginPacjent", PESEL);
+                            if ("BRAK_DANYCH".equals(result)) {
+                                new Alert(Alert.AlertType.WARNING, "Błędny login lub hasło").showAndWait();
+                                return;
+                            } else {
+                            imie = serverConnection.getPacjent(getImie, PESEL);
+                            nazwisko = serverConnection.getPacjent(getNazwisko, PESEL);
+                            nazwaPacjenta = imie + " " + nazwisko;
                             mainPacPanel mainPanelPac = new mainPacPanel(imie, nazwisko, nazwaPacjenta);
                             mainPanelPac.start(primaryStage);
+                            }
                         } catch (IOException ex) {
                             new Alert(Alert.AlertType.WARNING, "Nie udało się pobrać danych pacjenta!").showAndWait();
                         }
                         break;
                     case 2:
                         try {
-                            imie = serverConnection.getPacjent(getImie);
-                            nazwisko = serverConnection.getPacjent(getNazwisko);
+                            imie = serverConnection.getPacjent(getImie, PESEL);
+                            nazwisko = serverConnection.getPacjent(getNazwisko, PESEL);
                             nazwaPacjenta = imie + nazwisko;
-                            mainLekPanel mainPanelLek = new mainLekPanel(imie, nazwisko, login, password);
+                            mainLekPanel mainPanelLek = new mainLekPanel(imie, nazwisko, PESEL, password);
                             mainPanelLek.start(primaryStage);
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);

@@ -30,19 +30,19 @@ public class mainLekPanel {
     //Zmienne środkowego panelu
     private Label title = new Label("Wystawianie E-Recepty");
     private Label imieINazwiskoLabel = new Label("Imię i nazwisko:");
-    private Label imieINazwiskoPacjenta = new Label("Piotr Bujak");
+    private Label imieINazwiskoPacjenta = new Label("");
     private Label plecLabel = new Label("Płeć:");
-    private Label plec = new Label("Mężczyzna");
+    private Label plec = new Label("");
     private Label wiekLabel = new Label("Wiek:");
-    private Label wiek = new Label("21");
+    private Label wiek = new Label("");
     private Label PESELLabel = new Label("PESEL:");
-    private Label PESELPacjenta = new Label("0123456789");
+    private Label PESELPacjenta = new Label("");
     private Label adresLabel = new Label("Adres:");
-    private Label adresPacjenta = new Label("ul. Kwaitowa 5, Warszawa");
+    private Label adresPacjenta = new Label("");
     private Label telefonLabel = new Label("Nr. Telefonu:");
-    private Label telefon = new Label("777 777 777");
+    private Label telefon = new Label("");
     private Label emailLabel = new Label("Adres e-mail:");
-    private Label email = new Label("piotr.bujak@student.pk.edu.pl");
+    private Label email = new Label("");
     private Label typReceptyLabel = new Label("Leki do recepty");
     private Button wczytajBtn = new Button("Wczytaj");
     private Button wypiszBtn = new Button("Wypisz Receptę");
@@ -312,12 +312,21 @@ public class mainLekPanel {
 
         wczytajBtn.setOnAction(e -> {
             try {
-                String imie = serverConnection.getPacjent("getImie");
-                String nazwisko = serverConnection.getPacjent("getNazwisko");
+                String PESEL = searchField.getText();
+                String imie = serverConnection.getPacjent("getImie", PESEL);
+                String nazwisko = serverConnection.getPacjent("getNazwisko", PESEL);
+
+                imieINazwiskoPacjenta.setText(imie + " " + nazwisko);
+                PESELPacjenta.setText(PESEL);
+                adresPacjenta.setText(imie + " " + nazwisko);
+                plec.setText(imie + " " + nazwisko);
+                wiek.setText(imie + " " + nazwisko);
+                adresPacjenta.setText(imie + " " + nazwisko);
+                telefon.setText(imie + " " + nazwisko);
+                email.setText(imie + " " + nazwisko);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
-            imieINazwiskoPacjenta = new Label(imie + " " + nazwisko);
         });
     }
 
