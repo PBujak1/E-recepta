@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -74,6 +75,11 @@ public class stworzKontoPac {
         daneGrid.add(labelAdres, 0, 4, 2, 1);
         daneGrid.add(textAdres, 0, 5, 2, 1);
 
+        GridPane.setHgrow(textImie, Priority.ALWAYS);
+        GridPane.setHgrow(textNazwisko, Priority.ALWAYS);
+        dateUrodzenia.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(dateUrodzenia, Priority.ALWAYS);
+
         // ===== Grid kontakt =====
         VBox Vkontakt = new VBox();
         Vkontakt.getStyleClass().add("Vkontakt");
@@ -88,6 +94,10 @@ public class stworzKontoPac {
 
         kontaktGrid.add(labelEmail, 1, 0);
         kontaktGrid.add(textEmail, 1, 1);
+
+        GridPane.setHgrow(textTelefon, Priority.ALWAYS);
+        GridPane.setHgrow(textEmail, Priority.ALWAYS);
+
         Vkontakt.getChildren().addAll(
                 labelKontakt,
                 kontaktGrid
