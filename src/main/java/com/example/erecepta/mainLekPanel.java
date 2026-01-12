@@ -315,14 +315,16 @@ public class mainLekPanel {
                 String PESEL = searchField.getText();
                 String imie = serverConnection.getPacjent("getImie", PESEL);
                 String nazwisko = serverConnection.getPacjent("getNazwisko", PESEL);
+                String adres1 = serverConnection.getPacjent("getAdres", PESEL);
+                String telefon1 = serverConnection.getPacjent("getTelefon", PESEL);
                 String email1 = serverConnection.getPacjent("getEmail", PESEL);
 
                 imieINazwiskoPacjenta.setText(imie + " " + nazwisko);
                 PESELPacjenta.setText(PESEL);
-                adresPacjenta.setText(imie + " " + nazwisko);
-                plec.setText(imie + " " + nazwisko);
-                wiek.setText(imie + " " + nazwisko);
-                telefon.setText(imie + " " + nazwisko);
+                adresPacjenta.setText(adres1);
+                plec.setText("Kobieta");
+                wiek.setText("35");
+                telefon.setText(telefon1);
                 email.setText(email1);
             } catch (IOException ex) {
                 throw new RuntimeException(ex);

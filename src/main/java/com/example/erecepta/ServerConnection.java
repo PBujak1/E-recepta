@@ -55,6 +55,27 @@ public class ServerConnection {
                     response = in.readLine();
                     System.out.println(response);
                     return response;
+                case "getEmail":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getAdres":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getTelefon":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
                 default:
                     response = "Valid request!";
                     System.out.println(response);
