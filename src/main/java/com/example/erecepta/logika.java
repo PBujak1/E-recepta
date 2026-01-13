@@ -100,6 +100,10 @@ public class logika extends Application {
                                         plec1
                                 );
                                 ustawieniaLekarz.start(primaryStage);
+
+                                ustawieniaLekarz.getWyjdzBtn().setOnAction(actionEvent -> {
+                                    mainPanelLek.start(primaryStage);
+                                });
                             });
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);

@@ -3,6 +3,11 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
+.title-pane .label{
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+}
+
 .main-pane {
     -fx-background-color: #2C3E50;
     -fx-padding: 50;
@@ -31,4 +36,36 @@
 .main-pane .text-field:focused{
     -fx-border-color: #2980B9;
     -fx-border-width: 2;
+}
+
+.exit-btn {
+    -fx-background-color: #C0392B;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 300;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.exit-btn:hover {
+    -fx-background-color: #F08080;
+}
+
+.dalej-btn {
+    -fx-background-color: #2980B9;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+    -fx-pref-height: 20px;
+    -fx-pref-width: 300;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+}
+
+.dalej-btn:hover {
+    -fx-background-color: #3498DB;
 }
