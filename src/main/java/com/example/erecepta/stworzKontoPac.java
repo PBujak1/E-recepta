@@ -4,12 +4,30 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class stworzKontoPac {
 
+    // ===== Dane osobowe =====
+    private Label labelTitle = new Label("Tworzenie konta");
+    private Label labelDane = new Label("Dane osobowe");
+
+    private Label labelImie = new Label("Imię");
+    private Label labelNazwisko = new Label("Nazwisko");
+    private Label labelPesel = new Label("PESEL");
+    private Label labelData = new Label("Data urodzenia");
+    private Label labelAdres = new Label("Adres zamieszkania");
+
+    // ===== Kontakt =====
+    private Label labelKontakt = new Label("Kontakt");
+    private Label labelTelefon = new Label("Numer telefonu");
+    private Label labelEmail = new Label("Adres e-mail");
+
+    // ===== Pola =====
     public TextField textImie = new TextField();
     public TextField textNazwisko = new TextField();
     public TextField textPesel = new TextField();
@@ -17,98 +35,142 @@ public class stworzKontoPac {
     public TextField textAdres = new TextField();
     public TextField textTelefon = new TextField();
     public TextField textEmail = new TextField();
-    public PasswordField textHaslo = new PasswordField();
+
+    private Button buttonStworzKonto = new Button("Stwórz Konto");
+    public Button buttonWyloguj = new Button("Wyjdź");
 
     public void start(Stage primaryStage) {
 
-        // ===== Nagłówek =====
-        Label appTitle = new Label("E-recepta");
-        appTitle.setFont(Font.font("Arial", 22));
-
-        Label welcome = new Label("Stwórz konto Pacjenta");
-        welcome.setFont(Font.font("Arial", 36));
-
-        VBox header = new VBox(10, appTitle, welcome);
-        header.setAlignment(Pos.CENTER);
-
-        // ===== KARTA FORMULARZA =====
-        VBox card = new VBox(20);
-        card.setPadding(new Insets(30));
-        card.setMaxWidth(1000);
-        card.setAlignment(Pos.CENTER);
-
-        card.getStyleClass().add("login-card"); // pod CSS
-
-        Label cardTitle = new Label("Dane pacjenta");
-        cardTitle.setFont(Font.font("Arial", 24));
-
         // Placeholdery
-        textImie.setPromptText("Imię");
-        textNazwisko.setPromptText("Nazwisko");
-        textPesel.setPromptText("PESEL");
-        textAdres.setPromptText("Adres zamieszkania");
-        textTelefon.setPromptText("Numer telefonu");
-        textEmail.setPromptText("Adres e-mail");
-        textHaslo.setPromptText("Hasło");
+        textImie.setPromptText("Np. Jan");
+        textNazwisko.setPromptText("Np. Kowalski");
+        textPesel.setPromptText("11 cyfr");
+        textAdres.setPromptText("Ulica, numer domu, miasto, kod pocztowy");
+        textTelefon.setPromptText("000 000 000");
+        textEmail.setPromptText("pacjent@przyklad.pl");
 
-        // ===== Grid formularza =====
-        GridPane grid = new GridPane();
-        grid.setHgap(25);
-        grid.setVgap(20);
+        // Nagłówki
+        labelTitle.setFont(Font.font("Manrope", 32));
+        labelDane.setFont(Font.font("Manrope", 26));
+        labelKontakt.setFont(Font.font("Manrope", 26));
 
-        grid.add(new Label("Imię:"), 0, 0);
-        grid.add(textImie, 1, 0);
+        // ===== Grid dane osobowe =====
+        VBox VDaneOsobowe = new VBox();
+        GridPane daneGrid = new GridPane();
+        VDaneOsobowe.getStyleClass().add("daneGrid");
+        daneGrid.setHgap(30);
+        daneGrid.setVgap(20);
 
-        grid.add(new Label("Nazwisko:"), 2, 0);
-        grid.add(textNazwisko, 3, 0);
+        daneGrid.add(labelImie, 0, 0);
+        daneGrid.add(textImie, 0, 1);
 
-        grid.add(new Label("PESEL:"), 0, 1);
-        grid.add(textPesel, 1, 1);
+        daneGrid.add(labelNazwisko, 1, 0);
+        daneGrid.add(textNazwisko, 1, 1);
 
-        grid.add(new Label("Data urodzenia:"), 2, 1);
-        grid.add(dateUrodzenia, 3, 1);
+        daneGrid.add(labelPesel, 0, 2);
+        daneGrid.add(textPesel, 0, 3);
 
-        grid.add(new Label("Adres:"), 0, 2);
-        grid.add(textAdres, 1, 2, 3, 1);
+        daneGrid.add(labelData, 1, 2);
+        daneGrid.add(dateUrodzenia, 1, 3);
 
-        grid.add(new Label("Telefon:"), 0, 3);
-        grid.add(textTelefon, 1, 3);
+        daneGrid.add(labelAdres, 0, 4, 2, 1);
+        daneGrid.add(textAdres, 0, 5, 2, 1);
 
-        grid.add(new Label("E-mail:"), 2, 3);
-        grid.add(textEmail, 3, 3);
+        GridPane.setHgrow(textImie, Priority.ALWAYS);
+        GridPane.setHgrow(textNazwisko, Priority.ALWAYS);
+        dateUrodzenia.setMaxWidth(Double.MAX_VALUE);
+        GridPane.setHgrow(dateUrodzenia, Priority.ALWAYS);
 
-        grid.add(new Label("Hasło:"), 0, 4);
-        grid.add(textHaslo, 1, 4);
 
-        // ===== Przyciski =====
-        Button btnWyczysc = new Button("Wyczyść");
-        Button btnZarejestruj = new Button("Utwórz konto");
+        // ===== Grid kontakt =====
+        VBox Vkontakt = new VBox();
+        Vkontakt.getStyleClass().add("Vkontakt");
+        Vkontakt.setAlignment(Pos.TOP_CENTER);
+        GridPane kontaktGrid = new GridPane();
+        kontaktGrid.setAlignment(Pos.CENTER);
+        kontaktGrid.setHgap(30);
+        kontaktGrid.setVgap(20);
 
-        btnWyczysc.setPrefHeight(45);
-        btnZarejestruj.setPrefHeight(45);
+        kontaktGrid.add(labelTelefon, 0, 0);
+        kontaktGrid.add(textTelefon, 0, 1);
 
-        btnWyczysc.setPrefWidth(200);
-        btnZarejestruj.setPrefWidth(400);
+        kontaktGrid.add(labelEmail, 1, 0);
+        kontaktGrid.add(textEmail, 1, 1);
 
-        HBox buttons = new HBox(20, btnWyczysc, btnZarejestruj);
-        buttons.setAlignment(Pos.CENTER);
 
-        card.getChildren().addAll(cardTitle, grid, buttons);
+        buttonStworzKonto.setMaxWidth(Double.MAX_VALUE);
+        buttonWyloguj.setMaxWidth(Double.MAX_VALUE);
+        kontaktGrid.add(buttonStworzKonto, 0, 2);
+        kontaktGrid.add(buttonWyloguj, 1, 2);
+        buttonWyloguj.getStyleClass().add("exit-btn");
+        buttonStworzKonto.setMaxWidth(Double.MAX_VALUE);
+        buttonWyloguj.setMaxWidth(Double.MAX_VALUE);
 
-        // ===== ROOT =====
-        VBox root = new VBox(40, header, card);
-        root.setPadding(new Insets(30));
-        root.setAlignment(Pos.TOP_CENTER);
+        GridPane.setHgrow(textTelefon, Priority.ALWAYS);
+        GridPane.setHgrow(textEmail, Priority.ALWAYS);
 
-        Scene scene = new Scene(root, 1300, 780);
 
-        // Twój CSS
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/styleLek.css").toExternalForm()
+        VDaneOsobowe.getChildren().addAll(labelDane, daneGrid);
+
+        Vkontakt.getChildren().addAll(
+                labelKontakt,
+                kontaktGrid
         );
+
+        // ===== Root =====
+        VBox root = new VBox(30);
+        root.setPadding(new Insets(30));
+        root.setAlignment(Pos.TOP_LEFT);
+
+        root.getChildren().addAll(
+                labelTitle,
+                VDaneOsobowe, new Separator(),
+                Vkontakt
+        );
+
+        Scene scene = new Scene(root, 1300, 780); // jak w Twoim kodzie
+
+        scene.getStylesheets().add(getClass().getResource("/css/tworzenieKont/noweKontoPac.css").toExternalForm());
 
         primaryStage.setTitle("E-Recepta");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        buttonWyloguj.setOnAction(e -> {
+            logika mainPanel = new logika();
+            mainPanel.start(primaryStage);
+        });
+    }
+
+    // gettery jak u Ciebie
+    public String getImie() {
+        return textImie.getText();
+    }
+
+    public String getNazwisko() {
+        return textNazwisko.getText();
+    }
+
+    public String getPesel() {
+        return textPesel.getText();
+    }
+
+    public String getAdres() {
+        return textAdres.getText();
+    }
+
+    public String getTelefon() {
+        return textTelefon.getText();
+    }
+
+    public String getEmail() {
+        return textEmail.getText();
+    }
+    public Button getClearButton() {
+        return buttonStworzKonto;
+    }
+
+    public Button getSubmitButton() {
+        return buttonWyloguj;
     }
 }
