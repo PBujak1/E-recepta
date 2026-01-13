@@ -42,6 +42,7 @@ public class ustawieniaLek {
         VBox root = new VBox();
 
         GridPane mainPane = new GridPane();
+        mainPane.getStyleClass().add("main-pane");
         mainPane.add(imie, 0, 0);
         mainPane.add(nazwisko, 0, 1);
         mainPane.add(PESEL, 0, 2);
@@ -64,7 +65,7 @@ public class ustawieniaLek {
         );
         Scene scene = new Scene(root, 1300, 780);
         scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/nowaRecepta.css").toExternalForm()
+                getClass().getResource("/css/mainPanels/ustawieniaLek.css").toExternalForm()
         );
 
         primaryStage.setTitle("E-Recepta");
