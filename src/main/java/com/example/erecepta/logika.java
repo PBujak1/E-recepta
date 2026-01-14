@@ -83,11 +83,11 @@ public class logika extends Application {
                             nazwisko = serverConnection.getPacjent("getNazwiskoLekarz", PESEL);
                             String IDLekarza = serverConnection.getPacjent("getIDLekarza", PESEL);
                             String recepta  = serverConnection.getPacjent("getRecepta", IDLekarza);
-                            String adres1 = serverConnection.getPacjent("getAdres", PESEL);
-                            String telefon1 = serverConnection.getPacjent("getTelefon", PESEL);
-                            String email1 = serverConnection.getPacjent("getEmail", PESEL);
-                            String wiek1 = serverConnection.getPacjent("getWiek", PESEL);
-                            String plec1 = serverConnection.getPacjent("getPlec", PESEL);
+                            String adres1 = serverConnection.getPacjent("getAdresLekarz", PESEL);
+                            String telefon1 = serverConnection.getPacjent("getTelefonLekarz", PESEL);
+                            String email1 = serverConnection.getPacjent("getEmailLekarz", PESEL);
+                            String wiek1 = serverConnection.getPacjent("getWiekLekarz", PESEL);
+                            String plec1 = serverConnection.getPacjent("getPlecLekarz", PESEL);
                             nazwaPacjenta = imie + nazwisko;
                             mainLekPanel mainPanelLek = new mainLekPanel(PESEL, password, imie, nazwisko);
                             mainPanelLek.start(primaryStage);
@@ -122,6 +122,10 @@ public class logika extends Application {
                             mainPanelLek.getMojeReceptaBtn().setOnAction(actionEvent -> {
                                mojeRecepty mr = new mojeRecepty(recepta);
                                mr.start(primaryStage);
+
+                               mr.getWyjdz().setOnAction(a -> {
+                                   mainPanelLek.start(primaryStage);
+                               });
                             });
 
                         } catch (IOException ex) {

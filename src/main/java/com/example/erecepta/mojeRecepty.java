@@ -1,24 +1,37 @@
 package com.example.erecepta;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class mojeRecepty {
 
     private String receptyString;
+    private Label titleLabel = new Label("Moje Recepty");
+    private Label informationLabel = new Label("Ze względu na rodo wszystkie dane zapisane są za pomocą ID");
+    private Label daneLabel = new Label("Dane pokazują poszczególno IDRecepty, IDLekarza, IDPacjenta, Ilość opakowań danego leku");
+    private Button wyjdz = new Button("Wyjdź");
 
     mojeRecepty(String recepty) {
         this.receptyString = recepty;
     }
 
     public void start(Stage primaryStage) {
-        VBox root = new VBox(10);
-        root.setAlignment(Pos.TOP_CENTER);
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(50 , 50 , 50 , 50));
+
+        VBox titleBox = new VBox(10);
+        Region spacer = new Region();
+        titleBox.setAlignment(Pos.TOP_CENTER);
+        titleBox.getChildren().addAll(titleLabel, informationLabel,spacer, daneLabel);
 
         VBox receptyPane = new VBox(new Label(receptyString));
         receptyPane.setAlignment(Pos.TOP_CENTER);
@@ -30,7 +43,18 @@ public class mojeRecepty {
         contentPane.getStyleClass().add("main-panel-content");
         contentPane.setContent(receptyPane);
 
-        root.getChildren().add(contentPane);
+        VBox bottomPane = new VBox();
+        bottomPane.setAlignment(Pos.CENTER);
+        bottomPane.getChildren().addAll(wyjdz);
+
+        root.setCenter(contentPane);
+        root.setTop(titleBox);
+        root.setBottom(bottomPane);
+
+        titleLabel.getStyleClass().add("titleLabel");
+        informationLabel.getStyleClass().add("informationLabel");
+        daneLabel.getStyleClass().add("daneLabel");
+        wyjdz.getStyleClass().add("exit-btn");
 
         Scene scene = new Scene(root, 1300, 780);
         scene.getStylesheets().add(
@@ -41,4 +65,6 @@ public class mojeRecepty {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+
+    public Button getWyjdz() {return wyjdz;}
 }

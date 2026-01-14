@@ -112,6 +112,41 @@ public class ServerConnection {
                     response = in.readLine();
                     System.out.println(response);
                     return response;
+                case "getEmailLekarz":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getAdresLekarz":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getTelefonLekarz":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getPlecLekarz":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getWiekLekarz":
+                    out.println(data);
+                    out.println(PESEL);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
                 case "getRecepta":
                     out.println(data);
                     out.println(PESEL);
