@@ -52,8 +52,8 @@ public class logika extends Application {
                 alert.setContentText("Hasło nie może być puste!");
                 alert.showAndWait();
             } else {
-                String PESEL = logFX1.getLogin();
-                String password = logFX1.getPassword();
+                String password = logFX1.getLogin();
+                String PESEL = logFX1.getPassword();
                 int mode = logFX1.getChosenMode();
 
                 ServerConnection serverConnection = new ServerConnection(PESEL, password);
