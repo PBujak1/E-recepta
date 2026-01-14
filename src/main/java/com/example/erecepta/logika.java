@@ -138,6 +138,10 @@ public class logika extends Application {
                                 });
                             });
 
+                            nowaRecepta.getWyjdzBtn().setOnAction(a1 -> {
+                                mainPanelLek.start(primaryStage);
+                            });
+
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }

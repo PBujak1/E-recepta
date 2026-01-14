@@ -30,7 +30,7 @@ public class nowaRecepta {
     private Label dawkowanieLabel = new Label("DAWKOWANIE");
     private TextField dawkowanie = new TextField();
 
-    private Button wyjdz = new Button("Wyjdz");
+    private static Button wyjdz = new Button("Wyjdz");
     private Button dodaj = new Button("Dodaj");
 
     nowaRecepta(String imie, String nazwisko, String PESEL) {
@@ -101,7 +101,7 @@ public class nowaRecepta {
         primaryStage.show();
     }
 
-    public Button getWyjdzBtn() {
+    public static Button getWyjdzBtn() {
         return wyjdz;
     }
 }
