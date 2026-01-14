@@ -345,16 +345,12 @@ public class mainLekPanel {
                 nowaRecepta.setOnAction(a -> {
                     nowaRecepta Recepta = new nowaRecepta(imie1, nazwisko1, PESEL);
                     Recepta.start(primaryStage);
-
-                    Recepta.getWyjdzBtn().setOnAction(a1 -> {
-                        mainLekPanel mainPanelLek = new mainLekPanel(login, password, imie, nazwisko);
-                        mainPanelLek.start(primaryStage);
-                    });
                 });
 
                 zobaczWszystko.setOnAction(a -> {
                     System.out.println(historiaPacString);
                     VBox historiaPane = new VBox(new Label(historiaPacString));
+                    historiaPane.getStyleClass().add("historia");
                     historiaPane.setAlignment(Pos.TOP_CENTER);
 
                     contentPane.setContent(historiaPane);
