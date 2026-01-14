@@ -16,8 +16,8 @@ public class logFX{
     /*
     Tworzenie zmiennych
     */
-    private Label text1 = new Label("Login lub PESEL:");
-    private Label text2 = new Label("Hasło:");
+    private Label text1 = new Label("Nazwisko:");
+    private Label text2 = new Label("PESEL:");
     private Label welcome = new Label("Witaj ponownie!");
     private Label subtitle = new Label("Zaloguj się, aby uzyskać dostęp do e-recept");
     private Label title = new Label("E-recepta");
