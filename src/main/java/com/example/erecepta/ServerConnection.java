@@ -13,6 +13,7 @@ public class ServerConnection {
     private String PESEL;
     private String haslo;
     private String response;
+    private StringBuilder responseBuilder = new StringBuilder();
     private String IDlekarza;
 
     public ServerConnection(String PESEL, String haslo) {
@@ -150,7 +151,18 @@ public class ServerConnection {
                 case "getRecepta":
                     out.println(data);
                     out.println(PESEL);
-                    StringBuilder responseBuilder = new StringBuilder();
+                    responseBuilder = new StringBuilder();
+
+                    while (!(response = in.readLine()).equals("END")) {
+                        responseBuilder.append(response).append("\n");
+                    }
+                    response = responseBuilder.toString();
+                    System.out.println(response);
+                    return response;
+                case "getHistoria":
+                    out.println(data);
+                    out.println(PESEL);
+                    responseBuilder = new StringBuilder();
 
                     while (!(response = in.readLine()).equals("END")) {
                         responseBuilder.append(response).append("\n");

@@ -83,6 +83,7 @@ public class logika extends Application {
                             nazwisko = serverConnection.getPacjent("getNazwiskoLekarz", PESEL);
                             String IDLekarza = serverConnection.getPacjent("getIDLekarza", PESEL);
                             String recepta  = serverConnection.getPacjent("getRecepta", IDLekarza);
+                            String historia = serverConnection.getPacjent("getHistoria", IDLekarza);
                             String adres1 = serverConnection.getPacjent("getAdresLekarz", PESEL);
                             String telefon1 = serverConnection.getPacjent("getTelefonLekarz", PESEL);
                             String email1 = serverConnection.getPacjent("getEmailLekarz", PESEL);
@@ -126,6 +127,15 @@ public class logika extends Application {
                                mr.getWyjdz().setOnAction(a -> {
                                    mainPanelLek.start(primaryStage);
                                });
+                            });
+
+                            mainPanelLek.getHistoryBtn().setOnAction(actionEvent -> {
+                                historiaPac hp = new historiaPac(historia);
+                                hp.start(primaryStage);
+
+                                hp.getWyjdz().setOnAction(a -> {
+                                    mainPanelLek.start(primaryStage);
+                                });
                             });
 
                         } catch (IOException ex) {

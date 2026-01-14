@@ -344,6 +344,7 @@ public class mainLekPanel {
             }
         });
     }
+    public Button getHistoryBtn() {return historia;}
 
     public Button getMojeReceptaBtn() { return mojeRecepty; }
 
