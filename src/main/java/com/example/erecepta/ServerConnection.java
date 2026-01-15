@@ -191,18 +191,56 @@ public class ServerConnection {
         }
     }
 
-    public void getUpdate(String data, String PESEL) throws IOException {
+
+    public void getUpdateLek(String data, String PESEL, String noweImie, String noweNazwisko
+    , String nowyPesel, String nowyAdres, String nowyTelefonStr, String nowyEmail, String nowyWiek, String nowaPlec) throws IOException {
+        try {
+            Socket socket = new Socket(server, port);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+            int nowyTelefon = Integer.parseInt(nowyTelefonStr);
+
+            switch (data) {
+                case "updateWszystkoLek":
+                    out.println(data);
+                    out.println(PESEL);
+                    out.println(noweImie);
+                    out.println(noweNazwisko);
+                    out.println(nowyPesel);
+                    out.println(nowyAdres);
+                    out.println(nowyTelefon);
+                    out.println(nowyEmail);
+                    out.println(nowyWiek);
+                    out.println(nowaPlec);
+
+                default:
+                    response = "Valid request!";
+                    System.out.println(response);
+            }
+
+        } catch (IOException e) {
+            System.out.println( "Brak danych" + e.getMessage());
+        }
+    }
+
+    public void getUpdateRec(String data, String PESEL, String lek, String opakowania
+    , String odplatnosc, String PESELLek) throws IOException {
         try {
             Socket socket = new Socket(server, port);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
             switch (data) {
-                case "updateWszystko":
+                case "updateWszystkoRec":
                     out.println(data);
                     out.println(PESEL);
+                    out.println(lek);
+                    out.println(opakowania);
+                    out.println(odplatnosc);
+                    out.println(PESELLek);
 
-                default:
+            default:
                     response = "Valid request!";
                     System.out.println(response);
             }

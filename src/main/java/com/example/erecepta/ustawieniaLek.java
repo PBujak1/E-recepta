@@ -4,6 +4,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -174,18 +175,24 @@ public class ustawieniaLek {
         primaryStage.show();
 
         akceptuj.setOnAction(event -> {
-            noweImie = noweImieLabel.getText();
-            noweNazwisko = noweNazwiskoLabel.getText();
-            nowyPesel = nowyPeselLabel.getText();
-            nowyAdres = nowyAdresLabel.getText();
-            nowyTelefon = nowyTelefonLabel.getText();
-            nowyEmail = nowyEmailLabel.getText();
-            nowyWiek = nowyWiekLabel.getText();
-            nowaPlec = nowaPlecLabel.getText();
+            noweImie = imieField.getText();
+            noweNazwisko = nazwiskoField.getText();
+            nowyPesel = peselField.getText();
+            nowyAdres = adresField.getText();
+            nowyTelefon = telefonField.getText();
+            nowyEmail = emailField.getText();
+            nowyWiek = wiekField.getText();
+            nowaPlec = plecField.getText();
 
             ServerConnection serverConnection = new ServerConnection(PESELString, nazwiskoString);
             try {
-                serverConnection.getUpdate("updateWszystko", PESELString);
+                serverConnection.getUpdateLek("updateWszystkoLek", PESELString, noweImie, noweNazwisko
+                ,nowyPesel, nowyAdres, nowyTelefon, nowyEmail, nowyWiek, nowaPlec);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("UWAGA!");
+                alert.setHeaderText(null);
+                alert.setContentText("Zmieniono dane!");
+                alert.showAndWait();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
