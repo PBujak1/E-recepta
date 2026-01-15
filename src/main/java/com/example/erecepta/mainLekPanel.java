@@ -343,7 +343,7 @@ public class mainLekPanel {
                 email.setText(email1);
 
                 nowaRecepta.setOnAction(a -> {
-                    nowaRecepta Recepta = new nowaRecepta(imie1, nazwisko1, PESEL);
+                    nowaRecepta Recepta = new nowaRecepta(imie1, nazwisko1, PESEL, login);
                     Recepta.start(primaryStage);
                 });
 

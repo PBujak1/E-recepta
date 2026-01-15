@@ -3,21 +3,21 @@ package com.example.erecepta;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.Separator;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class nowaRecepta {
 
     private String imie;
     private String nazwisko;
     private String PESEL;
+    private String PESELLek;
 
     private Label pacjentLabel = new Label("Pacjent");
 
@@ -25,18 +25,21 @@ public class nowaRecepta {
     private TextField nazwaLeku = new TextField();
     private Label liczbaOpakowanLabel = new Label("LICZBA OPAKOWAŃ");
     private TextField liczbaOpakowan = new TextField();
-    private Label odplatnoscLabel = new Label("ODPLNOŚĆ");
+    private Label odplatnoscLabel = new Label("ODPŁATNOŚĆ");
     private TextField odplatnosc = new TextField();
-    private Label dawkowanieLabel = new Label("DAWKOWANIE");
-    private TextField dawkowanie = new TextField();
+
+    private String lek;
+    private String opakowania;
+    private String odplatnosci;
 
     private static Button wyjdz = new Button("Wyjdz");
     private Button dodaj = new Button("Dodaj");
 
-    nowaRecepta(String imie, String nazwisko, String PESEL) {
+    nowaRecepta(String imie, String nazwisko, String PESEL, String PESELLek) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.PESEL = PESEL;
+        this.PESELLek = PESELLek;
     }
 
     public void start(Stage primaryStage) {
@@ -73,7 +76,6 @@ public class nowaRecepta {
         mainPane.setPadding(new Insets(10, 5, 10, 5));
         mainPane.getStyleClass().add("main-pane");
         VBox.setVgrow(liczbaOpakowan, Priority.ALWAYS);
-        VBox.setVgrow(dawkowanie, Priority.ALWAYS);
         VBox.setVgrow(liczbaOpakowan, Priority.ALWAYS);
         mainPane.getChildren().addAll(
                 lekLabel,
@@ -81,9 +83,7 @@ public class nowaRecepta {
                 liczbaOpakowanLabel,
                 liczbaOpakowan,
                 odplatnoscLabel,
-                odplatnosc,
-                dawkowanieLabel,
-                dawkowanie, spacer,
+                odplatnosc, spacer,
                 dolnyPanel
         );
 
@@ -99,6 +99,24 @@ public class nowaRecepta {
         primaryStage.setTitle("E-Recepta");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        dodaj.setOnAction(actionEvent -> {
+            lek = nazwaLeku.getText();
+            opakowania = liczbaOpakowan.getText();
+            odplatnosci = odplatnosc.getText();
+
+            ServerConnection serverConnection = new ServerConnection(PESEL, nazwisko);
+            try {
+                serverConnection.getUpdateRec("updateWszystkoRec", PESEL, lek, opakowania, odplatnosci, PESELLek);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("UWAGA!");
+                alert.setHeaderText(null);
+                alert.setContentText("Zmieniono dane!");
+                alert.showAndWait();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public static Button getWyjdzBtn() {
