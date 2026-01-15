@@ -187,8 +187,23 @@ public class logFX{
         });
 
         stwórzKontoLekarza.setOnAction(e -> {
-            stworzKontoLek stworzKontoLek = new stworzKontoLek();
+            stworzKontoLek stworzKontoLek = new stworzKontoLek(
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta"
+            );
             stworzKontoLek.start(primaryStage);
+
+            stworzKontoLek.getWyjdzBtn().setOnAction(actionEvent -> {
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            });
         });
     }
 

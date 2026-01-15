@@ -196,7 +196,6 @@ public class ServerConnection {
     , String nowyPesel, String nowyAdres, String nowyTelefonStr, String nowyEmail, String nowyWiek, String nowaPlec) throws IOException {
         try {
             Socket socket = new Socket(server, port);
-            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
 
             int nowyTelefon = Integer.parseInt(nowyTelefonStr);
@@ -213,6 +212,39 @@ public class ServerConnection {
                     out.println(nowyEmail);
                     out.println(nowyWiek);
                     out.println(nowaPlec);
+
+                default:
+                    response = "Valid request!";
+                    System.out.println(response);
+            }
+
+        } catch (IOException e) {
+            System.out.println( "Brak danych" + e.getMessage());
+        }
+    }
+
+    public void getNowuLek(String data, String noweImie, String noweNazwisko, String PZW
+            , String nowyPesel, String nowyAdres, String nowyTelefonStr, String nowyEmail, String nowyWiek, String nowaPlec) throws IOException {
+        try {
+            Socket socket = new Socket(server, port);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+            int nowyTelefon = Integer.parseInt(nowyTelefonStr);
+
+            switch (data) {
+                case "nowyLek":
+                    System.out.println("ok");
+                    out.println(data);
+                    out.println(noweImie);
+                    out.println(noweNazwisko);
+                    out.println(PZW);
+                    out.println(nowyPesel);
+                    out.println(nowyAdres);
+                    out.println(nowyTelefon);
+                    out.println(nowyEmail);
+                    out.println(nowyWiek);
+                    out.println(nowaPlec);
+                    break;
 
                 default:
                     response = "Valid request!";

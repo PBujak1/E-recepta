@@ -127,7 +127,7 @@ public class mainLekPanel {
         searchIcon2.getStyleClass().add("search-icon2");
 
         HBox searchBox1 = new HBox(8);
-        searchField.setPromptText("Wyszukaj Pacjenta (PESEL / Imię i Nazwisko)");
+        searchField.setPromptText("Wpisz Lek");
         searchBox1.getChildren().addAll(searchIcon, searchField);
         searchBox1.getStyleClass().add("search-box");
         searchBox1.setAlignment(Pos.CENTER_LEFT);
@@ -355,10 +355,29 @@ public class mainLekPanel {
 
                     contentPane.setContent(historiaPane);
                 });
+
+                dodajLekBtn.setOnAction(e1 -> {
+                    try {
+                        String lek = searchField.getText();
+
+                        serverConnection.getUpdateRec("updateWszystkoRec", PESEL, lek, "1", "Nie", login);
+                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                        alert.setTitle("UWAGA!");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Zmieniono dane!");
+                        alert.showAndWait();
+
+                        searchField.setText("");
+                        searchField.setPromptText("Wpisz Lek");
+                    } catch (IOException e11) {
+                        throw new RuntimeException(e11);
+                    }
+                });
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
+
     }
     public Button getHistoryBtn() {return historia;}
 
