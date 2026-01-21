@@ -58,7 +58,7 @@ public class historiaPac {
 
         Scene scene = new Scene(root, 1300, 780);
         scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/mojeRecepty.css").toExternalForm()
+                getClass().getResource("/css/mainPanels/mojaHistoria.css").toExternalForm()
         );
 
         primaryStage.setTitle("E-Recepta");

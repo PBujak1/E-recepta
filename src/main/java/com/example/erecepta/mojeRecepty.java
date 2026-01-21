@@ -33,9 +33,11 @@ public class mojeRecepty {
         titleBox.setAlignment(Pos.TOP_CENTER);
         titleBox.getChildren().addAll(titleLabel, informationLabel,spacer, daneLabel);
 
-        VBox receptyPane = new VBox(new Label(receptyString));
-        receptyPane.setAlignment(Pos.TOP_CENTER);
+        Label receptyLabel = new Label(receptyString);
+        receptyLabel.setMaxWidth(Double.MAX_VALUE);
 
+        VBox receptyPane = new VBox(receptyLabel);
+        receptyPane.setAlignment(Pos.TOP_CENTER);
         ScrollPane contentPane = new ScrollPane();
         contentPane.setFitToWidth(true);
         VBox.setVgrow(contentPane, Priority.ALWAYS);

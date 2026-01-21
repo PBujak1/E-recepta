@@ -31,7 +31,7 @@
 }
 
 .main-panel-content .label {
-    -fx-font-size: 25;
+    -fx-font-size: 15;
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }

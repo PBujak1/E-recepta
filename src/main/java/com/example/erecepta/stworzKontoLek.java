@@ -101,12 +101,6 @@ public class stworzKontoLek {
         gridPane.setHgap(15);
         gridPane.setVgap(15);
 
-        ColumnConstraints col1 = new ColumnConstraints();
-        col1.setHalignment(HPos.RIGHT);
-        col1.setPercentWidth(15);
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setHalignment(HPos.LEFT);
-        col2.setPercentWidth(20);
         ColumnConstraints col3 = new ColumnConstraints();
         col3.setHalignment(HPos.RIGHT);
         col3.setPercentWidth(20);
@@ -114,47 +108,27 @@ public class stworzKontoLek {
         col4.setHalignment(HPos.RIGHT);
         col4.setHgrow(Priority.ALWAYS);
         col4.setFillWidth(true);
-        gridPane.getColumnConstraints().addAll(col1, col2, col3, col4);
+        gridPane.getColumnConstraints().addAll(col3, col4);
 
-        gridPane.add(stareImieLabel, 0, 0);
-        gridPane.add(stareNazwiskoLabel, 0, 1);
-        gridPane.add(starePZW, 0, 2);
-        gridPane.add(staryPeselLabel, 0, 3);
-        gridPane.add(staryAdresLabel, 0, 4);
-        gridPane.add(staryTelefonLabel, 0, 5);
-        gridPane.add(staryEmailLabel, 0, 6);
-        gridPane.add(staryWiekLabel, 0, 7);
-        gridPane.add(staraPlecLabel, 0, 8);
+        gridPane.add(noweImieLabel, 0, 0);
+        gridPane.add(noweNazwiskoLabel, 0, 1);
+        gridPane.add(NrPZW, 0, 2);
+        gridPane.add(nowyPeselLabel, 0, 3);
+        gridPane.add(nowyAdresLabel, 0, 4);
+        gridPane.add(nowyTelefonLabel, 0, 5);
+        gridPane.add(nowyEmailLabel, 0, 6);
+        gridPane.add(nowyWiekLabel, 0, 7);
+        gridPane.add(nowaPlecLabel, 0, 8);
 
-        gridPane.add(imie, 1, 0);
-        gridPane.add(nazwisko, 1, 1);
-        gridPane.add(PZW, 1, 2);
-        gridPane.add(PESEL, 1, 3);
-        gridPane.add(adres, 1, 4);
-        gridPane.add(telefon, 1, 5);
-        gridPane.add(email, 1, 6);
-        gridPane.add(wiek, 1, 7);
-        gridPane.add(plec, 1, 8);
-
-        gridPane.add(noweImieLabel, 2, 0);
-        gridPane.add(noweNazwiskoLabel, 2, 1);
-        gridPane.add(NrPZW, 2, 2);
-        gridPane.add(nowyPeselLabel, 2, 3);
-        gridPane.add(nowyAdresLabel, 2, 4);
-        gridPane.add(nowyTelefonLabel, 2, 5);
-        gridPane.add(nowyEmailLabel, 2, 6);
-        gridPane.add(nowyWiekLabel, 2, 7);
-        gridPane.add(nowaPlecLabel, 2, 8);
-
-        gridPane.add(imieField, 3, 0);
-        gridPane.add(nazwiskoField, 3, 1);
-        gridPane.add(PZWField, 3, 2);
-        gridPane.add(peselField, 3, 3);
-        gridPane.add(adresField, 3, 4);
-        gridPane.add(telefonField, 3, 5);
-        gridPane.add(emailField, 3, 6);
-        gridPane.add(wiekField, 3, 7);
-        gridPane.add(plecField, 3, 8);
+        gridPane.add(imieField, 1, 0);
+        gridPane.add(nazwiskoField, 1, 1);
+        gridPane.add(PZWField, 1, 2);
+        gridPane.add(peselField, 1, 3);
+        gridPane.add(adresField, 1, 4);
+        gridPane.add(telefonField, 1, 5);
+        gridPane.add(emailField, 1, 6);
+        gridPane.add(wiekField, 1, 7);
+        gridPane.add(plecField, 1, 8);
 
         HBox dolnyPanel = new HBox(600);
         dolnyPanel.setAlignment(Pos.CENTER);
