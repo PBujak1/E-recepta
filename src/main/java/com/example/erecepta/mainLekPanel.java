@@ -127,7 +127,7 @@ public class mainLekPanel {
         searchIcon2.getStyleClass().add("search-icon2");
 
         HBox searchBox1 = new HBox(8);
-        searchField.setPromptText("Wpisz Lek");
+        searchField.setPromptText("Wyszukaj Pacjenta (PESEL):");
         searchBox1.getChildren().addAll(searchIcon, searchField);
         searchBox1.getStyleClass().add("search-box");
         searchBox1.setAlignment(Pos.CENTER_LEFT);
