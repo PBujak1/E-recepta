@@ -173,7 +173,6 @@ public class mainPacPanel {
         mainButtonBox.getStyleClass().add("mainButtonBox");
         mainButtonBox.setAlignment(Pos.TOP_CENTER);
 
-
         Image calendarImage = new Image(
                 getClass().getResourceAsStream("/icons/calendar.png")
         );

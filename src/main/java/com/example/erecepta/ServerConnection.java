@@ -71,6 +71,17 @@ public class ServerConnection {
                     response = in.readLine();
                     System.out.println(response);
                     return response;
+                case "getAlergia":
+                    out.println(data);
+                    out.println(PESEL);
+                    String line;
+                    StringBuilder response1 = new StringBuilder();
+
+                    while (!(line = in.readLine()).equals("END")) {
+                        response1.append(line + "\n");
+                    }
+                    System.out.println(response1);
+                    return response1.toString();
                 case "getIDLekarza":
                     out.println(data);
                     out.println(PESEL);

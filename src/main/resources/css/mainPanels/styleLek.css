@@ -99,7 +99,7 @@
 .bottom-btn {
     -fx-background-color: white;
     -fx-background-radius: 15;
-    -fx-padding: 20;
+    -fx-padding: 10;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
@@ -124,6 +124,20 @@
     -fx-prompt-text-fill: black;
     -fx-font-size: 14px;
     -fx-padding: 6 0 6 0;
+}
+
+.lek-scrollpane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-vgap: 5;
+}
+
+.lek-scrollpane .viewport {
+    -fx-background-color: transparent;
+}
+
+.lek-scrollpane .label {
+    -fx-font-size: 20;
 }
 
 .wypisz-recepte {
@@ -166,8 +180,8 @@
     -fx-border-color: rgba(255,255,255,0.15);
 }
 
-.allergy-chip1, .allergy-chip2, .allergy-chip3 {
-    -fx-background-color: #34495E;
+.allergy-chip1{
+    -fx-background-color: #54a0c7;
     -fx-padding: 10 16 10 16;
     -fx-background-radius: 12;
     -fx-border-radius: 12;
@@ -175,19 +189,10 @@
     -fx-alignment: center-left;
 }
 
-.allergy-text1, .allergy-text2, .allergy-text3 {
+.allergy-chip1 .label {
+    -fx-font-weight: bold;
     -fx-text-fill: white;
-    -fx-font-size: 14px;
-}
-
-.allergy-remove {
-    -fx-text-fill: #FF4D4D;
-    -fx-font-size: 16px;
-    -fx-cursor: hand;
-}
-
-.allergy-remove:hover {
-    -fx-text-fill: #FF8080;
+    -fx-font-size: 15;
 }
 
 .historia-title {
