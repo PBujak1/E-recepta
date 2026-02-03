@@ -49,8 +49,14 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.center-panel .title-middle .label{
+.center-panel .title-middle .karta{
     -fx-font-size: 30;
+    -fx-font-weight: bold;
+    -fx-effecet: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
+}
+
+.center-panel .imie-nazwisko {
+    -fx-font-size: 20;
     -fx-font-weight: bold;
 }
 
@@ -78,7 +84,7 @@
     -fx-text-fill: white;
     -fx-border-radius: 5;
     -fx-background-radius: 5;
-    -fx-pref-width: 150;
+    -fx-pref-width: 100;
     -fx-font-size: 15px;
     -fx-padding: 20 0 20 0;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);
@@ -90,7 +96,6 @@
 }
 
 /*wyszukiwanie pacjenta i leku napisy*/
-
 .bottom-btn {
     -fx-background-color: white;
     -fx-background-radius: 15;

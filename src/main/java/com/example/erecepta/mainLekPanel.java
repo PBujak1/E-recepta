@@ -114,7 +114,7 @@ public class mainLekPanel {
            2.Wypisujące dane pacjęnta
            3.Wyszukujący dany lek i dodanie go do recepty
         */
-        VBox centerPanel = new VBox(20);
+        VBox centerPanel = new VBox(10);
 
         HBox titleBox = new HBox(10);
         titleBox.setAlignment(Pos.CENTER);
@@ -193,6 +193,8 @@ public class mainLekPanel {
         HBox searchBox2 = new HBox(8);
         lekField.setPromptText("Wyszukaj lek...");
         searchBox2.getChildren().addAll(searchIcon2, lekField);
+        karta.getStyleClass().add("karta");
+        imieINazwiskoPacjenta.getStyleClass().add("imie-nazwisko");
         searchBox2.getStyleClass().add("search-box2");
         searchBox2.setAlignment(Pos.CENTER_LEFT);
 
@@ -200,9 +202,15 @@ public class mainLekPanel {
         lekField.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(searchBox2, Priority.ALWAYS);
 
-        HBox botoomBox = new HBox(10);
-        botoomBox.setAlignment(Pos.CENTER_LEFT);
-        botoomBox.getChildren().addAll(
+        VBox botBox = new VBox(30);
+        botBox.setAlignment(Pos.CENTER);
+        VBox.setVgrow(botBox, Priority.ALWAYS);
+
+        Region spacer1 = new Region();
+
+        HBox searchMed = new HBox(10);
+        searchMed.setAlignment(Pos.CENTER_LEFT);
+        searchMed.getChildren().addAll(
                 searchBox2,
                 dodajLekBtn
         );
@@ -221,16 +229,21 @@ public class mainLekPanel {
         bottomBtn.setAlignment(Pos.CENTER);
         VBox.setVgrow(bottomBtn, Priority.ALWAYS);
         bottomBtn.getChildren().addAll(wypiszBtn);
-        bottomBtn.getStyleClass().add("bottom-btn");
         wypiszBtn.getStyleClass().add("wypisz-recepte");
+
+        botBox.getChildren().addAll(
+                typReceptyLabel,
+                searchMed, new Separator(),
+                bottomBtn
+        );
+        botBox.getStyleClass().add("bottom-btn");
 
         centerPanel.getChildren().addAll(
                 titleBox,
                 topBox, new Separator(),
                 titleMiddle, new Separator(),
-                typReceptyLabel,
-                botoomBox, new Separator(),
-                bottomBtn
+                spacer1,
+                botBox
         );
 
 
@@ -387,11 +400,10 @@ public class mainLekPanel {
                         Alert alert = new Alert(Alert.AlertType.INFORMATION);
                         alert.setTitle("UWAGA!");
                         alert.setHeaderText(null);
-                        alert.setContentText("Zmieniono dane!");
+                        alert.setContentText("Dodano Lek!");
                         alert.showAndWait();
 
                         searchField.setText("");
-                        searchField.setPromptText("Wpisz Lek");
                     } catch (IOException e11) {
                         throw new RuntimeException(e11);
                     }
