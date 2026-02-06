@@ -344,6 +344,8 @@ public class mainLekPanel {
         wczytajBtn.setOnAction(e -> {
             try {
                 String PESEL = searchField.getText();
+                String IDLekarza = serverConnection.getPacjent("getIDLekarza", login);
+                String e_wizyty = serverConnection.getPacjent("getWizyta", IDLekarza);
                 String imie1 = serverConnection.getPacjent("getImiePacjent", PESEL);
                 String nazwisko1 = serverConnection.getPacjent("getNazwiskoPacjent", PESEL);
                 String adres1 = serverConnection.getPacjent("getAdres", PESEL);
@@ -380,8 +382,8 @@ public class mainLekPanel {
                 });
 
                 zobaczWszystko.setOnAction(a -> {
-                    System.out.println(historiaPacString);
-                    VBox historiaPane = new VBox(new Label(historiaPacString));
+                    VBox historiaPane = new VBox(new Label(e_wizyty));
+                    System.out.print(e_wizyty);
                     historiaPane.getStyleClass().add("historia");
                     historiaPane.setAlignment(Pos.TOP_CENTER);
 
@@ -424,4 +426,6 @@ public class mainLekPanel {
     public Button getUstawieniaLek() { return ustawienia; }
 
     public Button getPomoc() { return pomoc; }
+
+    public Button getZobaczWszystko() { return zobaczWszystko; }
 }
