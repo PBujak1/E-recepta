@@ -55,7 +55,7 @@ public class mainLekPanel {
     //Zmienne prawej kolumny
     private Label alergieTitle = new Label("ALERGIE PACJENTA:");
     private String alergia1;
-    private Label historiaTitle = new Label("Historia Recept Pacjenta:");
+    private Label historiaTitle = new Label("Najbliższe E-wizyty:");
     private Button zobaczWszystko = new Button("Zobacz Wszystko");
     private String historiaPacString;
 
