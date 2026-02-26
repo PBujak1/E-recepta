@@ -21,7 +21,7 @@ public class mainLekPanel {
     String password;
 
     //Zmienne lewego panelu
-    private final Button nowaRecepta = new Button("NOWA E-RECEPTA");
+    private final Button nowaRecepta = new Button("NOWA E-RECEPTABubu");
     private final Button historia = new Button("Historia Pacjentów");
     private final Button mojeRecepty = new Button("Moje Recepty");
     private final Button ustawienia = new Button("Ustawienia");
