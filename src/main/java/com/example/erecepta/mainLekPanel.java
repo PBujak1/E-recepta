@@ -33,13 +33,13 @@ public class mainLekPanel {
     private Label karta = new Label("Karta Pacjenta");
     private Label imieINazwiskoLabel = new Label("Imię i nazwisko:");
     private Label imieINazwiskoPacjenta = new Label("");
-    private Label plecLabel = new Label("Płeć:");
+    private Label plecLabel = new Label("Płeć: ");
     private Label plec = new Label("");
-    private Label wiekLabel = new Label("Wiek:");
+    private Label wiekLabel = new Label("Wiek: ");
     private Label wiek = new Label("");
-    private Label PESELLabel = new Label("PESEL:");
+    private Label PESELLabel = new Label("PESEL: ");
     private Label PESELPacjenta = new Label("");
-    private Label adresLabel = new Label("Adres:");
+    private Label adresLabel = new Label("Adres: ");
     private Label adresPacjenta = new Label("");
     private Label telefonLabel = new Label("Nr. Telefonu:");
     private Label telefon = new Label("");
@@ -158,22 +158,22 @@ public class mainLekPanel {
         titleMiddle.setAlignment(Pos.CENTER);
 
         GridPane danePacjenta = new GridPane();
-        danePacjenta.setVgap(10);
+        danePacjenta.setVgap(15);
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setHalignment(HPos.RIGHT);
-        col1.setPercentWidth(15);
+        col1.setPercentWidth(30);
         ColumnConstraints col2 = new ColumnConstraints();
         col2.setHalignment(HPos.LEFT);
-        col2.setPercentWidth(30);
+        col2.setPercentWidth(5);
         ColumnConstraints col3 = new ColumnConstraints();
         col3.setHalignment(HPos.RIGHT);
-        col3.setPercentWidth(15);
+        col3.setPercentWidth(30);
         ColumnConstraints col4 = new ColumnConstraints();
-        col3.setHalignment(HPos.RIGHT);
+        col4.setHalignment(HPos.LEFT);
         col4.setHgrow(Priority.ALWAYS);
         col4.setFillWidth(true);
 
-        danePacjenta.getColumnConstraints().addAll(col1, col2);
+        danePacjenta.getColumnConstraints().addAll(col1, col2, col3, col4);
         danePacjenta.add(PESELLabel, 0, 1);
         danePacjenta.add(PESELPacjenta, 1, 1);
         danePacjenta.add(plecLabel, 2, 1);
