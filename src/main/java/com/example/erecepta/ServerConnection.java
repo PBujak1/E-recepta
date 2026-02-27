@@ -8,7 +8,7 @@ import java.net.Socket;
 
 public class ServerConnection {
 
-    private static final String server = "localhost1";
+    private static final String server = "localhost";
     private static final int port = 12345;
     private String PESEL;
     private String haslo;
