@@ -371,6 +371,7 @@ public class mainLekPanel {
 
                 System.out.println(alergia1);
                 String[] alergieTablica = alergia1.split("\\r?\\n");
+                allergyList.getChildren().clear();
 
                 for (int i = 0; i < alergieTablica.length; i++) {
                     HBox allergyChip1 = new HBox(10);
