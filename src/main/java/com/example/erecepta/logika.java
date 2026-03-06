@@ -70,6 +70,28 @@ public class logika extends Application {
                             nazwaPacjenta = imie + " " + nazwisko;
                             mainPacPanel mainPanelPac = new mainPacPanel(imie, nazwisko, nazwaPacjenta);
                             mainPanelPac.start(primaryStage);
+
+                            mainPanelPac.getDawkowanieButton().setOnAction(event -> {
+
+                            });
+
+                            mainPanelPac.getHistoriaButton().setOnAction(event -> {
+
+                            });
+
+                            mainPanelPac.getWizytaButton().setOnAction(event -> {
+                                nowaWizyta nowaWizyta = new nowaWizyta();
+                                nowaWizyta.start(primaryStage);
+
+                                nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
+                                    mainPanelPac.start(primaryStage);
+                                });
+                            });
+
+                            mainPanelPac.getNadchodzaceWizyty().setOnAction(event -> {
+
+                            });
+
                             }
                         } catch (IOException ex) {
                             new Alert(Alert.AlertType.WARNING, "Nie udało się pobrać danych pacjenta!").showAndWait();

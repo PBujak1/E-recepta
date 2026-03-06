@@ -39,7 +39,7 @@ public class mainPacPanel {
         this.nazwa = nazwa;
     }
 
-    public void start(Stage primaryStage) throws IOException {
+    public void start(Stage primaryStage){
 
         VBox root = new VBox(1);
         root.getStyleClass().add("main-panel");
@@ -287,6 +287,21 @@ public class mainPacPanel {
             logika mainPane = new logika();
             mainPane.start(primaryStage);
         });
+    }
 
+    public Button getWizytaButton() {
+        return wizyta;
+    }
+
+    public Button getNadchodzaceWizyty() {
+        return nadchodzaceWizyty;
+    }
+
+    public Button getHistoriaButton() {
+        return historia;
+    }
+
+    public Button getDawkowanieButton() {
+        return dawkowanie;
     }
 }
