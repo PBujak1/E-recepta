@@ -318,4 +318,46 @@ public class ServerConnection {
             System.out.println( "Brak danych" + e.getMessage());
         }
     }
+
+    public String getLekarz(String data, String imie, String nazwisko) throws IOException {
+        try {
+            Socket socket = new Socket(server, port);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+            switch (data) {
+                case "getEmailLekarza":
+                    out.println(data);
+                    out.println(imie);
+                    out.println(nazwisko);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getPZWekarza":
+                    out.println(data);
+                    out.println(imie);
+                    out.println(nazwisko);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getTelefonLekarza":
+                    out.println(data);
+                    out.println(imie);
+                    out.println(nazwisko);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+
+                default:
+                    response = "Valid request!";
+                    System.out.println(response);
+            }
+        } catch (IOException e) {
+            System.out.println( "Brak danych" + e.getMessage());
+        }
+        return response;
+    }
 }

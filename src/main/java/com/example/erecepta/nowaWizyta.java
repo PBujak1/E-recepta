@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class nowaWizyta {
@@ -104,12 +105,24 @@ public class nowaWizyta {
             Akcje
          */
         acceptBtn.setOnAction(event -> {
-            String imieNaziwsko = searchField.getText();
-            if (imieNaziwsko.isEmpty()) {
-                new Alert(Alert.AlertType.INFORMATION, "Proszę wpisać szukanego lekarza!").showAndWait();
-            } else {
+            String imieNazwisko = searchField.getText().trim();
+            String[] czesci = imieNazwisko.split("\\s+");
 
+            if (czesci.length >= 2) {
+                String imie = czesci[0];
+                String nazwisko = czesci[1];
+                try {
+                    ServerConnection serverConnection = new ServerConnection(imie, nazwisko);
+                    String nrPZW = serverConnection.getLekarz("getPZW", imie, nazwisko);
+                    String email = serverConnection.getLekarz("getEmailLekarza", imie, nazwisko);
+                    String telefon = serverConnection.getLekarz("getTelefonLekarza", imie, nazwisko);
+                } catch (IOException e){
+                    throw new RuntimeException(e);
+                }
+            } else {
+                new Alert(Alert.AlertType.INFORMATION, "Wprowadzono błędne dane").showAndWait();
             }
+
         });
 
         /*
