@@ -99,69 +99,74 @@ public class logika extends Application {
                         break;
                     case 2:
                         try {
-                            imie = serverConnection.getPacjent("getImieLekarz", PESEL);
-                            nazwisko = serverConnection.getPacjent("getNazwiskoLekarz", PESEL);
-                            String IDLekarza = serverConnection.getPacjent("getIDLekarza", PESEL);
-                            String recepta  = serverConnection.getPacjent("getRecepta", IDLekarza);
-                            String historia = serverConnection.getPacjent("getHistoria", IDLekarza);
-                            String adres1 = serverConnection.getPacjent("getAdresLekarz", PESEL);
-                            String telefon1 = serverConnection.getPacjent("getTelefonLekarz", PESEL);
-                            String email1 = serverConnection.getPacjent("getEmailLekarz", PESEL);
-                            String wiek1 = serverConnection.getPacjent("getWiekLekarz", PESEL);
-                            String plec1 = serverConnection.getPacjent("getPlecLekarz", PESEL);
-                            nazwaPacjenta = imie + nazwisko;
-                            mainLekPanel mainPanelLek = new mainLekPanel(PESEL, password, imie, nazwisko);
-                            mainPanelLek.start(primaryStage);
-
-                            mainPanelLek.getPomoc().setOnAction(e1 -> {
-                                        pomoc pomocPanel = new pomoc();
-                                        pomocPanel.start(primaryStage);
-
-                                        pomocPanel.getWyjdz().setOnAction(a -> {
-                                            mainPanelLek.start(primaryStage);
-                                        });
-                            });
-
-                            mainPanelLek.getUstawieniaLek().setOnAction(a->{
-                                ustawieniaLek ustawieniaLekarz = new ustawieniaLek(
-                                        imie,
-                                        nazwisko,
-                                        PESEL,
-                                        adres1,
-                                        telefon1,
-                                        email1,
-                                        wiek1,
-                                        plec1
-                                );
-                                ustawieniaLekarz.start(primaryStage);
-
-                                ustawieniaLekarz.getWyjdzBtn().setOnAction(actionEvent -> {
-                                    mainPanelLek.start(primaryStage);
-                                });
-                            });
-
-                            mainPanelLek.getMojeReceptaBtn().setOnAction(actionEvent -> {
-                               mojeRecepty mr = new mojeRecepty(recepta);
-                               mr.start(primaryStage);
-
-                               mr.getWyjdz().setOnAction(a -> {
-                                   mainPanelLek.start(primaryStage);
-                               });
-                            });
-
-                            mainPanelLek.getHistoryBtn().setOnAction(actionEvent -> {
-                                historiaPac hp = new historiaPac(historia);
-                                hp.start(primaryStage);
-
-                                hp.getWyjdz().setOnAction(a -> {
-                                    mainPanelLek.start(primaryStage);
-                                });
-                            });
-
-                            nowaRecepta.getWyjdzBtn().setOnAction(a1 -> {
+                            String result = serverConnection.getPacjent("loginLekarz", PESEL);
+                            if ("BRAK_DANYCH".equals(result)) {
+                                new Alert(Alert.AlertType.WARNING, "Błędny login lub hasło").showAndWait();
+                                return;
+                            } else {
+                                imie = serverConnection.getPacjent("getImieLekarz", PESEL);
+                                nazwisko = serverConnection.getPacjent("getNazwiskoLekarz", PESEL);
+                                String IDLekarza = serverConnection.getPacjent("getIDLekarza", PESEL);
+                                String recepta = serverConnection.getPacjent("getRecepta", IDLekarza);
+                                String historia = serverConnection.getPacjent("getHistoria", IDLekarza);
+                                String adres1 = serverConnection.getPacjent("getAdresLekarz", PESEL);
+                                String telefon1 = serverConnection.getPacjent("getTelefonLekarz", PESEL);
+                                String email1 = serverConnection.getPacjent("getEmailLekarz", PESEL);
+                                String wiek1 = serverConnection.getPacjent("getWiekLekarz", PESEL);
+                                String plec1 = serverConnection.getPacjent("getPlecLekarz", PESEL);
+                                nazwaPacjenta = imie + nazwisko;
+                                mainLekPanel mainPanelLek = new mainLekPanel(PESEL, password, imie, nazwisko);
                                 mainPanelLek.start(primaryStage);
-                            });
 
+                                mainPanelLek.getPomoc().setOnAction(e1 -> {
+                                    pomoc pomocPanel = new pomoc();
+                                    pomocPanel.start(primaryStage);
+
+                                    pomocPanel.getWyjdz().setOnAction(a -> {
+                                        mainPanelLek.start(primaryStage);
+                                    });
+                                });
+
+                                mainPanelLek.getUstawieniaLek().setOnAction(a -> {
+                                    ustawieniaLek ustawieniaLekarz = new ustawieniaLek(
+                                            imie,
+                                            nazwisko,
+                                            PESEL,
+                                            adres1,
+                                            telefon1,
+                                            email1,
+                                            wiek1,
+                                            plec1
+                                    );
+                                    ustawieniaLekarz.start(primaryStage);
+
+                                    ustawieniaLekarz.getWyjdzBtn().setOnAction(actionEvent -> {
+                                        mainPanelLek.start(primaryStage);
+                                    });
+                                });
+
+                                mainPanelLek.getMojeReceptaBtn().setOnAction(actionEvent -> {
+                                    mojeRecepty mr = new mojeRecepty(recepta);
+                                    mr.start(primaryStage);
+
+                                    mr.getWyjdz().setOnAction(a -> {
+                                        mainPanelLek.start(primaryStage);
+                                    });
+                                });
+
+                                mainPanelLek.getHistoryBtn().setOnAction(actionEvent -> {
+                                    historiaPac hp = new historiaPac(historia);
+                                    hp.start(primaryStage);
+
+                                    hp.getWyjdz().setOnAction(a -> {
+                                        mainPanelLek.start(primaryStage);
+                                    });
+                                });
+
+                                nowaRecepta.getWyjdzBtn().setOnAction(a1 -> {
+                                    mainPanelLek.start(primaryStage);
+                                });
+                            }
                         } catch (IOException ex) {
                             throw new RuntimeException(ex);
                         }

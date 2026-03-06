@@ -43,6 +43,21 @@ public class ServerConnection {
                     String nazwisko = in.readLine();
 
                     return imie + " " + nazwisko;
+                case "loginLekarz":
+                    out.println("loginLekarz");
+                    out.println(PESEL);
+                    out.println(haslo);
+
+                    response = in.readLine();
+
+                    if ("BRAK_DANYCH".equals(response)) {
+                        return "BRAK_DANYCH";
+                    }
+
+                    imie = response;
+                    nazwisko = in.readLine();
+
+                    return imie + " " + nazwisko;
                 case "getImiePacjent":
                     out.println(data);
                     out.println(PESEL);
