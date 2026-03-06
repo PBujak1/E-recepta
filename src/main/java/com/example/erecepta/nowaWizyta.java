@@ -28,7 +28,7 @@ public class nowaWizyta {
     private TextField searchField = new TextField();
 
     private Button testButton = new Button("Test");
-    private Button exitButton = new Button("Exit");
+    private Button exitButton = new Button("Exita");
 
     public void start(Stage primaryStage){
         VBox root = new VBox();
