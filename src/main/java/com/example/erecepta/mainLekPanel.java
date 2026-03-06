@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class mainLekPanel {
 
@@ -55,8 +56,8 @@ public class mainLekPanel {
     //Zmienne prawej kolumny
     private Label alergieTitle = new Label("ALERGIE PACJENTA:");
     private String alergia1;
-    private Label historiaTitle = new Label("Najbliższe E-wizyty:");
-    private Button zobaczWszystko = new Button("Zobacz Wszystko");
+    private final Label historiaTitle = new Label("Najbliższe E-wizyty:");
+    private final Button zobaczWszystko = new Button("Zobacz Wszystko");
     private String historiaPacString;
 
     mainLekPanel(String login, String password, String imie, String nazwisko) {
@@ -81,7 +82,6 @@ public class mainLekPanel {
         nowaRecepta.setMaxWidth(Double.MAX_VALUE);
         historia.setMaxWidth(Double.MAX_VALUE);
         mojeRecepty.setMaxWidth(Double.MAX_VALUE);
-        ;
         ustawienia.setMaxWidth(Double.MAX_VALUE);
         pomoc.setMaxWidth(Double.MAX_VALUE);
         wyloguj.setMaxWidth(Double.MAX_VALUE);
@@ -123,7 +123,7 @@ public class mainLekPanel {
         );
 
         Image searchImage = new Image(
-                getClass().getResourceAsStream("/icons/search.png")
+                Objects.requireNonNull(getClass().getResourceAsStream("/icons/search.png"))
         );
 
         ImageView searchIcon = new ImageView(searchImage);

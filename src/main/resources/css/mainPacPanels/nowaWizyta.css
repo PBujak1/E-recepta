@@ -47,6 +47,10 @@
     -fx-background-color: #3498DB;
 }
 
+/*
+    Panel centralny
+ */
+
 .selection, .lekarz{
     -fx-background-color: #2C3E50;
     -fx-alignment: center;
@@ -81,6 +85,14 @@
     -fx-fill: white;
     -fx-glyph-size: 30px;
 }
+
+.dane-lekarza {
+    -fx-pref-height: 150;
+}
+
+/*
+    Panel dolny
+ */
 
 .exit-btn {
     -fx-background-color: #C0392B;
