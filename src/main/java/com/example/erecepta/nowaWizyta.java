@@ -75,11 +75,8 @@ public class nowaWizyta {
         lekarz.setAlignment(Pos.CENTER_LEFT);
         VBox daneLekarza = new VBox(10);
         daneLekarza.setAlignment(Pos.CENTER_LEFT);
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
         lekarz.getChildren().addAll(
                 iconUser,
-                spacer,
                 daneLekarza
         );
         lekarz.getStyleClass().add("lekarz");
@@ -113,9 +110,15 @@ public class nowaWizyta {
                 String nazwisko = czesci[1];
                 try {
                     ServerConnection serverConnection = new ServerConnection(imie, nazwisko);
-                    String nrPZW = serverConnection.getLekarz("getPZW", imie, nazwisko);
+                    String nrPZW = serverConnection.getLekarz("getPZWLekarza", imie, nazwisko);
                     String email = serverConnection.getLekarz("getEmailLekarza", imie, nazwisko);
                     String telefon = serverConnection.getLekarz("getTelefonLekarza", imie, nazwisko);
+                    daneLekarza.getChildren().addAll(
+                            new Label(imieNazwisko),
+                            new Label(nrPZW),
+                            new Label(email),
+                            new Label(telefon)
+                    );
                 } catch (IOException e){
                     throw new RuntimeException(e);
                 }

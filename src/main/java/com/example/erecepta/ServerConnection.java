@@ -334,7 +334,7 @@ public class ServerConnection {
                     response = in.readLine();
                     System.out.println(response);
                     return response;
-                case "getPZWekarza":
+                case "getPZWLekarza":
                     out.println(data);
                     out.println(imie);
                     out.println(nazwisko);

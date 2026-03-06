@@ -89,6 +89,9 @@
 .dane-lekarza {
     -fx-pref-height: 150;
 }
+.dane-lekarza .label{
+    -fx-text-fill: white;
+}
 
 /*
     Panel dolny
