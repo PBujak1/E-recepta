@@ -20,7 +20,7 @@ public class mainPacPanel {
     String password;
     String nazwa;
 
-    private Label warningTestLabel1 = new Label("Recepta 1 kończy się za 2 dni!");
+    private Label warningTestLabel1 = new Label("Recepta 1 kończy się za 2 dni!"  );
     private Label warningTestLabel2 = new Label("Recepta 2 kończy się za 4 dni!");
     private Label notificationLabel1 = new Label("Otrzymano nową ereceptę!");
     private Label notificationLabel2 = new Label("Otrzymano nową ereceptę!");
@@ -31,7 +31,7 @@ public class mainPacPanel {
     private Button nadchodzaceWizyty = new Button("Nadchodzace wizyty");
     private Button dawkowanie = new Button("Dawkowanie");
 
-    private final Button wyloguj = new Button("Wyloguj");
+    private final Button wyloguj = new Button("Wyloguj") ;
 
     mainPacPanel(String login, String password, String nazwa) {
         this.login = login;
@@ -41,7 +41,8 @@ public class mainPacPanel {
 
     public void start(Stage primaryStage){
 
-        VBox root = new VBox(1);
+        VBox boczek = new VBox();
+        HBox root = new HBox(1);
         root.getStyleClass().add("main-panel");
 
         Label[] warningLabel = new Label[]{
@@ -267,12 +268,15 @@ public class mainPacPanel {
         /*
            SCENA
         */
-        root.setAlignment(Pos.TOP_CENTER);
-        root.getChildren().addAll(
+        boczek.setAlignment(Pos.TOP_CENTER);
+        boczek.getChildren().addAll(
                 nameBox, new Separator(),
-                receptyScrollPane, new Separator(),
                 mainButtonBox, new Separator(),
                 wylogujBox
+        );
+        root.getChildren().addAll(
+                boczek, new Separator(),
+                receptyScrollPane
         );
         Scene scene = new Scene(root, 1300, 780); //1300, 780
         scene.getStylesheets().add(
