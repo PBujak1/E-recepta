@@ -67,7 +67,7 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.selection .toggle-button {
+.selection .radio-button {
     -fx-background-color: #212F3D;
     -fx-background-radius: 15;
     -fx-font-size: 15;
@@ -75,7 +75,18 @@
     -fx-min-height: 50px;
 }
 
-.selection .toggle-button:selected {
+.selection .radio-button .radio,
+.selection .radio-button .radio .dot {
+    -fx-background-color: transparent;
+    -fx-background-image: null;
+    -fx-padding: 0;
+    -fx-shape: "";
+    -fx-min-width: 0;
+    -fx-pref-width: 0;
+    -fx-max-width: 0;
+}
+
+.selection .radio-button:selected {
     -fx-background-color: black;
     -fx-background-radius: 15;
     -fx-text-fill: white;

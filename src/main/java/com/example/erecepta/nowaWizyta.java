@@ -2,17 +2,16 @@ package com.example.erecepta;
 
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Objects;
 
 public class nowaWizyta {
@@ -26,9 +25,13 @@ public class nowaWizyta {
 
     //Pod top panel
     private final FontAwesomeIconView iconUser = new FontAwesomeIconView(FontAwesomeIcon.USER_CIRCLE);
-    private final ToggleButton stacjonarnieBtn = new ToggleButton("Stacjonarnie");
-    private final ToggleButton Eporada = new ToggleButton("E-porada");
+    private final FontAwesomeIconView calendarIcon = new FontAwesomeIconView(FontAwesomeIcon.CALENDAR);
+    private final RadioButton stacjonarnieBtn = new RadioButton("Stacjonarnie");
+    private final RadioButton Eporada = new RadioButton("E-porada");
     private final Label rodzajString = new Label("Rodzaj wizyty");
+
+    //szuaknie terminu
+    private final Calendar calendar = Calendar.getInstance();
 
     //Guziczki
     private final Button exitButton = new Button("Wyjście");
@@ -63,10 +66,18 @@ public class nowaWizyta {
         Eporada.setToggleGroup(toggleGroup);
         stacjonarnieBtn.setMaxWidth(Double.MAX_VALUE);
         Eporada.setMaxWidth(Double.MAX_VALUE);
+        stacjonarnieBtn.setAlignment(Pos.CENTER); // Wyśrodkowanie tekstu wewnątrz
+        Eporada.setAlignment(Pos.CENTER);
         HBox.setHgrow(stacjonarnieBtn, Priority.ALWAYS);
         HBox.setHgrow(Eporada, Priority.ALWAYS);
         selection.getChildren().addAll(stacjonarnieBtn, Eporada);
         selectionBox.getChildren().addAll(rodzajString, selection);
+
+        /*
+            Sprawdzenie dostępnych lekarzy
+         */
+        HBox termin = new HBox(15);
+        termin.setAlignment(Pos.CENTER);
 
         /*
             Utworzenie panelu lekarza po jego wcześniejszym wyszukaniu
@@ -86,6 +97,7 @@ public class nowaWizyta {
                 topBox, new Separator(),
                 selectionBox, new Separator(),
                 lekarz, new Separator(),
+                calendarIcon,
                 exitButton
         );
 
@@ -110,6 +122,7 @@ public class nowaWizyta {
                 String nazwisko = czesci[1];
                 try {
                     ServerConnection serverConnection = new ServerConnection(imie, nazwisko);
+                    iconUser.setVisible(true);
                     String nrPZW = serverConnection.getLekarz("getPZWLekarza", imie, nazwisko);
                     String email = serverConnection.getLekarz("getEmailLekarza", imie, nazwisko);
                     String telefon = serverConnection.getLekarz("getTelefonLekarza", imie, nazwisko);
@@ -132,6 +145,7 @@ public class nowaWizyta {
             Ustawienie wyglądu ikon
          */
         iconUser.setGlyphSize(60);
+        iconUser.setVisible(false);
         iconUser.setStyleClass("my-user-icon");
         searchIcon.setGlyphSize(30);
         searchIcon.setStyleClass("my-search-icon");
