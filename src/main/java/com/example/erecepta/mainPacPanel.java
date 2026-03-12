@@ -20,7 +20,7 @@ public class mainPacPanel {
     String password;
     String nazwa;
 
-    private Label warningTestLabel1 = new Label("Recepta 1 kończy się za 2 dni!"  );
+    private Label warningTestLabel1 = new Label("Recepta 1 kończy się za 2 dni!");
     private Label warningTestLabel2 = new Label("Recepta 2 kończy się za 4 dni!");
     private Label notificationLabel1 = new Label("Otrzymano nową ereceptę!");
     private Label notificationLabel2 = new Label("Otrzymano nową ereceptę!");
