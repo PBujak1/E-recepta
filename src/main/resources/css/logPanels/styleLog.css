@@ -48,11 +48,6 @@
     -fx-border-color: transparent;
 }
 
-.text-field:focused, .password-field:focused {
-    -fx-border-color: #2980B9;
-    -fx-border-width: 2;
-}
-
 .grid-pane .button {
     -fx-background-color: #2980B9;
     -fx-text-fill: white;

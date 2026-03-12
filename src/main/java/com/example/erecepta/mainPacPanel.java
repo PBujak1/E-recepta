@@ -42,6 +42,7 @@ public class mainPacPanel {
     public void start(Stage primaryStage){
 
         VBox boczek = new VBox();
+        HBox.setHgrow(boczek, Priority.ALWAYS);
         HBox root = new HBox(1);
         root.getStyleClass().add("main-panel");
 
@@ -137,6 +138,7 @@ public class mainPacPanel {
         //Dodanie ładnego przycisksu nowej recepty
 
         VBox nowaReceptaBox = new VBox(10);
+        VBox.setVgrow(nowaReceptaBox, Priority.ALWAYS);
         for (int i = 0; i < notificationLabel.length; i++) {
             HBox nowaReceptaView = new HBox(10);
             nowaReceptaView.setMaxWidth(Double.MAX_VALUE);
@@ -156,7 +158,8 @@ public class mainPacPanel {
         }
 
         VBox receptyBox = new VBox(20);
-        receptyBox.setAlignment(Pos.CENTER_LEFT);
+        receptyBox.setAlignment(Pos.CENTER);
+        VBox.setVgrow(receptyBox, Priority.ALWAYS);
         receptyBox.getStyleClass().add("receptyBox");
         receptyBox.getChildren().addAll(
                 warningsBox,new Separator(),
@@ -164,15 +167,17 @@ public class mainPacPanel {
         );
 
         ScrollPane receptyScrollPane = new ScrollPane(receptyBox);
+        VBox.setVgrow(receptyScrollPane, Priority.ALWAYS);
         receptyScrollPane.setFitToWidth(true);
-        receptyScrollPane.setPrefHeight(300);
-        receptyScrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        receptyScrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        receptyScrollPane.setFitToHeight(true);
+        receptyScrollPane.getStyleClass().add("receptyScrollPane");
+
 
         //Dodanie środkowego panelu z guziczkami
         VBox mainButtonBox = new VBox();
+        VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
         mainButtonBox.getStyleClass().add("mainButtonBox");
-        mainButtonBox.setAlignment(Pos.TOP_CENTER);
+        mainButtonBox.setAlignment(Pos.BOTTOM_CENTER);
 
         Image calendarImage = new Image(
                 getClass().getResourceAsStream("/icons/calendar.png")
@@ -262,7 +267,7 @@ public class mainPacPanel {
         );
 
         HBox wylogujBox = new HBox();
-        wylogujBox.setAlignment(Pos.CENTER_RIGHT);
+        wylogujBox.setAlignment(Pos.BOTTOM_LEFT);
         wylogujBox.getStyleClass().add("wylogujBox");
         wylogujBox.getChildren().add(wyloguj);
         /*

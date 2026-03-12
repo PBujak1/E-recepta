@@ -99,7 +99,7 @@
     -fx-background-color: #2C3E50;
     -fx-padding: 20;
     -fx-border-insets: 20;
-    -fx-pref-height: 200;
+    -fx-pref-height: 100;
     -fx-background-radius: 15;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
@@ -119,4 +119,17 @@
     -fx-background-radius: 5;
     -fx-pref-height: 10px;
     -fx-pref-width: 300;
+}
+
+.receptyScrollPane {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.receptyScrollPane .viewport {
+    -fx-background-color: transparent;
+}
+
+.receptyScrollPane .content {
+    -fx-background-color: transparent;
 }
