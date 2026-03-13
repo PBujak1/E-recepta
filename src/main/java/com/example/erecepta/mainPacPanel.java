@@ -1,5 +1,7 @@
 package com.example.erecepta;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -8,7 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import org.controlsfx.glyphfont.FontAwesome;
 
 import java.io.IOException;
 
@@ -20,16 +24,19 @@ public class mainPacPanel {
     String password;
     String nazwa;
 
+    private final FontAwesomeIconView profileIcon = new FontAwesomeIconView(FontAwesomeIcon.USER_CIRCLE);
+    private final FontAwesomeIconView belloIcon = new FontAwesomeIconView(FontAwesomeIcon.BELL);
+
     private Label warningTestLabel1 = new Label("Recepta 1 kończy się za 2 dni!");
     private Label warningTestLabel2 = new Label("Recepta 2 kończy się za 4 dni!");
     private Label notificationLabel1 = new Label("Otrzymano nową ereceptę!");
     private Label notificationLabel2 = new Label("Otrzymano nową ereceptę!");
 
     //Guziki z panelem z guziczkami
-    private Button wizyta = new Button("Prośba o E-receptę");
-    private Button historia = new Button("Historia wizyt");
-    private Button nadchodzaceWizyty = new Button("Nadchodzace wizyty");
-    private Button dawkowanie = new Button("Dawkowanie");
+    private final Button wizyta = new Button("Prośba o E-receptę");
+    private final Button historia = new Button("Historia wizyt");
+    private final Button nadchodzaceWizyty = new Button("Nadchodzace wizyty");
+    private final Button dawkowanie = new Button("Dawkowanie");
 
     private final Button wyloguj = new Button("Wyloguj") ;
 
@@ -61,28 +68,10 @@ public class mainPacPanel {
         Panel górny który zawiera ikonki, powiadomienia oraz nazwę profilu użytkownika
          */
         Region spacer = new Region();
-        Image profileImage = new Image(
-                getClass().getResourceAsStream("/icons/profile.png")
-        );
-
-        ImageView profileIcon = new ImageView(profileImage);
-        profileIcon.setFitWidth(50);
-        profileIcon.setFitHeight(50);
-        profileIcon.setPreserveRatio(true);
-
         HBox nameBox = new HBox(20);
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
         if (notificationLabel.length > 0) {
-            Image notificationImage = new Image(
-                    getClass().getResourceAsStream("/icons/notification-bell-active.png")
-            );
-
-            ImageView notificationIcon = new ImageView(notificationImage);
-            notificationIcon.setFitWidth(50);
-            notificationIcon.setFitHeight(50);
-            notificationIcon.setPreserveRatio(true);
-
             Label imieNazwisko = new Label(nazwa);
 
             nameBox.setAlignment(Pos.CENTER_LEFT);
@@ -91,7 +80,7 @@ public class mainPacPanel {
                     profileIcon,
                     imieNazwisko,
                     spacer,
-                    notificationIcon
+                    belloIcon
             );
         } else {
             Image notificationImage = new Image(
@@ -119,19 +108,14 @@ public class mainPacPanel {
         Kolejny panel górny który zawiera powiadomienia oraz przycisk do wypisywania e-recepty
          */
         VBox warningsBox = new VBox(10);
-        for (int i = 0; i < warningLabel.length; i++) {
+        for (int i = 1; i < warningLabel.length ; i++) {
             HBox warningBox = new HBox(10);
             warningBox.setAlignment(Pos.CENTER_LEFT);
             warningBox.getStyleClass().add("warningBox");
-            Image alertImage = new Image(
-                    getClass().getResourceAsStream("/icons/alert.png")
-            );
-
-            ImageView alertIcon = new ImageView(alertImage);
-            alertIcon.setFitWidth(15);
-            alertIcon.setFitHeight(15);
-            alertIcon.setPreserveRatio(true);
-            warningBox.getChildren().addAll(alertIcon, warningLabel[i]);
+            FontAwesomeIconView warningIcon = new FontAwesomeIconView(FontAwesomeIcon.WARNING);
+            warningIcon.setFill(Color.ORANGE);
+            warningIcon.getStyleClass().add("warningIcon");
+            warningBox.getChildren().addAll(warningIcon, warningLabel[i]);
             warningsBox.getChildren().add(warningBox);
         }
 
@@ -291,6 +275,11 @@ public class mainPacPanel {
         primaryStage.setTitle("E-Recepta");
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        profileIcon.getStyleClass().add("profileIcon");
+        profileIcon.setGlyphSize(60);
+        belloIcon.getStyleClass().add("belloIcon");
+        belloIcon.setGlyphSize(60);
 
         wyloguj.setOnAction(e -> {
             logika mainPane = new logika();

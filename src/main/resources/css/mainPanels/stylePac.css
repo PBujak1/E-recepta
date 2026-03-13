@@ -121,15 +121,11 @@
     -fx-pref-width: 300;
 }
 
-.receptyScrollPane {
+.receptyScrollPane, .viewport, .content {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
 }
 
-.receptyScrollPane .viewport {
-    -fx-background-color: transparent;
-}
-
-.receptyScrollPane .content {
-    -fx-background-color: transparent;
+.profileIcon, .belloIcon {
+    -fx-fill: white;
 }
