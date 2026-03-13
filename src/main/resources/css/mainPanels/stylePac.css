@@ -137,3 +137,10 @@
 .bar-chart .axis-label, .chart-legend-item {
     -fx-text-fill: white;
 }
+
+.pie-chart .chart-pie-label {
+    -fx-fill: white;
+}
+.pie-chart .chart-legend-item {
+    -fx-text-fill: white;
+}

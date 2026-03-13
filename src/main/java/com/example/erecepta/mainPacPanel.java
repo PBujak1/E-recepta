@@ -5,16 +5,15 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
+import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class mainPacPanel {
 
@@ -46,17 +45,21 @@ public class mainPacPanel {
         this.nazwa = nazwa;
     }
 
-    public void start(Stage primaryStage){
+    public void start(Stage primaryStage) throws IOException {
 
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
         HBox root = new HBox(1);
         root.getStyleClass().add("main-panel");
 
+        ServerConnection serverConnection = new ServerConnection(login, password);
+        String coś = serverConnection.getPacjent("getWizytaPacjenta", password);
+        System.out.println(coś);
         Label[] warningLabel = new Label[]{
                 warningTestLabel1,
                 warningTestLabel2,
-                warningTestLabel1
+                warningTestLabel1,
+                new Label(coś)
         };
 
         Label[] notificationLabel = new Label[]{
@@ -158,6 +161,47 @@ public class mainPacPanel {
 
 
         /*
+            Dodanie wykresu do środkowego panelu
+         */
+        VBox mainButtonBox = new VBox();
+        VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
+        HBox charts = new HBox(10);
+        Region spacer2 = new Region();
+        CategoryAxis xAxis = new CategoryAxis();
+        NumberAxis yAxis = new NumberAxis();
+        yAxis.setLabel("Ilość wizyt");
+        xAxis.setLabel("Rok");
+        BarChart barChart = new BarChart(xAxis, yAxis);
+        XYChart.Series dataSeries = new XYChart.Series();
+
+        dataSeries.getData().add(new XYChart.Data("13-12-2023", 1));
+        dataSeries.getData().add(new XYChart.Data("13-12-2024", 3));
+        dataSeries.getData().add(new XYChart.Data("13-12-2025", 5));
+        dataSeries.getData().add(new XYChart.Data("13-12-2026", 3));
+
+        barChart.getData().add(dataSeries);
+        barChart.setLegendVisible(false);
+
+        PieChart pieChart = new PieChart();
+        PieChart.Data slice1 = new PieChart.Data("Kamil Klęk", 67);
+        PieChart.Data slice2 = new PieChart.Data("Druid", 69);
+        PieChart.Data slice3 = new PieChart.Data("Zielarz", 112);
+        pieChart.setLegendVisible(false);
+
+        pieChart.getData().add(slice1);
+        pieChart.getData().add(slice2);
+        pieChart.getData().add(slice3);
+
+        barChart.getStyleClass().add("bar-chart");
+        pieChart.getStyleClass().add("pie-chart");
+        mainButtonBox.getStyleClass().add("mainButtonBox");
+        mainButtonBox.setAlignment(Pos.TOP_CENTER);
+        charts.getChildren().addAll(
+                barChart,
+                pieChart
+        );
+
+        /*
             Dodanie ikonek do głównych 4 przycisków
          */
         Image calendarImage = new Image(
@@ -240,26 +284,8 @@ public class mainPacPanel {
         GridPane.setHgrow(historia, Priority.ALWAYS);
         GridPane.setHgrow(dawkowanie, Priority.ALWAYS);
 
-        //Dodanie środkowego panelu z guziczkami
-        VBox mainButtonBox = new VBox();
-        VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
-        Region spacer2 = new Region();
-        CategoryAxis xAxis = new CategoryAxis();
-        NumberAxis yAxis = new NumberAxis();
-        BarChart barChart = new BarChart(xAxis, yAxis);
-        barChart.getStyleClass().add("bar-chart");
-        XYChart.Series dataSeries = new XYChart.Series();
-        yAxis.setLabel("Ilość wizyt");
-        xAxis.setLabel("Rok");
-        dataSeries.getData().add(new XYChart.Data("13-12-2025", 1));
-        dataSeries.getData().add(new XYChart.Data("13-12-2026", 3));
-
-        barChart.getData().add(dataSeries);
-        barChart.setLegendVisible(false);
-        mainButtonBox.getStyleClass().add("mainButtonBox");
-        mainButtonBox.setAlignment(Pos.TOP_CENTER);
         mainButtonBox.getChildren().addAll(
-                barChart,
+                charts,
                 spacer2,
                 mainButtonPanel
         );

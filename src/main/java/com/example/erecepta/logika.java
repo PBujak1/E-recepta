@@ -68,7 +68,7 @@ public class logika extends Application {
                             imie = serverConnection.getPacjent("getImiePacjent", PESEL);
                             nazwisko = serverConnection.getPacjent("getNazwiskoPacjent", PESEL);
                             nazwaPacjenta = imie + " " + nazwisko;
-                            mainPacPanel mainPanelPac = new mainPacPanel(imie, nazwisko, nazwaPacjenta);
+                            mainPacPanel mainPanelPac = new mainPacPanel(imie, PESEL, nazwaPacjenta);
                             mainPanelPac.start(primaryStage);
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
@@ -84,7 +84,11 @@ public class logika extends Application {
                                 nowaWizyta.start(primaryStage);
 
                                 nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
-                                    mainPanelPac.start(primaryStage);
+                                    try {
+                                        mainPanelPac.start(primaryStage);
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
                                 });
                             });
 
