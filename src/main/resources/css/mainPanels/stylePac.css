@@ -129,3 +129,11 @@
 .profileIcon, .belloIcon {
     -fx-fill: white;
 }
+
+.bar-chart .axis {
+    -fx-tick-label-fill: white;
+}
+
+.bar-chart .axis-label, .chart-legend-item {
+    -fx-text-fill: white;
+}
