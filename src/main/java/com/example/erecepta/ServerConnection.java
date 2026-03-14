@@ -229,6 +229,16 @@ public class ServerConnection {
                     response = responseBuilder.toString();
                     System.out.println(response);
                     return response;
+                case "getLekarzePacjenta":
+                    out.println(data);
+                    out.println(PESEL);
+                    responseBuilder = new StringBuilder();
+                    while (!(line = in.readLine()).equals("END")) {
+                        responseBuilder.append(line).append("\n");
+                    }
+                    response = responseBuilder.toString();
+                    System.out.println(response);
+                    return response;
                 default:
                     response = "Valid request!";
                     System.out.println(response);
@@ -271,7 +281,7 @@ public class ServerConnection {
         }
     }
 
-    public void getNowuLek(String data, String noweImie, String noweNazwisko, String PZW
+    public void getNowyLek(String data, String noweImie, String noweNazwisko, String PZW
             , String nowyPesel, String nowyAdres, String nowyTelefonStr, String nowyEmail, String nowyWiek, String nowaPlec) throws IOException {
         try {
             Socket socket = new Socket(server, port);

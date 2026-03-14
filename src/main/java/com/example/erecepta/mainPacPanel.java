@@ -14,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class mainPacPanel {
 
@@ -53,13 +56,15 @@ public class mainPacPanel {
         root.getStyleClass().add("main-panel");
 
         ServerConnection serverConnection = new ServerConnection(login, password);
-        String coś = serverConnection.getPacjent("getWizytaPacjenta", password);
-        System.out.println(coś);
+        String daneWizyty = serverConnection.getPacjent("getWizytaPacjenta", password);
+        String[] daty = daneWizyty.split("\n");
+        String daneLekarzy = serverConnection.getPacjent("getLekarzePacjenta", password);
+        List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarzy.split("\n")));
+
         Label[] warningLabel = new Label[]{
                 warningTestLabel1,
                 warningTestLabel2,
-                warningTestLabel1,
-                new Label(coś)
+                warningTestLabel1
         };
 
         Label[] notificationLabel = new Label[]{
@@ -174,23 +179,32 @@ public class mainPacPanel {
         BarChart barChart = new BarChart(xAxis, yAxis);
         XYChart.Series dataSeries = new XYChart.Series();
 
-        dataSeries.getData().add(new XYChart.Data("13-12-2023", 1));
-        dataSeries.getData().add(new XYChart.Data("13-12-2024", 3));
-        dataSeries.getData().add(new XYChart.Data("13-12-2025", 5));
-        dataSeries.getData().add(new XYChart.Data("13-12-2026", 3));
+        for(int i = 0; i < daty.length; i++) {
+            int BarCounter = 0;
+            for(int j = 0; j < daty.length; j++) {
+                if (daty[i].equals(daty[j])) {
+                    BarCounter++;
+                }
+            }
+            dataSeries.getData().add(new XYChart.Data<>(daty[i], BarCounter));
+        }
 
         barChart.getData().add(dataSeries);
         barChart.setLegendVisible(false);
 
         PieChart pieChart = new PieChart();
-        PieChart.Data slice1 = new PieChart.Data("Kamil Klęk", 67);
-        PieChart.Data slice2 = new PieChart.Data("Druid", 69);
-        PieChart.Data slice3 = new PieChart.Data("Zielarz", 112);
+        for (int i = 0; i < lekarze.size(); i++) {
+            int PieCounter = 1;
+            for (int j = i +1; j < lekarze.size(); j++) {
+                if (lekarze.get(i).equals(lekarze.get(j))) {
+                    PieCounter++;
+                    lekarze.remove(j);
+                }
+            }
+            PieChart.Data slice = new PieChart.Data(lekarze.get(i), PieCounter);
+            pieChart.getData().add(slice);
+        }
         pieChart.setLegendVisible(false);
-
-        pieChart.getData().add(slice1);
-        pieChart.getData().add(slice2);
-        pieChart.getData().add(slice3);
 
         barChart.getStyleClass().add("bar-chart");
         pieChart.getStyleClass().add("pie-chart");
@@ -326,7 +340,6 @@ public class mainPacPanel {
             mainPane.start(primaryStage);
         });
     }
-
     public Button getWizytaButton() {
         return wizyta;
     }

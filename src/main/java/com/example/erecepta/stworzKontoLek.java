@@ -171,7 +171,7 @@ public class stworzKontoLek {
 
             ServerConnection serverConnection = new ServerConnection(PESELString, nazwiskoString);
             try {
-                serverConnection.getNowuLek("nowyLek", noweImie, noweNazwisko, nowyPZW
+                serverConnection.getNowyLek("nowyLek", noweImie, noweNazwisko, nowyPZW
                         ,nowyPesel, nowyAdres, nowyTelefon, nowyEmail, nowyWiek, nowaPlec);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("UWAGA!");

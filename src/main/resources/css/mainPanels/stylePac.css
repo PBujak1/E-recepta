@@ -126,21 +126,20 @@
     -fx-border-color: transparent;
 }
 
-.profileIcon, .belloIcon {
+.belloIcon {
+    -fx-fill: #2980B9;
+}
+
+.profileIcon {
     -fx-fill: white;
 }
 
-.bar-chart .axis {
+.bar-chart .axis, .axis-label, .chart-legend-item {
+    -fx-text-fill: white;
     -fx-tick-label-fill: white;
 }
 
-.bar-chart .axis-label, .chart-legend-item {
-    -fx-text-fill: white;
-}
-
-.pie-chart .chart-pie-label {
+.pie-chart .chart-pie-label, .chart-legend-item {
     -fx-fill: white;
-}
-.pie-chart .chart-legend-item {
     -fx-text-fill: white;
 }
