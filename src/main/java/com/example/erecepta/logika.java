@@ -80,16 +80,19 @@ public class logika extends Application {
                             });
 
                             mainPanelPac.getWizytaButton().setOnAction(event -> {
-                                nowaWizyta nowaWizyta = new nowaWizyta();
-                                nowaWizyta.start(primaryStage);
-
-                                nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
-                                    try {
-                                        mainPanelPac.start(primaryStage);
-                                    } catch (IOException ex) {
-                                        throw new RuntimeException(ex);
-                                    }
-                                });
+                                nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
+                                try {
+                                    nowaWizyta.start(primaryStage);
+                                    nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
+                                        try {
+                                            mainPanelPac.start(primaryStage);
+                                        } catch (IOException ex) {
+                                            throw new RuntimeException(ex);
+                                        }
+                                    });
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
                             });
 
                             mainPanelPac.getNadchodzaceWizyty().setOnAction(event -> {

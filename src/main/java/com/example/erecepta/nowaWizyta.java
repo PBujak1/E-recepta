@@ -11,10 +11,13 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.Objects;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class nowaWizyta {
+    private String PESEL;
+    private String imie;
+
     //Tytuł
     private final Label titleLabel = new Label("Formularz E-wyzyty");
 
@@ -36,10 +39,19 @@ public class nowaWizyta {
     //Guziczki
     private final Button exitButton = new Button("Wyjście");
 
-    public void start(Stage primaryStage){
+    nowaWizyta(String PESEL, String imie) {
+        this.PESEL = PESEL;
+        this.imie = imie;
+    }
+
+    public void start(Stage primaryStage) throws IOException {
         VBox root = new VBox();
         root.setAlignment(Pos.TOP_CENTER);
         root.getStyleClass().add("main-panel");
+
+        ServerConnection connection = new ServerConnection(imie, PESEL);
+        String daneLekarze = connection.getPacjent("getLekarze", PESEL);
+        List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarze.split("\n")));
 
         /*
             Górny panel
@@ -52,6 +64,33 @@ public class nowaWizyta {
         HBox.setHgrow(searchField, Priority.ALWAYS);
         searchField.setPromptText("Wyszukaj lekarza");
         searchField.getStyleClass().add("search-field");
+
+        ContextMenu suggestionsMenu = new ContextMenu();
+        searchField.textProperty().addListener((obs, oldText, newText) -> {
+            if (newText.isEmpty()) {
+                suggestionsMenu.hide();
+            } else {
+                List<String> filtered = lekarze.stream().filter(name -> name.toLowerCase().contains(newText.toLowerCase()))
+                        .collect(Collectors.toList());
+                if (!filtered.isEmpty()) {
+                    // Tworzymy MenuItemy dla podpowiedzi
+                    suggestionsMenu.getItems().clear();
+                    for (String match : filtered) {
+                        MenuItem item = new MenuItem(match);
+                        item.setOnAction(e -> {
+                            searchField.setText(match);
+                            suggestionsMenu.hide();
+                        });
+                        suggestionsMenu.getItems().add(item);
+                    }
+                    if (!suggestionsMenu.isShowing()) {
+                        suggestionsMenu.show(searchField, javafx.geometry.Side.BOTTOM, 0, 0);
+                    }
+                } else {
+                    suggestionsMenu.hide();
+                }
+            }
+        });
 
         /*
             Panel do wybrania formy e-wizyty

@@ -239,6 +239,17 @@ public class ServerConnection {
                     response = responseBuilder.toString();
                     System.out.println(response);
                     return response;
+                case "getLekarze":
+                    out.println(data);
+                    responseBuilder = new StringBuilder();
+
+                    while (!(line = in.readLine()).equals("END")) {
+                        responseBuilder.append(line).append("\n");
+                    }
+
+                    response = responseBuilder.toString();
+                    System.out.println(response);
+                    return response;
                 default:
                     response = "Valid request!";
                     System.out.println(response);
