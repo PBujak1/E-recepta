@@ -177,6 +177,8 @@ public class mainPacPanel {
         yAxis.setLabel("Ilość wizyt");
         xAxis.setLabel("Rok");
         BarChart barChart = new BarChart(xAxis, yAxis);
+        HBox.setHgrow(barChart, Priority.ALWAYS);
+        VBox.setVgrow(barChart, Priority.ALWAYS);
         XYChart.Series dataSeries = new XYChart.Series();
 
         for(int i = 0; i < daty.length; i++) {
@@ -275,7 +277,7 @@ public class mainPacPanel {
         historia.setGraphicTextGap(10);
         dawkowanie.setGraphicTextGap(10);
 
-        mainButtonPanel.setAlignment(Pos.TOP_CENTER);
+        mainButtonPanel.setAlignment(Pos.BOTTOM_CENTER);
         mainButtonPanel.add(wizyta, 0, 0);
         mainButtonPanel.add(nadchodzaceWizyty, 1, 0);
         mainButtonPanel.add(historia, 0, 1);

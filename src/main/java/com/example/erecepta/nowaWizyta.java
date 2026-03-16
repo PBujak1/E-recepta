@@ -47,7 +47,7 @@ public class nowaWizyta {
     public void start(Stage primaryStage) throws IOException {
         VBox root = new VBox();
         root.setAlignment(Pos.TOP_CENTER);
-        root.getStyleClass().add("main-panel");
+
 
         ServerConnection connection = new ServerConnection(imie, PESEL);
         String daneLekarze = connection.getPacjent("getLekarze", PESEL);
@@ -58,12 +58,8 @@ public class nowaWizyta {
          */
         HBox topBox = new HBox(10);
         topBox.setAlignment(Pos.CENTER);
-        acceptBtn.getStyleClass().add("acceptBtn");
-        topBox.getStyleClass().add("top-panel");
         topBox.getChildren().addAll(searchIcon, searchField, acceptBtn);
         HBox.setHgrow(searchField, Priority.ALWAYS);
-        searchField.setPromptText("Wyszukaj lekarza");
-        searchField.getStyleClass().add("search-field");
 
         ContextMenu suggestionsMenu = new ContextMenu();
         searchField.textProperty().addListener((obs, oldText, newText) -> {
@@ -113,19 +109,15 @@ public class nowaWizyta {
         selectionBox.getChildren().addAll(rodzajString, selection);
 
         /*
-            Sprawdzenie dostępnych lekarzy
-         */
-        HBox termin = new HBox(15);
-        termin.setAlignment(Pos.CENTER);
-
-        /*
             Utworzenie panelu lekarza po jego wcześniejszym wyszukaniu
          */
         HBox lekarz = new HBox(10);
         lekarz.setAlignment(Pos.CENTER_LEFT);
         VBox daneLekarza = new VBox(10);
         daneLekarza.setAlignment(Pos.CENTER_LEFT);
+        DatePicker datePicker = new DatePicker();
         lekarz.getChildren().addAll(
+                calendarIcon, datePicker,
                 iconUser,
                 daneLekarza
         );
@@ -136,7 +128,6 @@ public class nowaWizyta {
                 topBox, new Separator(),
                 selectionBox, new Separator(),
                 lekarz, new Separator(),
-                calendarIcon,
                 exitButton
         );
 
@@ -183,6 +174,11 @@ public class nowaWizyta {
         /*
             Ustawienie wyglądu ikon
          */
+        root.getStyleClass().add("main-panel");
+        searchField.setPromptText("Wyszukaj lekarza");
+        searchField.getStyleClass().add("search-field");
+        acceptBtn.getStyleClass().add("acceptBtn");
+        topBox.getStyleClass().add("top-panel");
         iconUser.setGlyphSize(60);
         iconUser.setVisible(false);
         iconUser.setStyleClass("my-user-icon");
@@ -191,6 +187,9 @@ public class nowaWizyta {
         exitButton.getStyleClass().add("exit-btn");
         titleLabel.getStyleClass().add("title-label");
         daneLekarza.getStyleClass().add("dane-lekarza");
+        datePicker.getStyleClass().add("date-picker");
+        calendarIcon.getStyleClass().add("calendar-icon");
+        calendarIcon.setGlyphSize(60);
     }
 
     public Button getWyjdzButton() {
