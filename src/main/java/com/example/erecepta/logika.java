@@ -108,8 +108,8 @@ public class logika extends Application {
                     case 2:
                         try {
                             String result = serverConnection.getPacjent("loginLekarz", PESEL);
-                            if ("BRAK_DANYCH".equals(result)) {
-                                new Alert(Alert.AlertType.WARNING, "Błędny login lub hasło").showAndWait();
+                            if ("Brak danych".equals(result)) {
+                                new Alert(Alert.AlertType.INFORMATION, "Brak połączenia").showAndWait();
                                 return;
                             } else {
                                 imie = serverConnection.getPacjent("getImieLekarz", PESEL);

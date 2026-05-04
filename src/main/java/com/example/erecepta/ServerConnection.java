@@ -36,7 +36,7 @@ public class ServerConnection {
                     String response = in.readLine();
 
                     if ("BRAK_DANYCH".equals(response)) {
-                        return "BRAK_DANYCH";
+                        return "Brak danych";
                     }
 
                     String imie = response;
@@ -51,7 +51,7 @@ public class ServerConnection {
                     response = in.readLine();
 
                     if ("BRAK_DANYCH".equals(response)) {
-                        return "BRAK_DANYCH";
+                        return "Brak danych";
                     }
 
                     imie = response;
@@ -240,6 +240,17 @@ public class ServerConnection {
                     System.out.println(response);
                     return response;
                 case "getLekarze":
+                    out.println(data);
+                    responseBuilder = new StringBuilder();
+
+                    while (!(line = in.readLine()).equals("END")) {
+                        responseBuilder.append(line).append("\n");
+                    }
+
+                    response = responseBuilder.toString();
+                    System.out.println(response);
+                    return response;
+                case "getLeki":
                     out.println(data);
                     responseBuilder = new StringBuilder();
 

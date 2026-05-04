@@ -13,8 +13,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class mainLekPanel {
 
@@ -24,7 +26,7 @@ public class mainLekPanel {
     String password;
 
     //Zmienne lewego panelu
-    private final Button nowaRecepta = new Button("NOWA E-RECEPTABubu");
+    private final Button nowaRecepta = new Button("NOWA E-RECEPTA");
     private final Button historia = new Button("Historia Pacjentów");
     private final Button mojeRecepty = new Button("Moje Recepty");
     private final Button ustawienia = new Button("Ustawienia");
@@ -201,6 +203,41 @@ public class mainLekPanel {
         HBox searchBox2 = new HBox(8);
         lekField.setPromptText("Wyszukaj lek...");
         searchBox2.getChildren().addAll(searchIcon2, lekField);
+
+        try {
+            ServerConnection connection = new ServerConnection(imie, password);
+            String tablicaLekow = connection.getPacjent("getLeki", password);
+            List<String> leki = new ArrayList<>(Arrays.asList(tablicaLekow.split("\n")));
+            ContextMenu suggestionsMenu = new ContextMenu();
+            lekField.textProperty().addListener((obs, oldText, newText) -> {
+                if (newText.isEmpty()) {
+                    suggestionsMenu.hide();
+                } else {
+                    List<String> filtered = leki.stream().filter(name -> name.toLowerCase().contains(newText.toLowerCase()))
+                            .collect(Collectors.toList());
+                    if (!filtered.isEmpty()) {
+                        // Tworzymy MenuItemy dla podpowiedzi
+                        suggestionsMenu.getItems().clear();
+                        for (String match : filtered) {
+                            MenuItem item = new MenuItem(match);
+                            item.setOnAction(e -> {
+                                lekField.setText(match);
+                                suggestionsMenu.hide();
+                            });
+                            suggestionsMenu.getItems().add(item);
+                        }
+                        if (!suggestionsMenu.isShowing()) {
+                            suggestionsMenu.show(lekField, javafx.geometry.Side.BOTTOM, 0, 0);
+                        }
+                    } else {
+                        suggestionsMenu.hide();
+                    }
+                }
+            });
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+
         karta.getStyleClass().add("karta");
         imieINazwiskoPacjenta.getStyleClass().add("imie-nazwisko");
         searchBox2.getStyleClass().add("search-box2");
@@ -348,6 +385,26 @@ public class mainLekPanel {
             mainPane.start(primaryStage);
         });
 
+        nowaRecepta.setOnAction(a -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
+            alert.showAndWait();
+        });
+
+        zobaczWszystko.setOnAction(a -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
+            alert.showAndWait();
+        });
+
+        dodajLekBtn.setOnAction(a -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
+            alert.showAndWait();
+        });
+
+        wypiszBtn.setOnAction(a -> {
+            Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
+            alert.showAndWait();
+        });
+
         wczytajBtn.setOnAction(e -> {
             try {
                 String PESEL = searchField.getText();
@@ -400,9 +457,17 @@ public class mainLekPanel {
 
                 dodajLekBtn.setOnAction(e1 -> {
                     String tekst = lekField.getText();
-                    MedList.add(tekst);
-                    nowyLek.getChildren().add(new Label(MedList.size() + ". " + tekst + " (1 Op.)"));
-                    lekField.clear();
+                    if (!lekField.getText().isEmpty()) {
+                        MedList.add(tekst);
+                        nowyLek.getChildren().add(new Label(MedList.size() + ". " + tekst + " (1 Op.)"));
+                        lekField.clear();
+                    } else {
+                        Alert alert = new Alert(Alert.AlertType.WARNING);
+                        alert.setTitle("Błąd danych");
+                        alert.setHeaderText(null);
+                        alert.setContentText("Pole leku nie może być puste!");
+                        alert.showAndWait();
+                    }
                 });
 
                 wypiszBtn.setOnAction(e2 -> {
@@ -418,14 +483,12 @@ public class mainLekPanel {
                     alert.setHeaderText(null);
                     alert.setContentText("Dodano Lek!");
                     alert.showAndWait();
-
                     searchField.setText("");
                 });
             } catch (IOException ex) {
                 throw new RuntimeException(ex);
             }
         });
-
     }
     public Button getHistoryBtn() {return historia;}
 
