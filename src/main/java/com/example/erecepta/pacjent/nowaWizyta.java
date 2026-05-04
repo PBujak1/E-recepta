@@ -24,8 +24,10 @@ public class nowaWizyta {
 
     //Top panel
     private final FontAwesomeIconView searchIcon = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
-    private final TextField searchField = new TextField();
-    private final Button acceptBtn = new Button("Wybierz");
+    private final TextField searchField1 = new TextField();
+    private final TextField searchField2 = new TextField();
+    private final Button acceptBtn1 = new Button("Wybierz");
+    private final Button acceptBtn2 = new Button("Wybierz");
 
     //Pod top panel
     private final FontAwesomeIconView iconUser = new FontAwesomeIconView(FontAwesomeIcon.USER_CIRCLE);
@@ -33,7 +35,8 @@ public class nowaWizyta {
     private final RadioButton stacjonarnieBtn = new RadioButton("Stacjonarnie");
     private final RadioButton Eporada = new RadioButton("E-porada");
     private final Label rodzajString = new Label("Rodzaj wizyty");
-    private Button accpetDateBtn = new Button("Akceptuj");
+    private final Button accpetDateBtn = new Button("Akceptuj");
+    private final Label specjalnoscLabel = new Label("Specjalność");
 
     //szuaknie terminu
     private final Calendar calendar = Calendar.getInstance();
@@ -47,7 +50,7 @@ public class nowaWizyta {
     }
 
     public void start(Stage primaryStage) throws IOException {
-        VBox root = new VBox();
+        VBox root = new VBox(10);
         root.setAlignment(Pos.TOP_CENTER);
 
 
@@ -56,39 +59,21 @@ public class nowaWizyta {
         List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarze.split("\n")));
 
         /*
-            Górny panel
+            Wyszukiwania
          */
-        HBox topBox = new HBox(10);
-        topBox.setAlignment(Pos.CENTER);
-        topBox.getChildren().addAll(searchIcon, searchField, acceptBtn);
-        HBox.setHgrow(searchField, Priority.ALWAYS);
+        HBox searchBox1 = new HBox(10);
+        searchBox1.setAlignment(Pos.CENTER);
+        searchBox1.getChildren().addAll(searchIcon, searchField1, acceptBtn1);
+        HBox.setHgrow(searchField1, Priority.ALWAYS);
 
-        ContextMenu suggestionsMenu = new ContextMenu();
-        searchField.textProperty().addListener((obs, oldText, newText) -> {
-            if (newText.isEmpty()) {
-                suggestionsMenu.hide();
-            } else {
-                List<String> filtered = lekarze.stream().filter(name -> name.toLowerCase().contains(newText.toLowerCase()))
-                        .collect(Collectors.toList());
-                if (!filtered.isEmpty()) {
-                    // Tworzymy MenuItemy dla podpowiedzi
-                    suggestionsMenu.getItems().clear();
-                    for (String match : filtered) {
-                        MenuItem item = new MenuItem(match);
-                        item.setOnAction(e -> {
-                            searchField.setText(match);
-                            suggestionsMenu.hide();
-                        });
-                        suggestionsMenu.getItems().add(item);
-                    }
-                    if (!suggestionsMenu.isShowing()) {
-                        suggestionsMenu.show(searchField, javafx.geometry.Side.BOTTOM, 0, 0);
-                    }
-                } else {
-                    suggestionsMenu.hide();
-                }
-            }
-        });
+        suggestrions(lekarze, searchField1);
+
+        HBox searchBox2 = new HBox(10);
+        searchBox2.setAlignment(Pos.CENTER);
+        searchBox2.getChildren().addAll(searchIcon, searchField2, acceptBtn2);
+        HBox.setHgrow(searchField1, Priority.ALWAYS);
+
+        suggestrions(lekarze, searchField1);
 
         /*
             Panel do wybrania formy e-wizyty
@@ -116,40 +101,46 @@ public class nowaWizyta {
         HBox lekarz = new HBox(10);
         lekarz.setAlignment(Pos.CENTER_LEFT);
 
-        VBox daneLekarza = new VBox(10);
-        daneLekarza.setAlignment(Pos.CENTER_LEFT);
         VBox date = new VBox(10);
-        date.setAlignment(Pos.CENTER_LEFT);
+        date.setAlignment(Pos.TOP_CENTER);
         DatePicker datePicker = new DatePicker();
         datePicker.setPromptText("Data wizyty");
         datePicker.setPrefWidth(300);
         datePicker.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(datePicker, Priority.ALWAYS);
-        date.getChildren().addAll(datePicker, accpetDateBtn);
+        date.getChildren().addAll(
+                datePicker,
+                accpetDateBtn, new Separator(),
+                specjalnoscLabel, searchBox2
+        );
 
         HBox innerBoxDate = new HBox(30);
-        innerBoxDate.setAlignment(Pos.CENTER);
+        innerBoxDate.setAlignment(Pos.TOP_CENTER);
         innerBoxDate.getChildren().addAll(calendarIcon, date);
 
+        VBox innerBox = new VBox(10);
+        innerBox.setAlignment(Pos.TOP_CENTER);
+        VBox daneLekarza = new VBox(10);
+        daneLekarza.setAlignment(Pos.CENTER_LEFT);
         HBox innerBoxLekarz = new HBox(10);
-        innerBoxLekarz.setAlignment(Pos.CENTER);
+        innerBoxLekarz.setAlignment(Pos.CENTER_LEFT);
         innerBoxLekarz.getChildren().addAll(iconUser, daneLekarza);
+        innerBox.getChildren().addAll(searchBox1, new Separator(),innerBoxLekarz);
 
         lekarz.getChildren().addAll(
                 innerBoxDate,
-                innerBoxLekarz
+                innerBox
         );
         innerBoxDate.setMaxWidth(500);
-        innerBoxLekarz.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(innerBoxLekarz, Priority.ALWAYS);
+        innerBox.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(innerBox, Priority.ALWAYS);
         HBox.setHgrow(innerBoxDate, Priority.ALWAYS);
         lekarz.getStyleClass().add("lekarz");
         innerBoxDate.getStyleClass().add("inner-box-date");
-        innerBoxLekarz.getStyleClass().add("inner-box-lekarz");
+        innerBox.getStyleClass().add("inner-box-lekarz");
 
         root.getChildren().addAll(
                 titleLabel,
-                topBox, new Separator(),
                 selectionBox, new Separator(),
                 lekarz, new Separator(),
                 exitButton
@@ -167,8 +158,8 @@ public class nowaWizyta {
         /*
             Akcje
          */
-        acceptBtn.setOnAction(event -> {
-            String imieNazwisko = searchField.getText().trim();
+        acceptBtn1.setOnAction(event -> {
+            String imieNazwisko = searchField1.getText().trim();
             String[] czesci = imieNazwisko.split("\\s+");
 
             if (czesci.length >= 2) {
@@ -199,10 +190,10 @@ public class nowaWizyta {
             Ustawienie wyglądu ikon
          */
         root.getStyleClass().add("main-panel");
-        searchField.setPromptText("Wyszukaj lekarza");
-        searchField.getStyleClass().add("search-field");
-        acceptBtn.getStyleClass().add("acceptBtn");
-        topBox.getStyleClass().add("top-panel");
+        searchField1.setPromptText("Wyszukaj lekarza");
+        searchField1.getStyleClass().add("search-field");
+        acceptBtn1.getStyleClass().add("acceptBtn");
+        searchBox1.getStyleClass().add("top-panel");
         iconUser.setGlyphSize(60);
         iconUser.setVisible(true);
         iconUser.setStyleClass("my-user-icon");
@@ -216,11 +207,40 @@ public class nowaWizyta {
         calendarIcon.setGlyphSize(60);
     }
 
+    public static void suggestrions(List<String> lekarze, TextField searchField) {
+        ContextMenu suggestionsMenu = new ContextMenu();
+        searchField.textProperty().addListener((obs, oldText, newText) -> {
+            if (newText.isEmpty()) {
+                suggestionsMenu.hide();
+            } else {
+                List<String> filtered = lekarze.stream().filter(name -> name.toLowerCase().contains(newText.toLowerCase()))
+                        .collect(Collectors.toList());
+                if (!filtered.isEmpty()) {
+                    // Tworzymy MenuItemy dla podpowiedzi
+                    suggestionsMenu.getItems().clear();
+                    for (String match : filtered) {
+                        MenuItem item = new MenuItem(match);
+                        item.setOnAction(e -> {
+                            searchField.setText(match);
+                            suggestionsMenu.hide();
+                        });
+                        suggestionsMenu.getItems().add(item);
+                    }
+                    if (!suggestionsMenu.isShowing()) {
+                        suggestionsMenu.show(searchField, javafx.geometry.Side.BOTTOM, 0, 0);
+                    }
+                } else {
+                    suggestionsMenu.hide();
+                }
+            }
+        });
+    }
+
     public Button getWyjdzButton() {
         return exitButton;
     }
 
     public Button getAcceptBtn() {
-        return acceptBtn;
+        return acceptBtn1;
     }
 }

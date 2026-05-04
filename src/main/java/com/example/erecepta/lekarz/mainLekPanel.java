@@ -2,6 +2,7 @@ package com.example.erecepta.lekarz;
 
 import com.example.erecepta.ServerConnection;
 import com.example.erecepta.logika;
+import com.example.erecepta.pacjent.nowaWizyta;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -208,32 +209,7 @@ public class mainLekPanel {
             ServerConnection connection = new ServerConnection(imie, password);
             String tablicaLekow = connection.getPacjent("getLeki", password);
             List<String> leki = new ArrayList<>(Arrays.asList(tablicaLekow.split("\n")));
-            ContextMenu suggestionsMenu = new ContextMenu();
-            lekField.textProperty().addListener((obs, oldText, newText) -> {
-                if (newText.isEmpty()) {
-                    suggestionsMenu.hide();
-                } else {
-                    List<String> filtered = leki.stream().filter(name -> name.toLowerCase().contains(newText.toLowerCase()))
-                            .collect(Collectors.toList());
-                    if (!filtered.isEmpty()) {
-                        // Tworzymy MenuItemy dla podpowiedzi
-                        suggestionsMenu.getItems().clear();
-                        for (String match : filtered) {
-                            MenuItem item = new MenuItem(match);
-                            item.setOnAction(e -> {
-                                lekField.setText(match);
-                                suggestionsMenu.hide();
-                            });
-                            suggestionsMenu.getItems().add(item);
-                        }
-                        if (!suggestionsMenu.isShowing()) {
-                            suggestionsMenu.show(lekField, javafx.geometry.Side.BOTTOM, 0, 0);
-                        }
-                    } else {
-                        suggestionsMenu.hide();
-                    }
-                }
-            });
+            nowaWizyta.suggestrions(leki, lekField);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }

@@ -51,8 +51,18 @@
     Panel centralny
  */
 
-.selection, .lekarz{
+.selection {
     -fx-background-color: #2C3E50;
+    -fx-alignment: center;
+    -fx-padding: 20;
+    -fx-border-insets: 20;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
+}
+
+.lekarz{
+    -fx-background-color: #2C3E50;
+    -fx-pref-height: 400;
     -fx-alignment: center;
     -fx-padding: 20;
     -fx-border-insets: 20;
@@ -127,22 +137,25 @@
     -fx-background-color: white;
 }
 
-.inner-box-date, inner-box-lekarz {
-    -fx-background-color: #5555;
-    -fx-background-radius: 15;
+.inner-box-date, .inner-box-lekarz {
+    -fx-background-color: #dedede;
+    -fx-background-radius: 10;
     -fx-border-color: black;
-    -fx-alignment: center;
-    -fx-padding: 20;
-    -fx-border-insets: 20;
-    -fx-background-radius: 15;
+    -fx-padding: 10;
+    -fx-border-insets: 10;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
 /*
     Ikonki dla lekarza
  */
-.my-user-icon, .my-search-icon, .calendar-icon{
+.my-search-icon {
     -fx-fill: white;
+    -fx-glyph-size: 30px;
+}
+
+.my-user-icon,.calendar-icon {
+    -fx-fill: black;
     -fx-glyph-size: 30px;
 }
 
@@ -150,7 +163,8 @@
     -fx-pref-height: 150;
 }
 .dane-lekarza .label{
-    -fx-text-fill: white;
+    -fx-text-fill: black;
+    -fx-font-weight: bold;
 }
 
 /*
