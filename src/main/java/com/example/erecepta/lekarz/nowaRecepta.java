@@ -1,5 +1,6 @@
-package com.example.erecepta;
+package com.example.erecepta.lekarz;
 
+import com.example.erecepta.ServerConnection;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

@@ -1,5 +1,7 @@
-package com.example.erecepta;
+package com.example.erecepta.lekarz;
 
+import com.example.erecepta.ServerConnection;
+import com.example.erecepta.logika;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -60,7 +62,7 @@ public class mainLekPanel {
     private final Button zobaczWszystko = new Button("Zobacz Wszystko");
     private String historiaPacString;
 
-    mainLekPanel(String login, String password, String imie, String nazwisko) {
+    public mainLekPanel(String login, String password, String imie, String nazwisko) {
         this.login = login;
         this.password = password;
         this.imie = imie;

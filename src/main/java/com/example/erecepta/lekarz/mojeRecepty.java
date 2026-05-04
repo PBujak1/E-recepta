@@ -1,4 +1,4 @@
-package com.example.erecepta;
+package com.example.erecepta.lekarz;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ public class mojeRecepty {
     private Label daneLabel = new Label("Dane pokazują poszczególno IDRecepty, Nazwa Leku, IDPacjenta, Ilość opakowań danego leku");
     private Button wyjdz = new Button("Wyjdź");
 
-    mojeRecepty(String recepty) {
+    public mojeRecepty(String recepty) {
         this.receptyString = recepty;
     }
 

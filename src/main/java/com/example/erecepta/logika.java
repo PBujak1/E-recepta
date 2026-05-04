@@ -1,4 +1,7 @@
 package com.example.erecepta;
+import com.example.erecepta.lekarz.*;
+import com.example.erecepta.pacjent.mainPacPanel;
+import com.example.erecepta.pacjent.nowaWizyta;
 import javafx.application.Application;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;

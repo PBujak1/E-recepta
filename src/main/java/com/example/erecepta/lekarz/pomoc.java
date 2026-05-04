@@ -1,4 +1,4 @@
-package com.example.erecepta;
+package com.example.erecepta.lekarz;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

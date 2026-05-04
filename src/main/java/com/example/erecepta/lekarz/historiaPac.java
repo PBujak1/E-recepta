@@ -1,4 +1,4 @@
-package com.example.erecepta;
+package com.example.erecepta.lekarz;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,7 +20,7 @@ public class historiaPac {
     private Label daneLabel = new Label("Dane pokazują poszczególno IDWizyty, Datę wizyty, IDLekarza, IDPacjenta, IDRecepty");
     private Button wyjdz = new Button("Wyjdź");
 
-    historiaPac(String historia) {
+    public historiaPac(String historia) {
         this.historiaString = historia;
     }
 

@@ -1,5 +1,7 @@
-package com.example.erecepta;
+package com.example.erecepta.pacjent;
 
+import com.example.erecepta.ServerConnection;
+import com.example.erecepta.logika;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
@@ -42,7 +44,7 @@ public class mainPacPanel {
 
     private final Button wyloguj = new Button("Wyloguj") ;
 
-    mainPacPanel(String login, String password, String nazwa) {
+    public mainPacPanel(String login, String password, String nazwa) {
         this.login = login;
         this.password = password;
         this.nazwa = nazwa;

@@ -1,5 +1,6 @@
-package com.example.erecepta;
+package com.example.erecepta.pacjent;
 
+import com.example.erecepta.ServerConnection;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Pos;
@@ -39,7 +40,7 @@ public class nowaWizyta {
     //Guziczki
     private final Button exitButton = new Button("Wyjście");
 
-    nowaWizyta(String PESEL, String imie) {
+    public nowaWizyta(String PESEL, String imie) {
         this.PESEL = PESEL;
         this.imie = imie;
     }

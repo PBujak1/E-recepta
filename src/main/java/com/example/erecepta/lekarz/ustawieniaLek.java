@@ -1,5 +1,6 @@
-package com.example.erecepta;
+package com.example.erecepta.lekarz;
 
+import com.example.erecepta.ServerConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -66,7 +67,7 @@ public class ustawieniaLek {
 
     private Label title = new Label("Ustawienia");
 
-    ustawieniaLek(String imie, String nazwisko, String PESEL, String adres, String telefon, String email, String wiek, String plec) {
+    public ustawieniaLek(String imie, String nazwisko, String PESEL, String adres, String telefon, String email, String wiek, String plec) {
         this.imie = new Label(imie);
         this.nazwisko = new Label(nazwisko);
         this.PESEL = new Label(PESEL);
