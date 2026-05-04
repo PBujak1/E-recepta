@@ -33,6 +33,7 @@ public class nowaWizyta {
     private final RadioButton stacjonarnieBtn = new RadioButton("Stacjonarnie");
     private final RadioButton Eporada = new RadioButton("E-porada");
     private final Label rodzajString = new Label("Rodzaj wizyty");
+    private Button accpetDateBtn = new Button("Akceptuj");
 
     //szuaknie terminu
     private final Calendar calendar = Calendar.getInstance();
@@ -110,19 +111,41 @@ public class nowaWizyta {
         selectionBox.getChildren().addAll(rodzajString, selection);
 
         /*
-            Utworzenie panelu lekarza po jego wcześniejszym wyszukaniu
+            Utworzenie panelu wybierania daty po jego wcześniejszym wyszukaniu
          */
         HBox lekarz = new HBox(10);
         lekarz.setAlignment(Pos.CENTER_LEFT);
+
         VBox daneLekarza = new VBox(10);
         daneLekarza.setAlignment(Pos.CENTER_LEFT);
+        VBox date = new VBox(10);
+        date.setAlignment(Pos.CENTER_LEFT);
         DatePicker datePicker = new DatePicker();
+        datePicker.setPromptText("Data wizyty");
+        datePicker.setPrefWidth(300);
+        datePicker.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(datePicker, Priority.ALWAYS);
+        date.getChildren().addAll(datePicker, accpetDateBtn);
+
+        HBox innerBoxDate = new HBox(30);
+        innerBoxDate.setAlignment(Pos.CENTER);
+        innerBoxDate.getChildren().addAll(calendarIcon, date);
+
+        HBox innerBoxLekarz = new HBox(10);
+        innerBoxLekarz.setAlignment(Pos.CENTER);
+        innerBoxLekarz.getChildren().addAll(iconUser, daneLekarza);
+
         lekarz.getChildren().addAll(
-                calendarIcon, datePicker,
-                iconUser,
-                daneLekarza
+                innerBoxDate,
+                innerBoxLekarz
         );
+        innerBoxDate.setMaxWidth(500);
+        innerBoxLekarz.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(innerBoxLekarz, Priority.ALWAYS);
+        HBox.setHgrow(innerBoxDate, Priority.ALWAYS);
         lekarz.getStyleClass().add("lekarz");
+        innerBoxDate.getStyleClass().add("inner-box-date");
+        innerBoxLekarz.getStyleClass().add("inner-box-lekarz");
 
         root.getChildren().addAll(
                 titleLabel,
@@ -181,7 +204,7 @@ public class nowaWizyta {
         acceptBtn.getStyleClass().add("acceptBtn");
         topBox.getStyleClass().add("top-panel");
         iconUser.setGlyphSize(60);
-        iconUser.setVisible(false);
+        iconUser.setVisible(true);
         iconUser.setStyleClass("my-user-icon");
         searchIcon.setGlyphSize(30);
         searchIcon.setStyleClass("my-search-icon");

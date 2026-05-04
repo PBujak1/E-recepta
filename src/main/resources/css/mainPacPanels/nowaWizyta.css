@@ -69,6 +69,9 @@
 
 .selection .radio-button {
     -fx-background-color: #212F3D;
+    -fx-border-color: #455A64;
+    -fx-border-radius: 15;
+    -fx-border-width: 1px;
     -fx-background-radius: 15;
     -fx-font-size: 15;
     -fx-text-fill: white;
@@ -124,6 +127,16 @@
     -fx-background-color: white;
 }
 
+.inner-box-date, inner-box-lekarz {
+    -fx-background-color: #5555;
+    -fx-background-radius: 15;
+    -fx-border-color: black;
+    -fx-alignment: center;
+    -fx-padding: 20;
+    -fx-border-insets: 20;
+    -fx-background-radius: 15;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
+}
 
 /*
     Ikonki dla lekarza
