@@ -53,16 +53,14 @@ public class logika extends Application {
                 String password = logFX1.getLogin();
                 String PESEL = logFX1.getPassword();
                 int mode = logFX1.getChosenMode();
-
                 ServerConnection serverConnection = new ServerConnection(PESEL, password);
-
 
                 switch (mode) {
                     case 1:
                         try {
                             String result = serverConnection.getPacjent("loginPacjent", PESEL);
-                            if ("BRAK_DANYCH".equals(result)) {
-                                new Alert(Alert.AlertType.WARNING, "Błędny login lub hasło").showAndWait();
+                            if ("Brak danych".equals(result)) {
+                                new Alert(Alert.AlertType.INFORMATION, "Brak połączenia").showAndWait();
                                 return;
                             } else {
                             imie = serverConnection.getPacjent("getImiePacjent", PESEL);

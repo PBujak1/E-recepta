@@ -256,7 +256,7 @@ public class ServerConnection {
                     return response;
             }
         } catch (IOException e) {
-            return "Brak danych" + e.getMessage();
+            return "Brak danych";
         }
     }
 
