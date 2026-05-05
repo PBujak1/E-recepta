@@ -13,7 +13,14 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.top-panel {
+.specjalnoscLabel {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 30;
+    -fx-font-family: "Segoe UI", sans-serif;
+}
+
+.top-panel, .search-panel2 {
     -fx-background-color: #2C3E50;
     -fx-padding: 20;
     -fx-border-insets: 20;
@@ -22,7 +29,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.search-field{
+.search-field1, .search-field2 {
     -fx-background-color: #ECF0F1;
     -fx-background-radius: 5;
     -fx-padding: 10;
@@ -31,7 +38,7 @@
     -fx-border-color: transparent;
 }
 
-.acceptBtn {
+.acceptBtn1, .acceptBtn2, .accpetDateBtn {
     -fx-background-color: #2980B9;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -43,14 +50,13 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.acceptBtn:hover {
+.acceptBtn1:hover, .acceptBtn2:hover {
     -fx-background-color: #3498DB;
 }
 
 /*
     Panel centralny
  */
-
 .selection {
     -fx-background-color: #2C3E50;
     -fx-alignment: center;
@@ -108,10 +114,8 @@
 /*
     Data terminu
  */
-
-
 .date-picker {
-    -fx-background-color: #2b2b2b;
+    -fx-background-color: white;
     -fx-border-color: #4a90e2;
     -fx-border-radius: 8;
     -fx-background-radius: 8;
@@ -138,7 +142,7 @@
 }
 
 .inner-box-date, .inner-box-lekarz {
-    -fx-background-color: #dedede;
+    -fx-background-color: #3E5A72;
     -fx-background-radius: 10;
     -fx-border-color: black;
     -fx-padding: 10;
@@ -155,15 +159,16 @@
 }
 
 .my-user-icon,.calendar-icon {
-    -fx-fill: black;
+    -fx-fill: white;
     -fx-glyph-size: 30px;
 }
 
 .dane-lekarza {
     -fx-pref-height: 150;
 }
+
 .dane-lekarza .label{
-    -fx-text-fill: black;
+    -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 

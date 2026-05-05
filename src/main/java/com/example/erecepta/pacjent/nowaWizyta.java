@@ -101,22 +101,23 @@ public class nowaWizyta {
         HBox lekarz = new HBox(10);
         lekarz.setAlignment(Pos.CENTER_LEFT);
 
-        VBox date = new VBox(10);
-        date.setAlignment(Pos.TOP_CENTER);
+
+
+        VBox innerBoxDate = new VBox(10);
+        innerBoxDate.setAlignment(Pos.CENTER);
         DatePicker datePicker = new DatePicker();
         datePicker.setPromptText("Data wizyty");
         datePicker.setPrefWidth(300);
         datePicker.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(datePicker, Priority.ALWAYS);
-        date.getChildren().addAll(
-                datePicker,
+        HBox date = new HBox(30);
+        date.setAlignment(Pos.CENTER);
+        date.getChildren().addAll(calendarIcon, datePicker );
+        innerBoxDate.getChildren().addAll(
+                date,
                 accpetDateBtn, new Separator(),
                 specjalnoscLabel, searchBox2
         );
-
-        HBox innerBoxDate = new HBox(30);
-        innerBoxDate.setAlignment(Pos.TOP_CENTER);
-        innerBoxDate.getChildren().addAll(calendarIcon, date);
 
         VBox innerBox = new VBox(10);
         innerBox.setAlignment(Pos.TOP_CENTER);
@@ -191,9 +192,15 @@ public class nowaWizyta {
          */
         root.getStyleClass().add("main-panel");
         searchField1.setPromptText("Wyszukaj lekarza");
-        searchField1.getStyleClass().add("search-field");
-        acceptBtn1.getStyleClass().add("acceptBtn");
+        searchField1.getStyleClass().add("search-field1");
+        searchField2.setPromptText("Wyszukaj specjalizację");
+        searchField2.getStyleClass().add("search-field2");
+        acceptBtn1.getStyleClass().add("acceptBtn1");
         searchBox1.getStyleClass().add("top-panel");
+        acceptBtn2.getStyleClass().add("acceptBtn2");
+        accpetDateBtn.getStyleClass().add("accpetDateBtn");
+        searchBox2.getStyleClass().add("search-panel2");
+        specjalnoscLabel.getStyleClass().add("specjalnoscLabel");
         iconUser.setGlyphSize(60);
         iconUser.setVisible(true);
         iconUser.setStyleClass("my-user-icon");
