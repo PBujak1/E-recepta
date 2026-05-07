@@ -6,9 +6,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -133,17 +131,68 @@ public class nowaWizyta {
          */
         VBox innerBox = new VBox(10);
         innerBox.setAlignment(Pos.TOP_CENTER);
-        VBox daneLekarza = new VBox(10);
-        daneLekarza.setAlignment(Pos.CENTER_LEFT);
-        HBox innerBoxLekarz = new HBox(10);
-        innerBoxLekarz.setAlignment(Pos.CENTER_LEFT);
-        innerBoxLekarz.getChildren().addAll(
-                iconUser,
-                daneLekarza
-        );
+
+        // Tworzymy tabelę danych lekarza
+        GridPane tabelaLekarza = new GridPane();
+        VBox.setVgrow(tabelaLekarza, Priority.ALWAYS);
+
+        // Definicja nagłówków
+        Label hProfil = new Label("Profil");
+        Label hDane = new Label("dane");
+        Label hOpis = new Label("Opis");
+
+        hProfil.getStyleClass().add("header-label");
+        hDane.getStyleClass().add("header-label");
+        hOpis.getStyleClass().add("header-label");
+
+        // Ustawienie szerokości kolumn (procentowo)
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(25);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(25);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPercentWidth(50);
+        tabelaLekarza.getColumnConstraints().addAll(col1, col2, col3);
+
+        // Zawartość kolumny 1: Ikona i napis "Profil"
+        VBox profilBox = new VBox(10, iconUser);
+        profilBox.setAlignment(Pos.CENTER);
+        profilBox.getStyleClass().add("cell-border");
+
+        // Zawartość kolumny 2: Dane tekstowe
+        VBox daneBox = new VBox(5);
+        daneBox.setAlignment(Pos.CENTER_LEFT);
+        daneBox.getStyleClass().addAll("cell-border", "padding-left");
+
+        // Zawartość kolumny 3: Opis
+        Label opisLabel = new Label("Lekarz kardiologii z 20 letnim doświadczeniem...");
+        opisLabel.setWrapText(true);
+        VBox opisBox = new VBox(opisLabel);
+        opisBox.getStyleClass().addAll("cell-border", "padding-left");
+
+        //ustawienie, aby kolumny rozciągały się na całą wysokość
+        profilBox.setMaxHeight(Double.MAX_VALUE);
+        daneBox.setMaxHeight(Double.MAX_VALUE);
+        opisBox.setMaxHeight(Double.MAX_VALUE);
+        GridPane.setVgrow(profilBox, Priority.ALWAYS);
+        GridPane.setVgrow(daneBox, Priority.ALWAYS);
+        GridPane.setVgrow(opisBox, Priority.ALWAYS);
+        profilBox.setFillWidth(true);
+        daneBox.setFillWidth(true);
+        opisBox.setFillWidth(true);
+
+        // Dodanie do Grida
+        tabelaLekarza.add(hProfil, 0, 0);
+        tabelaLekarza.add(hDane, 1, 0);
+        tabelaLekarza.add(hOpis, 2, 0);
+        tabelaLekarza.add(profilBox, 0, 1);
+        tabelaLekarza.add(daneBox, 1, 1);
+        tabelaLekarza.add(opisBox, 2, 1);
+
         innerBox.getChildren().addAll(
-                searchBox1, new Separator(),
-                innerBoxLekarz
+                searchBox1,
+                new Separator(),
+                tabelaLekarza
         );
 
 
@@ -197,7 +246,7 @@ public class nowaWizyta {
                     String nrPZW = serverConnection.getLekarz("getPZWLekarza", imie, nazwisko);
                     String email = serverConnection.getLekarz("getEmailLekarza", imie, nazwisko);
                     String telefon = serverConnection.getLekarz("getTelefonLekarza", imie, nazwisko);
-                    daneLekarza.getChildren().addAll(
+                    daneBox.getChildren().addAll(
                             new Label(imieNazwisko),
                             new Label(nrPZW),
                             new Label(email),
@@ -220,25 +269,32 @@ public class nowaWizyta {
         searchField1.getStyleClass().add("search-field1");
         searchField2.setPromptText("Wyszukaj specjalizację");
         searchField2.getStyleClass().add("search-field2");
+
         acceptBtn1.getStyleClass().add("acceptBtn1");
         searchBox1.getStyleClass().add("top-panel");
         acceptBtn2.getStyleClass().add("acceptBtn2");
         accpetDateBtn.getStyleClass().add("accpetDateBtn");
+
         date.getStyleClass().add("date");
         searchBox2.getStyleClass().add("search-panel2");
         specjalnoscLabel.getStyleClass().add("specjalnoscLabel");
         wyborDaty.getStyleClass().add("wyborDatyLabel");
+
         iconUser.setGlyphSize(60);
         iconUser.setVisible(true);
         iconUser.setStyleClass("my-user-icon");
         searchIcon.setGlyphSize(30);
         searchIcon.setStyleClass("my-search-icon");
+
         exitButton.getStyleClass().add("exit-btn");
         titleLabel.getStyleClass().add("title-label");
-        daneLekarza.getStyleClass().add("dane-lekarza");
+
+        daneBox.getStyleClass().add("dane-lekarza");
         datePicker.getStyleClass().add("date-picker");
         calendarIcon.getStyleClass().add("calendar-icon");
         calendarIcon.setGlyphSize(30);
+
+        tabelaLekarza.getStyleClass().add("tabela-lekarza");
     }
 
     public static void suggestrions(List<String> lekarze, TextField searchField) {

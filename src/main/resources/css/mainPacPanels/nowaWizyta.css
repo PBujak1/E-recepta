@@ -137,10 +137,10 @@
     -fx-pref-height: 150;
 }
 
-.dane-lekarza .label, .specjalnoscLabel, .wyborDatyLabel{
+.dane-lekarza .label, .specjalnoscLabel, .wyborDatyLabel, .header-label{
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 30;
+    -fx-font-size: 20;
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
@@ -203,4 +203,47 @@
     -fx-font-size: 16px;
     -fx-pref-height: 50px;
     -fx-border-color: transparent;
+}
+
+/*
+    dane informacyjne dla lekarza
+ */
+/* Styl dla całej tabeli wewnątrz panelu */
+.tabela-lekarza {
+    -fx-background-color: #2C3E50;
+    -fx-border-color: #5D6D7E;
+    -fx-border-insets: 20;
+    -fx-background-radius: 15;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+}
+
+/* Nagłówki tabeli */
+.header-label {
+    -fx-text-fill: white;
+    -fx-font-size: 22;
+    -fx-font-weight: bold;
+    -fx-padding: 10;
+    -fx-alignment: center;
+    -fx-border-color: #5D6D7E;
+    -fx-border-width: 0 1 1 0; /* Linia na dole i z prawej */
+    -fx-max-width: 1000; /* Rozciąganie */
+}
+
+/* Komórki z danymi */
+.cell-border {
+    -fx-border-color: #5D6D7E;
+    -fx-border-width: 0 1 0 0; /* Tylko linia pionowa z prawej */
+    -fx-padding: 15;
+}
+
+/* Mniejsza czcionka dla danych i opisu */
+.cell-border .label {
+    -fx-text-fill: white;
+    -fx-font-size: 14; /* Zmniejszone z 30 */
+    -fx-font-family: "Segoe UI";
+}
+
+.padding-left {
+    -fx-padding: 0 0 0 20;
 }
