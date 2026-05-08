@@ -1,10 +1,11 @@
 package com.example.erecepta;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import javafx.scene.image.Image;
+
+import java.io.*;
 import java.net.Socket;
+import java.nio.file.Files;
+import java.util.Base64;
 
 public class ServerConnection {
 
@@ -261,6 +262,32 @@ public class ServerConnection {
                     response = responseBuilder.toString();
                     System.out.println(response);
                     return response;
+                case "imageSetter":
+                    out.println(data);
+                    out.println(PESEL);
+                    out.println(haslo);
+                    responseBuilder = new StringBuilder();
+
+                    while (!(line = in.readLine()).equals("END")) {
+                        responseBuilder.append(line).append("\n");
+                    }
+
+                    response = responseBuilder.toString();
+                    System.out.println(response);
+                    return response;
+                case "imageGetter":
+                    out.println(data);
+                    out.println(PESEL);
+                    out.println(haslo);
+                    responseBuilder = new StringBuilder();
+
+                    while (!(line = in.readLine()).equals("END")) {
+                        responseBuilder.append(line).append("\n");
+                    }
+
+                    response = responseBuilder.toString();
+                    System.out.println(response);
+                    return response;
                 default:
                     response = "Valid request!";
                     System.out.println(response);
@@ -402,5 +429,41 @@ public class ServerConnection {
             System.out.println( "Brak danych" + e.getMessage());
         }
         return response;
+    }
+
+    public void setImage(String data, File file, int idLekarza) throws IOException {
+        try {
+            Socket socket = new Socket(server, port);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+
+            out.println("imageSetter");
+
+            byte[] imageBytes = Files.readAllBytes(file.toPath());
+            String base64 = Base64.getEncoder().encodeToString(imageBytes);
+
+            out.println(idLekarza);
+            out.println(base64);
+        } catch (IOException e) {
+            System.out.println( "Brak danych" + e.getMessage());
+        }
+    }
+
+    public Image getImage(String data, int idLekarza) throws IOException {
+        try {
+            Socket socket = new Socket(server, port);
+            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            out.println("imageGetter");
+            out.println(idLekarza);
+            String base64 = in.readLine();
+            byte[] imageBytes = Base64.getDecoder().decode(base64);
+            Image image = new Image(new ByteArrayInputStream(imageBytes));
+            return image;
+
+        } catch (IOException e) {
+            System.out.println( "Brak danych" + e.getMessage());
+        }
+        return null;
     }
 }

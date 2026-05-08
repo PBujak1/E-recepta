@@ -6,9 +6,13 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -257,6 +261,41 @@ public class nowaWizyta {
                 }
             } else {
                 new Alert(Alert.AlertType.INFORMATION, "Wprowadzono błędne dane").showAndWait();
+            }
+
+        });
+
+        acceptBtn2.setOnAction(event -> {
+            ServerConnection serverConnection = new ServerConnection(imie, PESEL);
+            FileChooser chooser = new FileChooser();
+
+
+            // filtrowanie plików (opcjonalnie)
+            chooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("Obrazy", "*.png", "*.jpg", "*.jpeg")
+            );
+
+            File selectedFile = chooser.showOpenDialog(null);
+            if (selectedFile != null) {
+                try {
+                    serverConnection.setImage("imageSetter", selectedFile, 1);
+
+                    new Alert(Alert.AlertType.INFORMATION, "Plik został wysłany").showAndWait();
+
+                    Image img = serverConnection.getImage("imageGetter", 1);
+
+                    ImageView imgView = new ImageView(img);
+                    imgView.setFitHeight(150);
+                    imgView.setFitWidth(150);
+
+                    if (img != null) {
+                        iconUser.setVisible(false);
+                    }
+                    profilBox.getChildren().add(imgView);
+
+                } catch (IOException e) {
+                    new Alert(Alert.AlertType.ERROR, "Nie udało się wysłać pliku").showAndWait();
+                }
             }
 
         });
