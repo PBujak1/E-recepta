@@ -3,6 +3,7 @@ package com.example.erecepta;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
@@ -13,6 +14,7 @@ import java.lang.*;
 
 public class logFX{
 
+    VBox root = new VBox(5);
     /*
     Tworzenie zmiennych
     */
@@ -37,10 +39,9 @@ public class logFX{
 
     int chosenMode = 1;
 
-    public void logPanel(Stage primaryStage) {
+    public logFX() {
 
         //Główny panel do którego dodajemy inne mniejsze
-        VBox root = new VBox(5);
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
         root.getStyleClass().add("root-panel");
@@ -146,21 +147,6 @@ public class logFX{
                 dolnyPanel
         );
 
-        Scene scene = new Scene(root, 1300, 780);
-        primaryStage.setScene(scene);
-        scene.getStylesheets().add(
-                getClass().getResource("/css/logPanels/styleStart.css").toExternalForm()
-        );
-        scene.getStylesheets().add(
-                getClass().getResource("/css/logPanels/styleLog.css").toExternalForm()
-        );
-        primaryStage.setTitle("Logowanie");
-        primaryStage.show();
-
-        wyjdz.setOnAction(e -> {
-            primaryStage.close();
-        });
-
         zalogujPacjent.setOnAction(e -> {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("LOGOWANIE");
@@ -179,31 +165,6 @@ public class logFX{
             alert.showAndWait();
             mode.setText("Zaloguj jako Lekarz");
             chosenMode = 2;
-        });
-
-        stworzKontoPacjenta.setOnAction(e -> {
-            stworzKontoPac stworzKontoPac = new stworzKontoPac();
-            stworzKontoPac.start(primaryStage);
-        });
-
-        stwórzKontoLekarza.setOnAction(e -> {
-            stworzKontoLek stworzKontoLek = new stworzKontoLek(
-                    "Tworzenie konta",
-                    "Tworzenie konta",
-                    "Tworzenie konta",
-                    "Tworzenie konta",
-                    "Tworzenie konta",
-                    "Tworzenie konta",
-                    "Tworzenie konta",
-                    "Tworzenie konta",
-                    "Tworzenie konta"
-            );
-            stworzKontoLek.start(primaryStage);
-
-            stworzKontoLek.getWyjdzBtn().setOnAction(actionEvent -> {
-                primaryStage.setScene(scene);
-                primaryStage.show();
-            });
         });
     }
 
@@ -234,5 +195,13 @@ public class logFX{
     public int getChosenMode() {
         return chosenMode;
     }
+
+    public Parent getView() { return root; }
+
+    public Button getWyjdzBtn() { return wyjdz; }
+
+    public Button getStworzKontoPacjenta() { return stworzKontoPacjenta; }
+
+    public Button getStwórzKontoLekarza() { return stwórzKontoLekarza; }
 }
 

@@ -3,6 +3,7 @@ import com.example.erecepta.lekarz.*;
 import com.example.erecepta.pacjent.mainPacPanel;
 import com.example.erecepta.pacjent.nowaWizyta;
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -29,7 +30,47 @@ public class logika extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logFX1.logPanel(primaryStage);
+        Scene scene = new Scene(logFX1.getView());
+
+        scene.getStylesheets().addAll(
+                getClass().getResource("/css/mainPacPanels/nowaWizyta.css").toExternalForm(),
+                getClass().getResource("/css/logPanels/styleStart.css").toExternalForm(),
+                getClass().getResource("/css/logPanels/styleLog.css").toExternalForm(),
+                getClass().getResource("/css/mainPanels/stylePac.css").toExternalForm()
+        );
+
+        primaryStage.setScene(scene);
+        primaryStage.setFullScreen(true);
+        primaryStage.show();
+
+        logFX1.getWyjdzBtn().setOnAction(e -> {
+            primaryStage.close();
+        });
+
+        logFX1.getStworzKontoPacjenta().setOnAction(e -> {
+            stworzKontoPac stworzKontoPac = new stworzKontoPac();
+            stworzKontoPac.start(primaryStage);
+        });
+
+        logFX1.getStwórzKontoLekarza().setOnAction(e -> {
+            stworzKontoLek stworzKontoLek = new stworzKontoLek(
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta",
+                    "Tworzenie konta"
+            );
+            stworzKontoLek.start(primaryStage);
+
+            stworzKontoLek.getWyjdzBtn().setOnAction(actionEvent -> {
+                primaryStage.setScene(scene);
+                primaryStage.show();
+            });
+        });
         /*
         Tworzenie teraz przycisków akcji czyli co się ma dziać po naciśnięciu guziczków
         */
@@ -70,7 +111,7 @@ public class logika extends Application {
                             nazwisko = serverConnection.getPacjent("getNazwiskoPacjent", PESEL);
                             nazwaPacjenta = imie + " " + nazwisko;
                             mainPacPanel mainPanelPac = new mainPacPanel(imie, PESEL, nazwaPacjenta);
-                            mainPanelPac.start(primaryStage);
+                            scene.setRoot(mainPanelPac.getView());
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
 
@@ -81,12 +122,14 @@ public class logika extends Application {
                             });
 
                             mainPanelPac.getWizytaButton().setOnAction(event -> {
-                                nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
+                                System.out.println("działa");
                                 try {
-                                    nowaWizyta.start(primaryStage);
+                                    nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
+                                    scene.setRoot(new nowaWizyta(PESEL, imie).getView());
+
                                     nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
                                         try {
-                                            mainPanelPac.start(primaryStage);
+                                            scene.setRoot(new mainPacPanel(imie, PESEL, nazwaPacjenta).getView());
                                         } catch (IOException ex) {
                                             throw new RuntimeException(ex);
                                         }

@@ -6,6 +6,7 @@ import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
@@ -22,6 +23,7 @@ import java.util.List;
 
 public class mainPacPanel {
 
+    HBox root = new HBox(1);
     String nazwisko;
     String imie;
     String login;
@@ -44,17 +46,13 @@ public class mainPacPanel {
 
     private final Button wyloguj = new Button("Wyloguj") ;
 
-    public mainPacPanel(String login, String password, String nazwa) {
+    public mainPacPanel(String login, String password, String nazwa) throws IOException {
         this.login = login;
         this.password = password;
         this.nazwa = nazwa;
-    }
-
-    public void start(Stage primaryStage) throws IOException {
 
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
-        HBox root = new HBox(1);
         root.getStyleClass().add("main-panel");
 
         ServerConnection serverConnection = new ServerConnection(login, password);
@@ -325,24 +323,16 @@ public class mainPacPanel {
                 boczek, new Separator(),
                 receptyScrollPane
         );
-        Scene scene = new Scene(root, 1300, 780); //1300, 780
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/stylePac.css").toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         profileIcon.getStyleClass().add("profileIcon");
         profileIcon.setGlyphSize(60);
         belloIcon.getStyleClass().add("belloIcon");
         belloIcon.setGlyphSize(60);
 
-        wyloguj.setOnAction(e -> {
-            logika mainPane = new logika();
-            mainPane.start(primaryStage);
-        });
+//        wyloguj.setOnAction(e -> {
+//            logika mainPane = new logika();
+//            mainPane.start(primaryStage);
+//        });
     }
     public Button getWizytaButton() {
         return wizyta;
@@ -359,4 +349,6 @@ public class mainPacPanel {
     public Button getDawkowanieButton() {
         return dawkowanie;
     }
+
+    public Parent getView() { return root; }
 }

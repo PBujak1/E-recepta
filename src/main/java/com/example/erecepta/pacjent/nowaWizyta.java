@@ -4,13 +4,12 @@ import com.example.erecepta.ServerConnection;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,6 +17,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class nowaWizyta {
+    private VBox root = new VBox(10);
     private String PESEL;
     private String imie;
 
@@ -48,13 +48,10 @@ public class nowaWizyta {
     //Guziczki
     private final Button exitButton = new Button("Wyjście");
 
-    public nowaWizyta(String PESEL, String imie) {
+    public nowaWizyta(String PESEL, String imie) throws IOException {
         this.PESEL = PESEL;
         this.imie = imie;
-    }
 
-    public void start(Stage primaryStage) throws IOException {
-        VBox root = new VBox(10);
         root.setAlignment(Pos.TOP_CENTER);
 
 
@@ -225,15 +222,6 @@ public class nowaWizyta {
                 exitButton
         );
 
-        Scene scene = new Scene(root, 1300, 780);
-        scene.getStylesheets().add(
-                Objects.requireNonNull(getClass().getResource("/css/mainPacPanels/nowaWizyta.css")).toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
         /*
             Akcje
          */
@@ -242,20 +230,29 @@ public class nowaWizyta {
             String[] czesci = imieNazwisko.split("\\s+");
 
             if (czesci.length >= 2) {
-                String imie = czesci[0];
+                String imie1 = czesci[0];
                 String nazwisko = czesci[1];
                 try {
-                    ServerConnection serverConnection = new ServerConnection(imie, nazwisko);
+                    ServerConnection serverConnection = new ServerConnection(imie1, nazwisko);
                     iconUser.setVisible(true);
-                    String nrPZW = serverConnection.getLekarz("getPZWLekarza", imie, nazwisko);
-                    String email = serverConnection.getLekarz("getEmailLekarza", imie, nazwisko);
-                    String telefon = serverConnection.getLekarz("getTelefonLekarza", imie, nazwisko);
+                    String nrPZW = serverConnection.getLekarz("getPZWLekarza", imie1, nazwisko);
+                    String email = serverConnection.getLekarz("getEmailLekarza", imie1, nazwisko);
+                    String telefon = serverConnection.getLekarz("getTelefonLekarza", imie1, nazwisko);
                     daneBox.getChildren().addAll(
                             new Label(imieNazwisko),
                             new Label(nrPZW),
                             new Label(email),
                             new Label(telefon)
                     );
+                    Image img = serverConnection.getImage("imageGetter", 1);
+
+                    ImageView imgView = new ImageView(img);
+                    imgView.setFitHeight(150);
+                    imgView.setFitWidth(150);
+                    if (img != null) {
+                        profilBox.getChildren().clear();
+                    }
+                    profilBox.getChildren().add(imgView);
                 } catch (IOException e){
                     throw new RuntimeException(e);
                 }
@@ -279,20 +276,7 @@ public class nowaWizyta {
             if (selectedFile != null) {
                 try {
                     serverConnection.setImage("imageSetter", selectedFile, 1);
-
                     new Alert(Alert.AlertType.INFORMATION, "Plik został wysłany").showAndWait();
-
-                    Image img = serverConnection.getImage("imageGetter", 1);
-
-                    ImageView imgView = new ImageView(img);
-                    imgView.setFitHeight(150);
-                    imgView.setFitWidth(150);
-
-                    if (img != null) {
-                        profilBox.getChildren().clear();
-                    }
-                    profilBox.getChildren().add(imgView);
-
                 } catch (IOException e) {
                     new Alert(Alert.AlertType.ERROR, "Nie udało się wysłać pliku").showAndWait();
                 }
@@ -372,4 +356,6 @@ public class nowaWizyta {
     public Button getAcceptBtn() {
         return acceptBtn1;
     }
+
+    public Parent getView() { return root; }
 }
