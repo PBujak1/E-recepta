@@ -289,7 +289,7 @@ public class nowaWizyta {
                     imgView.setFitWidth(150);
 
                     if (img != null) {
-                        iconUser.setVisible(false);
+                        profilBox.getChildren().clear();
                     }
                     profilBox.getChildren().add(imgView);
 
