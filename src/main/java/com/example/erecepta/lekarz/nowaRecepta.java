@@ -3,6 +3,7 @@ package com.example.erecepta.lekarz;
 import com.example.erecepta.ServerConnection;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 public class nowaRecepta {
 
+    private VBox root = new VBox(15);
     private String imie;
     private String nazwisko;
     private String PESEL;
@@ -29,9 +31,7 @@ public class nowaRecepta {
     private Label odplatnoscLabel = new Label("ODPŁATNOŚĆ");
     private TextField odplatnosc = new TextField();
 
-    private String lek;
-    private String opakowania;
-    private String odplatnosci;
+
 
     private static Button wyjdz = new Button("Wyjdz");
     private Button dodaj = new Button("Dodaj");
@@ -41,10 +41,7 @@ public class nowaRecepta {
         this.nazwisko = nazwisko;
         this.PESEL = PESEL;
         this.PESELLek = PESELLek;
-    }
 
-    public void start(Stage primaryStage) {
-        VBox root = new VBox(15);
         root.setPadding(new Insets(20, 10, 20, 10));
 
         VBox titlePane = new VBox(10);
@@ -92,35 +89,16 @@ public class nowaRecepta {
                 titlePane,
                 mainPane
         );
-        Scene scene = new Scene(root, 1300, 780);
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/nowaRecepta.css").toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
-        dodaj.setOnAction(actionEvent -> {
-            lek = nazwaLeku.getText();
-            opakowania = liczbaOpakowan.getText();
-            odplatnosci = odplatnosc.getText();
-
-            ServerConnection serverConnection = new ServerConnection(PESEL, nazwisko);
-            try {
-                serverConnection.getUpdateRec("updateWszystkoRec", PESEL, lek, opakowania, odplatnosci, PESELLek);
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("UWAGA!");
-                alert.setHeaderText(null);
-                alert.setContentText("Zmieniono dane!");
-                alert.showAndWait();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     public static Button getWyjdzBtn() {
         return wyjdz;
     }
+
+    public Parent getView() { return root; }
+    public Button getDodaj() { return dodaj; }
+
+    public TextField getNazwaLeku() { return nazwaLeku; }
+    public TextField getLiczbaOpakowan() { return liczbaOpakowan; }
+    public TextField getOdplatnosc() { return odplatnosc; }
 }

@@ -48,7 +48,8 @@ public class logika extends Application {
                 Objects.requireNonNull(getClass().getResource("/css/mainPanels/ustawieniaLek.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/css/mainPanels/pomoc.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/css/mainPanels/mojaHistoria.css")).toExternalForm(),
-                Objects.requireNonNull(getClass().getResource("/css/mainPanels/mojeRecepty.css")).toExternalForm()
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/mojeRecepty.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/nowaRecepta.css")).toExternalForm()
         );
 
         primaryStage.setScene(scene);
@@ -232,7 +233,24 @@ public class logika extends Application {
 
                                         mainPanelLek.getNowaRecepta().setOnAction(a -> {
                                             nowaRecepta Recepta = new nowaRecepta(imie1, nazwisko1, PESELp, PESEL);
-                                            Recepta.start(primaryStage);
+                                            scene.setRoot(Recepta.getView());
+
+                                            Recepta.getDodaj().setOnAction(actionEvent -> {
+                                                String lek = Recepta.getNazwaLeku().getText();
+                                                String opakowania = Recepta.getLiczbaOpakowan().getText();
+                                                String odplatnosci = Recepta.getOdplatnosc().getText();
+
+                                                try {
+                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, lek, opakowania, odplatnosci, PESEL);
+                                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                                    alert.setTitle("UWAGA!");
+                                                    alert.setHeaderText(null);
+                                                    alert.setContentText("Zmieniono dane!");
+                                                    alert.showAndWait();
+                                                } catch (IOException e2) {
+                                                    throw new RuntimeException(e2);
+                                                }
+                                            });
                                         });
 
                                         mainPanelLek.getZobaczWszystko().setOnAction(a -> {
