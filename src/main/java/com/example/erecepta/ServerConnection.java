@@ -372,6 +372,7 @@ public class ServerConnection {
 
             switch (data) {
                 case "updateWszystkoRec":
+                    System.out.println("tu działa");
                     out.println(data);
                     out.println(PESEL);
                     out.println(lek);

@@ -343,8 +343,6 @@ public class mainLekPanel {
         lekField.getStyleClass().add("search-field2");
         lekiScrollPane.getStyleClass().add("lek-scrollpane");
 
-        ServerConnection serverConnection = new ServerConnection(login, password);
-
         nowaRecepta.setOnAction(a -> {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
             alert.showAndWait();

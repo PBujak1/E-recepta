@@ -97,18 +97,21 @@ public class logika extends Application {
         submit.setOnAction(e -> {
             if (loginField.getText().isEmpty() && passwordField.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(primaryStage);
                 alert.setTitle("Błąd danych");
                 alert.setHeaderText(null);
                 alert.setContentText("Proszę uzupełnić login i hasło!");
                 alert.showAndWait();
             } else if (loginField.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(primaryStage);
                 alert.setTitle("Błąd danych");
                 alert.setHeaderText(null);
                 alert.setContentText("Pole login nie może być puste!");
                 alert.showAndWait();
             } else if (passwordField.getText().isEmpty()) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(primaryStage);
                 alert.setTitle("Błąd danych");
                 alert.setHeaderText(null);
                 alert.setContentText("Hasło nie może być puste!");
@@ -142,7 +145,6 @@ public class logika extends Application {
                             });
 
                             mainPanelPac.getWizytaButton().setOnAction(event -> {
-                                System.out.println("działa");
                                 try {
                                     nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
                                     scene.setRoot(nowaWizyta.getView());
@@ -243,6 +245,7 @@ public class logika extends Application {
                                                 try {
                                                     serverConnection.getUpdateRec("updateWszystkoRec", PESELp, lek, opakowania, odplatnosci, PESEL);
                                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                                    alert.initOwner(primaryStage);
                                                     alert.setTitle("UWAGA!");
                                                     alert.setHeaderText(null);
                                                     alert.setContentText("Zmieniono dane!");
@@ -270,6 +273,7 @@ public class logika extends Application {
                                                 mainPanelLek.getLekField().clear();
                                             } else {
                                                 Alert alert = new Alert(Alert.AlertType.WARNING);
+                                                alert.initOwner(primaryStage);
                                                 alert.setTitle("Błąd danych");
                                                 alert.setHeaderText(null);
                                                 alert.setContentText("Pole leku nie może być puste!");
@@ -280,7 +284,7 @@ public class logika extends Application {
                                         mainPanelLek.getWypiszBtn().setOnAction(e2 -> {
                                             for (int i = 0; i < mainPanelLek.getMedList().size(); i++) {
                                                 try {
-                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "Nie", PESEL);
+                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "0", PESEL);
                                                 } catch (IOException ex) {
                                                     throw new RuntimeException(ex);
                                                 }
