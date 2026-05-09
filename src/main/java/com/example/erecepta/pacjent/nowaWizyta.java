@@ -281,7 +281,6 @@ public class nowaWizyta {
                     new Alert(Alert.AlertType.ERROR, "Nie udało się wysłać pliku").showAndWait();
                 }
             }
-
         });
 
         /*

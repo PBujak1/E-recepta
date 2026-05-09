@@ -75,11 +75,7 @@
 
 .date-picker {
     -fx-background-color: white;
-    -fx-pref-height: 75;
-    -fx-border-color: #4a90e2;
-    -fx-border-radius: 8;
-    -fx-background-radius: 8;
-    -fx-padding: 3;
+    -fx-pref-height: 30px;
 }
 
 .date-picker .text-field {
@@ -90,7 +86,7 @@
 
 .date-picker .arrow-button {
     -fx-background-color: #4a90e2;
-    -fx-background-radius: 0 8 8 0;
+    -fx-background-radius: 0 10 10 0;
 }
 
 .date-picker .arrow-button:hover {

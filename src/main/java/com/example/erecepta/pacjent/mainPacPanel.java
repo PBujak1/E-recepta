@@ -328,11 +328,6 @@ public class mainPacPanel {
         profileIcon.setGlyphSize(60);
         belloIcon.getStyleClass().add("belloIcon");
         belloIcon.setGlyphSize(60);
-
-//        wyloguj.setOnAction(e -> {
-//            logika mainPane = new logika();
-//            mainPane.start(primaryStage);
-//        });
     }
     public Button getWizytaButton() {
         return wizyta;
@@ -349,6 +344,8 @@ public class mainPacPanel {
     public Button getDawkowanieButton() {
         return dawkowanie;
     }
+
+    public Button getWylogujButton() { return wyloguj; }
 
     public Parent getView() { return root; }
 }

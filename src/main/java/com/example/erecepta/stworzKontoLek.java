@@ -3,6 +3,7 @@ package com.example.erecepta;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class stworzKontoLek {
+    VBox root = new VBox();
 
     private Label imie;
     private Label nazwisko;
@@ -71,7 +73,7 @@ public class stworzKontoLek {
 
     private Label title = new Label("STWÓRZ KONTO LEKARZA");
 
-    stworzKontoLek(String imie, String nazwisko, String PZW, String PESEL, String adres, String telefon, String email, String wiek, String plec) {
+    public stworzKontoLek(String imie, String nazwisko, String PZW, String PESEL, String adres, String telefon, String email, String wiek, String plec) {
         this.imie = new Label(imie);
         this.nazwisko = new Label(nazwisko);
         this.PZW = new Label(PZW);
@@ -83,10 +85,7 @@ public class stworzKontoLek {
         this.email = new Label(email);
         this.wiek = new Label(wiek);
         this.plec = new Label(plec);
-    }
 
-    public void start(Stage primaryStage) {
-        VBox root = new VBox();
         root.setPadding(new Insets(10, 10, 10, 10));
 
         VBox titlePane = new VBox();
@@ -149,14 +148,6 @@ public class stworzKontoLek {
                 titlePane,
                 mainPane
         );
-        Scene scene = new Scene(root, 1300, 780);
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/ustawieniaLek.css").toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         akceptuj.setOnAction(event -> {
             noweImie = imieField.getText();
@@ -185,4 +176,6 @@ public class stworzKontoLek {
     }
 
     public Button getWyjdzBtn() {return wyjdz;}
+
+    public Parent getView() { return root; }
 }

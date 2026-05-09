@@ -2,6 +2,7 @@ package com.example.erecepta.lekarz;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 public class mojeRecepty {
 
+    private BorderPane root = new BorderPane();
     private String receptyString;
     private Label titleLabel = new Label("Moje Recepty");
     private Label informationLabel = new Label("Ze względu na rodo wszystkie dane zapisane są za pomocą ID");
@@ -22,10 +24,7 @@ public class mojeRecepty {
 
     public mojeRecepty(String recepty) {
         this.receptyString = recepty;
-    }
 
-    public void start(Stage primaryStage) {
-        BorderPane root = new BorderPane();
         root.setPadding(new Insets(50 , 50 , 50 , 50));
 
         VBox titleBox = new VBox(10);
@@ -57,16 +56,9 @@ public class mojeRecepty {
         informationLabel.getStyleClass().add("informationLabel");
         daneLabel.getStyleClass().add("daneLabel");
         wyjdz.getStyleClass().add("exit-btn");
-
-        Scene scene = new Scene(root, 1300, 780);
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/mojeRecepty.css").toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public Button getWyjdz() {return wyjdz;}
+
+    public Parent getView() { return root; }
 }

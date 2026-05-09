@@ -3,13 +3,18 @@ import com.example.erecepta.lekarz.*;
 import com.example.erecepta.pacjent.mainPacPanel;
 import com.example.erecepta.pacjent.nowaWizyta;
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class logika extends Application {
 
@@ -33,11 +38,17 @@ public class logika extends Application {
         Scene scene = new Scene(logFX1.getView());
 
         scene.getStylesheets().addAll(
-                getClass().getResource("/css/mainPacPanels/nowaWizyta.css").toExternalForm(),
-                getClass().getResource("/css/logPanels/styleStart.css").toExternalForm(),
-                getClass().getResource("/css/logPanels/styleLog.css").toExternalForm(),
-                getClass().getResource("/css/mainPanels/stylePac.css").toExternalForm(),
-                getClass().getResource("/css/tworzenieKont/noweKontoPac.css").toExternalForm()
+                Objects.requireNonNull(getClass().getResource("/css/mainPacPanels/nowaWizyta.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/logPanels/styleStart.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/logPanels/styleLog.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPacPanels/stylePac.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/tworzenieKont/noweKontoPac.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/ustawieniaLek.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/styleLek.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/ustawieniaLek.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/pomoc.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/mojaHistoria.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/mojeRecepty.css")).toExternalForm()
         );
 
         primaryStage.setScene(scene);
@@ -71,11 +82,12 @@ public class logika extends Application {
                     "Tworzenie konta",
                     "Tworzenie konta"
             );
-            stworzKontoLek.start(primaryStage);
+            scene.setRoot(stworzKontoLek.getView());
 
             stworzKontoLek.getWyjdzBtn().setOnAction(actionEvent -> {
-                primaryStage.setScene(scene);
-                primaryStage.show();
+                scene.setRoot(logFX1.getView());
+                logFX1.getLoginTextField().clear();
+                logFX1.getPasswordField().clear();
             });
         });
         /*
@@ -111,7 +123,7 @@ public class logika extends Application {
                         try {
                             String result = serverConnection.getPacjent("loginPacjent", PESEL);
                             if ("Brak danych".equals(result)) {
-                                new Alert(Alert.AlertType.INFORMATION, "Brak połączenia").showAndWait();
+                                new Alert(Alert.AlertType.INFORMATION, "Błędny Login lub Hasło!").showAndWait();
                                 return;
                             } else {
                             imie = serverConnection.getPacjent("getImiePacjent", PESEL);
@@ -132,14 +144,10 @@ public class logika extends Application {
                                 System.out.println("działa");
                                 try {
                                     nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
-                                    scene.setRoot(new nowaWizyta(PESEL, imie).getView());
+                                    scene.setRoot(nowaWizyta.getView());
 
                                     nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
-                                        try {
-                                            scene.setRoot(new mainPacPanel(imie, PESEL, nazwaPacjenta).getView());
-                                        } catch (IOException ex) {
-                                            throw new RuntimeException(ex);
-                                        }
+                                        scene.setRoot(mainPanelPac.getView());
                                     });
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
@@ -150,9 +158,14 @@ public class logika extends Application {
 
                             });
 
+                            mainPanelPac.getWylogujButton().setOnAction(event -> {
+                                scene.setRoot(logFX1.getView());
+                                logFX1.getLoginTextField().clear();
+                                logFX1.getPasswordField().clear();
+                            });
                             }
                         } catch (IOException ex) {
-                            new Alert(Alert.AlertType.WARNING, "Nie udało się pobrać danych pacjenta!").showAndWait();
+                            new Alert(Alert.AlertType.WARNING, "Brak połączenia!").showAndWait();
                         }
                         break;
                     case 2:
@@ -174,14 +187,104 @@ public class logika extends Application {
                                 String plec1 = serverConnection.getPacjent("getPlecLekarz", PESEL);
                                 nazwaPacjenta = imie + nazwisko;
                                 mainLekPanel mainPanelLek = new mainLekPanel(PESEL, password, imie, nazwisko);
-                                mainPanelLek.start(primaryStage);
+                                scene.setRoot(mainPanelLek.getView());
+
+                                mainPanelLek.getWyloguj().setOnAction(event -> {
+                                    logFX1.getLoginTextField().clear();
+                                    logFX1.getPasswordField().clear();
+                                    scene.setRoot(logFX1.getView());
+                                });
+
+                                mainPanelLek.getWczytajBtn().setOnAction(event -> {
+                                    try {
+                                        String PESELp = mainPanelLek.getSearchField().getText();
+                                        String IDLekarzap = serverConnection.getPacjent("getIDLekarza", PESEL);
+                                        String e_wizyty = serverConnection.getPacjent("getWizyta", IDLekarzap);
+                                        String imie1 = serverConnection.getPacjent("getImiePacjent", PESELp);
+                                        String nazwisko1 = serverConnection.getPacjent("getNazwiskoPacjent", PESELp);
+                                        String adres1p = serverConnection.getPacjent("getAdres", PESELp);
+                                        String telefon1p = serverConnection.getPacjent("getTelefon", PESELp);
+                                        String email1p = serverConnection.getPacjent("getEmail", PESELp);
+                                        String wiek1p = serverConnection.getPacjent("getWiek", PESELp);
+                                        String plec1p = serverConnection.getPacjent("getPlec", PESELp);
+                                        String historiaPacString = serverConnection.getPacjent("getHistoriaPac", PESELp);
+                                        String alergia1 = serverConnection.getPacjent("getAlergia", PESELp);
+
+                                        mainPanelLek.getImieINazwiskoPacjenta().setText(imie1 + " " + nazwisko1);
+                                        mainPanelLek.getPESELPacjenta().setText(PESELp);
+                                        mainPanelLek.getAdresPacjenta().setText(adres1p);
+                                        mainPanelLek.getPlec().setText(plec1p);
+                                        mainPanelLek.getWiek().setText(wiek1p);
+                                        mainPanelLek.getTelefon().setText(telefon1p);
+                                        mainPanelLek.getEmail().setText(email1p);
+
+                                        String[] alergieTablica = alergia1.split("\\r?\\n");
+                                        mainPanelLek.getAllergyList().getChildren().clear();
+
+                                        for (int i = 0; i < alergieTablica.length; i++) {
+                                            HBox allergyChip1 = new HBox(10);
+                                            Label alergieLabel = new Label(alergieTablica[i]);
+                                            allergyChip1.getChildren().addAll(alergieLabel);
+                                            allergyChip1.getStyleClass().add("allergy-chip1");
+                                            allergyChip1.setAlignment(Pos.CENTER);
+                                            mainPanelLek.getAllergyList().getChildren().add(allergyChip1);
+                                        }
+
+                                        mainPanelLek.getNowaRecepta().setOnAction(a -> {
+                                            nowaRecepta Recepta = new nowaRecepta(imie1, nazwisko1, PESELp, PESEL);
+                                            Recepta.start(primaryStage);
+                                        });
+
+                                        mainPanelLek.getZobaczWszystko().setOnAction(a -> {
+                                            VBox historiaPane = new VBox(new Label(e_wizyty));
+                                            System.out.print(e_wizyty);
+                                            historiaPane.getStyleClass().add("historia");
+                                            historiaPane.setAlignment(Pos.TOP_CENTER);
+
+                                            mainPanelLek.getContentPane().setContent(historiaPane);
+                                        });
+
+                                        mainPanelLek.getDodajLekBtn().setOnAction(e1 -> {
+                                            String tekst = mainPanelLek.getLekField().getText();
+                                            if (!mainPanelLek.getLekField().getText().isEmpty()) {
+                                                mainPanelLek.getMedList().add(tekst);
+                                                mainPanelLek.getNowyLek().getChildren().add(new Label(mainPanelLek.getMedList().size() + ". " + tekst + " (1 Op.)"));
+                                                mainPanelLek.getLekField().clear();
+                                            } else {
+                                                Alert alert = new Alert(Alert.AlertType.WARNING);
+                                                alert.setTitle("Błąd danych");
+                                                alert.setHeaderText(null);
+                                                alert.setContentText("Pole leku nie może być puste!");
+                                                alert.showAndWait();
+                                            }
+                                        });
+
+                                        mainPanelLek.getWypiszBtn().setOnAction(e2 -> {
+                                            for (int i = 0; i < mainPanelLek.getMedList().size(); i++) {
+                                                try {
+                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "Nie", PESEL);
+                                                } catch (IOException ex) {
+                                                    throw new RuntimeException(ex);
+                                                }
+                                            }
+                                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                            alert.setTitle("UWAGA!");
+                                            alert.setHeaderText(null);
+                                            alert.setContentText("Dodano Lek!");
+                                            alert.showAndWait();
+                                            mainPanelLek.getSearchField().setText("");
+                                        });
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                });
 
                                 mainPanelLek.getPomoc().setOnAction(e1 -> {
                                     pomoc pomocPanel = new pomoc();
-                                    pomocPanel.start(primaryStage);
+                                    scene.setRoot(pomocPanel.getView());
 
                                     pomocPanel.getWyjdz().setOnAction(a -> {
-                                        mainPanelLek.start(primaryStage);
+                                        scene.setRoot(mainPanelLek.getView());
                                     });
                                 });
 
@@ -196,33 +299,33 @@ public class logika extends Application {
                                             wiek1,
                                             plec1
                                     );
-                                    ustawieniaLekarz.start(primaryStage);
+                                    scene.setRoot(ustawieniaLekarz.getView());
 
                                     ustawieniaLekarz.getWyjdzBtn().setOnAction(actionEvent -> {
-                                        mainPanelLek.start(primaryStage);
+                                        scene.setRoot(mainPanelLek.getView());
                                     });
                                 });
 
                                 mainPanelLek.getMojeReceptaBtn().setOnAction(actionEvent -> {
                                     mojeRecepty mr = new mojeRecepty(recepta);
-                                    mr.start(primaryStage);
+                                    scene.setRoot(mr.getView());
 
                                     mr.getWyjdz().setOnAction(a -> {
-                                        mainPanelLek.start(primaryStage);
+                                        scene.setRoot(mainPanelLek.getView());
                                     });
                                 });
 
                                 mainPanelLek.getHistoryBtn().setOnAction(actionEvent -> {
                                     historiaPac hp = new historiaPac(historia);
-                                    hp.start(primaryStage);
+                                    scene.setRoot(hp.getView());
 
                                     hp.getWyjdz().setOnAction(a -> {
-                                        mainPanelLek.start(primaryStage);
+                                        scene.setRoot(mainPanelLek.getView());
                                     });
                                 });
 
                                 nowaRecepta.getWyjdzBtn().setOnAction(a1 -> {
-                                    mainPanelLek.start(primaryStage);
+                                    scene.setRoot(mainPanelLek.getView());
                                 });
                             }
                         } catch (IOException ex) {
@@ -242,6 +345,3 @@ public class logika extends Application {
         });
     }
 }
-
-
-

@@ -36,7 +36,7 @@ public class nowaRecepta {
     private static Button wyjdz = new Button("Wyjdz");
     private Button dodaj = new Button("Dodaj");
 
-    nowaRecepta(String imie, String nazwisko, String PESEL, String PESELLek) {
+    public nowaRecepta(String imie, String nazwisko, String PESEL, String PESELLek) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.PESEL = PESEL;

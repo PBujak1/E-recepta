@@ -2,6 +2,7 @@ package com.example.erecepta.lekarz;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 public class pomoc {
 
+    BorderPane root = new BorderPane();
     private Label title = new Label("Wsparcie techniczne");
     private Label subtitle = new Label("System E-recepta");
     private Label callText = new Label("ZADZWOŃ DO NAS");
@@ -24,10 +26,7 @@ public class pomoc {
 
     private Button wyjdz = new Button("Wyjdz");
 
-    public void start(Stage primaryStage) {
-
-        BorderPane root = new BorderPane();
-
+    public pomoc() {
         wyjdz.getStyleClass().add("exit-btn");
         Region spacer = new Region();
 
@@ -57,18 +56,11 @@ public class pomoc {
         );
 
         root.setCenter(center);
-
-        Scene scene = new Scene(root, 1300, 780);
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/pomoc.css").toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
     }
 
     public Button getWyjdz() {
         return wyjdz;
     }
+
+    public Parent getView() { return root; }
 }

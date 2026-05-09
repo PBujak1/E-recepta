@@ -5,6 +5,7 @@ import com.example.erecepta.logika;
 import com.example.erecepta.pacjent.nowaWizyta;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -58,21 +59,22 @@ public class mainLekPanel {
     private TextField searchField = new TextField();
     private TextField lekField = new TextField();
 
+    private VBox allergyList = new VBox(12);
+    ScrollPane contentPane = new ScrollPane();
+    List<String> MedList = new ArrayList<>();
+
     //Zmienne prawej kolumny
+    BorderPane root = new BorderPane();
     private Label alergieTitle = new Label("ALERGIE PACJENTA:");
-    private String alergia1;
     private final Label historiaTitle = new Label("Najbliższe E-wizyty:");
     private final Button zobaczWszystko = new Button("Zobacz Wszystko");
-    private String historiaPacString;
+    VBox nowyLek = new VBox(10);
 
     public mainLekPanel(String login, String password, String imie, String nazwisko) {
         this.login = login;
         this.password = password;
         this.imie = imie;
         this.nazwisko = nazwisko;
-    }
-
-    public void start(Stage primaryStage) {
 
         /*
            LEWA KOLUMNA - MENU
@@ -236,8 +238,6 @@ public class mainLekPanel {
                 dodajLekBtn
         );
 
-        List<String> MedList = new ArrayList<>();
-        VBox nowyLek = new VBox(10);
         ScrollPane lekiScrollPane = new ScrollPane(nowyLek);
         lekiScrollPane.setFitToWidth(true);
         lekiScrollPane.setPrefHeight(300);
@@ -287,7 +287,6 @@ public class mainLekPanel {
         titleBoxP.setAlignment(Pos.CENTER);
         titleBoxP.getChildren().addAll(warningIcon, allergyTitle);
 
-        VBox allergyList = new VBox(12);
         allergyList.getStyleClass().add("allergy-container");
 
         ScrollPane contentPane2 = new ScrollPane(allergyList);
@@ -305,7 +304,6 @@ public class mainLekPanel {
         VBox emptyPane = new VBox(new Label());
         emptyPane.setAlignment(Pos.TOP_CENTER);
 
-        ScrollPane contentPane = new ScrollPane();
         contentPane.setFitToWidth(true);
         VBox.setVgrow(contentPane, Priority.ALWAYS);
         contentPane.setMaxHeight(Double.MAX_VALUE);
@@ -326,7 +324,7 @@ public class mainLekPanel {
         /*
            BORDERPANE — UŁOŻENIE 3 PANELI
         */
-        BorderPane root = new BorderPane();
+
         root.setLeft(leftPanel);
         root.setCenter(centerPanel);
         root.setRight(rightPanel);
@@ -345,21 +343,7 @@ public class mainLekPanel {
         lekField.getStyleClass().add("search-field2");
         lekiScrollPane.getStyleClass().add("lek-scrollpane");
 
-        Scene scene = new Scene(root, 1300, 780); //1300, 780
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/styleLek.css").toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
         ServerConnection serverConnection = new ServerConnection(login, password);
-
-        wyloguj.setOnAction(e -> {
-            logika mainPane = new logika();
-            mainPane.start(primaryStage);
-        });
 
         nowaRecepta.setOnAction(a -> {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
@@ -380,99 +364,36 @@ public class mainLekPanel {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
             alert.showAndWait();
         });
-
-        wczytajBtn.setOnAction(e -> {
-            try {
-                String PESEL = searchField.getText();
-                String IDLekarza = serverConnection.getPacjent("getIDLekarza", login);
-                String e_wizyty = serverConnection.getPacjent("getWizyta", IDLekarza);
-                String imie1 = serverConnection.getPacjent("getImiePacjent", PESEL);
-                String nazwisko1 = serverConnection.getPacjent("getNazwiskoPacjent", PESEL);
-                String adres1 = serverConnection.getPacjent("getAdres", PESEL);
-                String telefon1 = serverConnection.getPacjent("getTelefon", PESEL);
-                String email1 = serverConnection.getPacjent("getEmail", PESEL);
-                String wiek1 = serverConnection.getPacjent("getWiek", PESEL);
-                String plec1 = serverConnection.getPacjent("getPlec", PESEL);
-                historiaPacString = serverConnection.getPacjent("getHistoriaPac", PESEL);
-                alergia1 = serverConnection.getPacjent("getAlergia", PESEL);
-
-                imieINazwiskoPacjenta.setText(imie1 + " " + nazwisko1);
-                PESELPacjenta.setText(PESEL);
-                adresPacjenta.setText(adres1);
-                plec.setText(plec1);
-                wiek.setText(wiek1);
-                telefon.setText(telefon1);
-                email.setText(email1);
-
-                System.out.println(alergia1);
-                String[] alergieTablica = alergia1.split("\\r?\\n");
-                allergyList.getChildren().clear();
-
-                for (int i = 0; i < alergieTablica.length; i++) {
-                    HBox allergyChip1 = new HBox(10);
-                    Label alergieLabel = new Label(alergieTablica[i]);
-                    allergyChip1.getChildren().addAll(alergieLabel);
-                    allergyChip1.getStyleClass().add("allergy-chip1");
-                    allergyChip1.setAlignment(Pos.CENTER);
-                    allergyList.getChildren().add(allergyChip1);
-                }
-
-                nowaRecepta.setOnAction(a -> {
-                    nowaRecepta Recepta = new nowaRecepta(imie1, nazwisko1, PESEL, login);
-                    Recepta.start(primaryStage);
-                });
-
-                zobaczWszystko.setOnAction(a -> {
-                    VBox historiaPane = new VBox(new Label(e_wizyty));
-                    System.out.print(e_wizyty);
-                    historiaPane.getStyleClass().add("historia");
-                    historiaPane.setAlignment(Pos.TOP_CENTER);
-
-                    contentPane.setContent(historiaPane);
-                });
-
-                dodajLekBtn.setOnAction(e1 -> {
-                    String tekst = lekField.getText();
-                    if (!lekField.getText().isEmpty()) {
-                        MedList.add(tekst);
-                        nowyLek.getChildren().add(new Label(MedList.size() + ". " + tekst + " (1 Op.)"));
-                        lekField.clear();
-                    } else {
-                        Alert alert = new Alert(Alert.AlertType.WARNING);
-                        alert.setTitle("Błąd danych");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Pole leku nie może być puste!");
-                        alert.showAndWait();
-                    }
-                });
-
-                wypiszBtn.setOnAction(e2 -> {
-                    for (int i = 0; i < MedList.size(); i++) {
-                        try {
-                            serverConnection.getUpdateRec("updateWszystkoRec", PESEL, MedList.get(i), "1", "Nie", login);
-                        } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        }
-                    }
-                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                    alert.setTitle("UWAGA!");
-                    alert.setHeaderText(null);
-                    alert.setContentText("Dodano Lek!");
-                    alert.showAndWait();
-                    searchField.setText("");
-                });
-            } catch (IOException ex) {
-                throw new RuntimeException(ex);
-            }
-        });
     }
+
     public Button getHistoryBtn() {return historia;}
-
     public Button getMojeReceptaBtn() { return mojeRecepty; }
-
     public Button getUstawieniaLek() { return ustawienia; }
-
     public Button getPomoc() { return pomoc; }
-
     public Button getZobaczWszystko() { return zobaczWszystko; }
+    public Button getWyloguj() { return wyloguj; }
+    public Button getWczytajBtn() { return wczytajBtn; }
+    public Button getNowaRecepta() { return nowaRecepta; }
+
+    public TextField getSearchField() { return searchField; }
+
+    public Label getImieINazwiskoPacjenta() { return imieINazwiskoPacjenta;}
+    public Label getPESELPacjenta() { return PESELPacjenta; }
+    public Label getAdresPacjenta() { return adresPacjenta; }
+    public Label getPlec() { return plec; }
+    public Label getWiek() { return wiek; }
+    public Label getTelefon() { return telefon; }
+    public Label getEmail() { return email; }
+
+    public VBox getAllergyList() { return allergyList; }
+
+    public Parent getView() { return root; }
+
+    public Button getDodajLekBtn() { return dodajLekBtn; }
+    public TextField getLekField() { return lekField; }
+
+    public Button getWypiszBtn() { return wypiszBtn; }
+    public ScrollPane getContentPane() { return contentPane; }
+    public List<String> getMedList() { return MedList; }
+    public VBox getNowyLek() { return nowyLek; }
 }

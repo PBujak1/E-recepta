@@ -4,28 +4,29 @@ import com.example.erecepta.ServerConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class ustawieniaLek {
 
-    private Label imie;
-    private Label nazwisko;
-    private Label PESEL;
-    private String PESELString;
-    private String nazwiskoString;
-    private Label adres;
-    private Label telefon;
-    private Label email;
-    private Label wiek;
-    private Label plec;
+    private VBox root = new VBox();
+    private Label imie1;
+    private Label nazwisko1;
+    private Label PESEL1;
+    private String PESELString1;
+    private String nazwiskoString1;
+    private Label adres1;
+    private Label telefon1;
+    private Label email1;
+    private Label wiek1;
+    private Label plec1;
     private Label stareImieLabel = new Label("Stare Imie:");
     private Label stareNazwiskoLabel = new Label("Stare Nazwisko:");
     private Label staryPeselLabel = new Label("Stary Pesel:");
@@ -68,20 +69,17 @@ public class ustawieniaLek {
     private Label title = new Label("Ustawienia");
 
     public ustawieniaLek(String imie, String nazwisko, String PESEL, String adres, String telefon, String email, String wiek, String plec) {
-        this.imie = new Label(imie);
-        this.nazwisko = new Label(nazwisko);
-        this.PESEL = new Label(PESEL);
-        this.PESELString = PESEL;
-        this.nazwiskoString = nazwisko;
-        this.adres = new Label(adres);
-        this.telefon = new Label(telefon);
-        this.email = new Label(email);
-        this.wiek = new Label(wiek);
-        this.plec = new Label(plec);
-    }
+        this.imie1 = new Label(imie);
+        this.nazwisko1 = new Label(nazwisko);
+        this.PESEL1 = new Label(PESEL);
+        this.PESELString1 = PESEL;
+        this.nazwiskoString1 = nazwisko;
+        this.adres1 = new Label(adres);
+        this.telefon1 = new Label(telefon);
+        this.email1 = new Label(email);
+        this.wiek1 = new Label(wiek);
+        this.plec1 = new Label(plec);
 
-    public void start(Stage primaryStage) {
-        VBox root = new VBox();
         root.setPadding(new Insets(10, 10, 10, 10));
 
         VBox titlePane = new VBox();
@@ -120,14 +118,14 @@ public class ustawieniaLek {
         gridPane.add(staryWiekLabel, 0, 6);
         gridPane.add(staraPlecLabel, 0, 7);
 
-        gridPane.add(imie, 1, 0);
-        gridPane.add(nazwisko, 1, 1);
-        gridPane.add(PESEL, 1, 2);
-        gridPane.add(adres, 1, 3);
-        gridPane.add(telefon, 1, 4);
-        gridPane.add(email, 1, 5);
-        gridPane.add(wiek, 1, 6);
-        gridPane.add(plec, 1, 7);
+        gridPane.add(imie1, 1, 0);
+        gridPane.add(nazwisko1, 1, 1);
+        gridPane.add(PESEL1, 1, 2);
+        gridPane.add(adres1, 1, 3);
+        gridPane.add(telefon1, 1, 4);
+        gridPane.add(email1, 1, 5);
+        gridPane.add(wiek1, 1, 6);
+        gridPane.add(plec1, 1, 7);
 
         gridPane.add(noweImieLabel, 2, 0);
         gridPane.add(noweNazwiskoLabel, 2, 1);
@@ -166,14 +164,6 @@ public class ustawieniaLek {
                 titlePane,
                 mainPane
         );
-        Scene scene = new Scene(root, 1300, 780);
-        scene.getStylesheets().add(
-                getClass().getResource("/css/mainPanels/ustawieniaLek.css").toExternalForm()
-        );
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
 
         akceptuj.setOnAction(event -> {
             noweImie = imieField.getText();
@@ -185,9 +175,9 @@ public class ustawieniaLek {
             nowyWiek = wiekField.getText();
             nowaPlec = plecField.getText();
 
-            ServerConnection serverConnection = new ServerConnection(PESELString, nazwiskoString);
+            ServerConnection serverConnection = new ServerConnection(PESELString1, nazwiskoString1);
             try {
-                serverConnection.getUpdateLek("updateWszystkoLek", PESELString, noweImie, noweNazwisko
+                serverConnection.getUpdateLek("updateWszystkoLek", PESELString1, noweImie, noweNazwisko
                 ,nowyPesel, nowyAdres, nowyTelefon, nowyEmail, nowyWiek, nowaPlec);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("UWAGA!");
@@ -201,4 +191,6 @@ public class ustawieniaLek {
     }
 
     public Button getWyjdzBtn() {return wyjdz;}
+
+    public Parent getView() { return root; }
 }

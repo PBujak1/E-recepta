@@ -78,7 +78,7 @@ public class logFX{
 
         //panel który zawiera przyciski do wyboru jako co chcemy się zalogować
         HBox leftPanel = new HBox(5);
-        leftPanel.getStyleClass().add("left-panel");
+        leftPanel.getStyleClass().add("left-panels");
         leftPanel.setAlignment(Pos.CENTER);
         zalogujPacjent.setMaxWidth(Double.MAX_VALUE);
         zalogujLekarz.setMaxWidth(Double.MAX_VALUE);
