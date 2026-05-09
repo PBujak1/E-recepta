@@ -36,7 +36,8 @@ public class logika extends Application {
                 getClass().getResource("/css/mainPacPanels/nowaWizyta.css").toExternalForm(),
                 getClass().getResource("/css/logPanels/styleStart.css").toExternalForm(),
                 getClass().getResource("/css/logPanels/styleLog.css").toExternalForm(),
-                getClass().getResource("/css/mainPanels/stylePac.css").toExternalForm()
+                getClass().getResource("/css/mainPanels/stylePac.css").toExternalForm(),
+                getClass().getResource("/css/tworzenieKont/noweKontoPac.css").toExternalForm()
         );
 
         primaryStage.setScene(scene);
@@ -49,7 +50,13 @@ public class logika extends Application {
 
         logFX1.getStworzKontoPacjenta().setOnAction(e -> {
             stworzKontoPac stworzKontoPac = new stworzKontoPac();
-            stworzKontoPac.start(primaryStage);
+            scene.setRoot(stworzKontoPac.getView());
+
+            stworzKontoPac.getExitButton().setOnAction(actionEvent -> {
+                scene.setRoot(logFX1.getView());
+                logFX1.getLoginTextField().clear();
+                logFX1.getPasswordField().clear();
+            });
         });
 
         logFX1.getStwórzKontoLekarza().setOnAction(e -> {

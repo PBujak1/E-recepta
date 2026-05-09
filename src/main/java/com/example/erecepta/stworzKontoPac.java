@@ -2,6 +2,7 @@ package com.example.erecepta;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
@@ -11,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class stworzKontoPac {
+    VBox root = new VBox(30);
 
     // ===== Dane osobowe =====
     private Label labelTitle = new Label("Tworzenie konta");
@@ -39,7 +41,7 @@ public class stworzKontoPac {
     private Button buttonStworzKonto = new Button("Stwórz Konto");
     public Button buttonWyloguj = new Button("Wyjdź");
 
-    public void start(Stage primaryStage) {
+    public stworzKontoPac() {
 
         // Placeholdery
         textImie.setPromptText("Np. Jan");
@@ -118,7 +120,7 @@ public class stworzKontoPac {
         );
 
         // ===== Root =====
-        VBox root = new VBox(30);
+
         root.setPadding(new Insets(30));
         root.setAlignment(Pos.TOP_LEFT);
 
@@ -128,17 +130,9 @@ public class stworzKontoPac {
                 Vkontakt
         );
 
-        Scene scene = new Scene(root, 1300, 780); // jak w Twoim kodzie
-
-        scene.getStylesheets().add(getClass().getResource("/css/tworzenieKont/noweKontoPac.css").toExternalForm());
-
-        primaryStage.setTitle("E-Recepta");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
         buttonWyloguj.setOnAction(e -> {
             logika mainPanel = new logika();
-            mainPanel.start(primaryStage);
+            mainPanel.start(new Stage());
         });
     }
 
@@ -170,7 +164,9 @@ public class stworzKontoPac {
         return buttonStworzKonto;
     }
 
-    public Button getSubmitButton() {
+    public Button getExitButton() {
         return buttonWyloguj;
     }
+
+    public Parent getView() { return root; }
 }
