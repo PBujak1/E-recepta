@@ -38,7 +38,6 @@ public class logika extends Application {
         Scene scene = new Scene(logFX1.getView());
 
         scene.getStylesheets().addAll(
-                Objects.requireNonNull(getClass().getResource("/css/mainPacPanels/nowaWizyta.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/css/logPanels/styleStart.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/css/logPanels/styleLog.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/css/mainPacPanels/stylePac.css")).toExternalForm(),
@@ -49,7 +48,8 @@ public class logika extends Application {
                 Objects.requireNonNull(getClass().getResource("/css/mainPanels/pomoc.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/css/mainPanels/mojaHistoria.css")).toExternalForm(),
                 Objects.requireNonNull(getClass().getResource("/css/mainPanels/mojeRecepty.css")).toExternalForm(),
-                Objects.requireNonNull(getClass().getResource("/css/mainPanels/nowaRecepta.css")).toExternalForm()
+                Objects.requireNonNull(getClass().getResource("/css/mainPanels/nowaRecepta.css")).toExternalForm(),
+                Objects.requireNonNull(getClass().getResource("/css/mainPacPanels/nowaWizyta.css")).toExternalForm()
         );
 
         primaryStage.setScene(scene);

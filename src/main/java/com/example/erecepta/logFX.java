@@ -44,21 +44,17 @@ public class logFX{
         //Główny panel do którego dodajemy inne mniejsze
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
-        root.getStyleClass().add("root-panel");
 
         //Panel ostatni z przyciskiem do zamknięcia aplikacji oraz resetem hasła
         HBox dolnyPanel = new HBox(600);
         dolnyPanel.setAlignment(Pos.CENTER);
-        dolnyPanel.getStyleClass().add("dolnyPanel");
         //Przycisk
         HBox wyjdzHbox = new HBox();
         wyjdzHbox.setAlignment(Pos.CENTER);
-        wyjdz.getStyleClass().add("exit-btn");
         wyjdzHbox.getChildren().addAll(wyjdz);
         //napis do resetowania
         HBox resetujHbox = new HBox();
         resetujHbox.setAlignment(Pos.CENTER);
-        resetHasla.getStyleClass().add("reset-btn");
         resetujHbox.getChildren().add(resetHasla);
         dolnyPanel.getChildren().addAll(resetujHbox, wyjdzHbox);
 
@@ -78,7 +74,6 @@ public class logFX{
 
         //panel który zawiera przyciski do wyboru jako co chcemy się zalogować
         HBox leftPanel = new HBox(5);
-        leftPanel.getStyleClass().add("left-panels");
         leftPanel.setAlignment(Pos.CENTER);
         zalogujPacjent.setMaxWidth(Double.MAX_VALUE);
         zalogujLekarz.setMaxWidth(Double.MAX_VALUE);
@@ -97,19 +92,16 @@ public class logFX{
 
         // Panel który zawiera napis e-recepta i to z zalogowaniem
         VBox headLog = new VBox(40);
-        headLog.getStyleClass().add("mode-pane");
+        VBox.setVgrow(headLog, Priority.ALWAYS);
 
         //Panel który zawiera napis e-recepta
         HBox headMode = new HBox();
         headMode.setAlignment(Pos.TOP_CENTER);
         headMode.getChildren().add(mode);
         mode.setFont(Font.font("Manrope", 20));
-        headMode.getStyleClass().add("mode");
 
         //Panel do którego dodajemy wprowadzenie loginu i hasła
         GridPane gridPane = new GridPane();
-        text1.getStyleClass().add("text1");
-        text2.getStyleClass().add("text2");
         //Konfiguracja Kolumn
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setHalignment(HPos.RIGHT); // tekst wyrównany do prawej
@@ -124,8 +116,6 @@ public class logFX{
         passwordField1.setMaxWidth(Double.MAX_VALUE);
         button1.setMaxWidth(Double.MAX_VALUE);
         button2.setMaxWidth(Double.MAX_VALUE);
-        text1.getStyleClass().add("login-label");
-        text2.getStyleClass().add("haslo-label");
         gridPane.add(text1, 0, 0);
         gridPane.add(textField1, 1, 0);
         gridPane.add(text2, 0, 1);
@@ -137,7 +127,6 @@ public class logFX{
         button2.setMaxWidth(Double.MAX_VALUE);
 
         headLog.getChildren().addAll(headMode, gridPane);
-        gridPane.getStyleClass().add("grid-pane");
 
         root.getChildren().addAll(
                 header,
@@ -166,6 +155,21 @@ public class logFX{
             mode.setText("Zaloguj jako Lekarz");
             chosenMode = 2;
         });
+
+        root.getStyleClass().add("logFX-root-panel");
+        dolnyPanel.getStyleClass().add("logFX-dolnyPanel");
+        wyjdz.getStyleClass().add("logFX-exit-btn");
+        resetHasla.getStyleClass().add("logFX-reset-btn");
+        leftPanel.getStyleClass().add("logFX-left-panels");
+        headLog.getStyleClass().add("logFX-mode-pane");
+        headMode.getStyleClass().add("logFX-mode");
+        text1.getStyleClass().add("logFX-text1");
+        text2.getStyleClass().add("logFX-text2");
+        text1.getStyleClass().add("logFX-login-label");
+        text2.getStyleClass().add("logFX-haslo-label");
+        passwordField1.getStyleClass().add("logFX-password-field");
+        textField1.getStyleClass().add("logFX-textfield");
+        gridPane.getStyleClass().add("logFX-grid-pane");
     }
 
     public String getLogin() {

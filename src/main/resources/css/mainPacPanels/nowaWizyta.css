@@ -65,7 +65,8 @@
  */
 .date {
     -fx-background-color: #2C3E50;
-    -fx-pref-height: 400;
+    -fx-pref-height: 100;
+    -fx-max-height: 100;
     -fx-alignment: center;
     -fx-padding: 20;
     -fx-border-insets: 20;
@@ -79,7 +80,7 @@
 }
 
 .date-picker .text-field {
-    -fx-background-color: transparent;
+    -fx-background-color: white;
     -fx-text-fill: black;
     -fx-font-size: 14px;
 }
@@ -192,13 +193,8 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.search-field1, .search-field2 {
-    -fx-background-color: #ECF0F1;
-    -fx-background-radius: 5;
-    -fx-padding: 10;
-    -fx-font-size: 16px;
-    -fx-pref-height: 50px;
-    -fx-border-color: transparent;
+.top-panel .search-field {
+    -fx-fill: black;
 }
 
 /*

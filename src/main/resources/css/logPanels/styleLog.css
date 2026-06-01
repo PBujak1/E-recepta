@@ -1,46 +1,44 @@
 
-.root {
+.logFX-root {
     -fx-background-color: linear-gradient(to bottom , white, #34495E);
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.mode-pane {
+.logFX-mode-pane {
     -fx-background-color: #2C3E50;
     -fx-padding: 50;
     -fx-vgap: 10;
     -fx-hgap: 10;
     -fx-background-radius: 15;
-    -fx-max-height: 300;
-    -fx-pref-height: 300;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
     -fx-alignment: CENTER;
 }
 
-.mode .label {
+.logFX-mode .label {
     -fx-font-size: 20px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.grid-pane {
+.logFX-grid-pane {
     -fx-vgap: 10;
     -fx-hgap: 10;
     -fx-alignment: CENTER;
 }
 
-.grid-pane .text1{
+.logFX-grid-pane .logFX-text1{
     -fx-font-size: 20px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.grid-pane .text2 {
+.logFX-grid-pane .logFX-text2 {
     -fx-font-size: 20px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.text-field, .password-field {
+.logFX-textfield, .logFX-password-field{
     -fx-background-color: #ECF0F1;
     -fx-background-radius: 5;
     -fx-padding: 10;
@@ -48,7 +46,7 @@
     -fx-border-color: transparent;
 }
 
-.grid-pane .button {
+.logFX-grid-pane .button {
     -fx-background-color: #2980B9;
     -fx-text-fill: white;
     -fx-font-size: 18px;
@@ -58,7 +56,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.grid-pane .button:hover {
+.logFX-grid-pane .button:hover {
     -fx-background-color: #3498DB;
 }
 

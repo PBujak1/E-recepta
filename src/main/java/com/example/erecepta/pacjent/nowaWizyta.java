@@ -25,8 +25,9 @@ public class nowaWizyta {
     private final Label titleLabel = new Label("Formularz E-wyzyty");
 
     //Top panel
-    private final FontAwesomeIconView searchIcon = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
-    private final TextField searchField1 = new TextField();
+    private final FontAwesomeIconView searchIcon1 = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
+    private final FontAwesomeIconView searchIcon2 = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
+    private final TextField searchField1 = new TextField(); 
     private final TextField searchField2 = new TextField();
 
     private final Button accpetDateBtn = new Button("Akceptuj");
@@ -64,7 +65,7 @@ public class nowaWizyta {
          */
         HBox searchBox1 = new HBox(10);
         searchBox1.setAlignment(Pos.CENTER);
-        searchBox1.getChildren().addAll(searchIcon, searchField1, acceptBtn1);
+        searchBox1.getChildren().addAll(searchIcon1, searchField1, acceptBtn1);
         HBox.setHgrow(searchField1, Priority.ALWAYS);
 
         suggestrions(lekarze, searchField1);
@@ -93,7 +94,7 @@ public class nowaWizyta {
             Panel wybierający datę oraz specjalizację
          */
         VBox innerBoxDate = new VBox(10);
-        innerBoxDate.setAlignment(Pos.CENTER);
+        innerBoxDate.setAlignment(Pos.TOP_CENTER);
 
         //Panel do wybrania daty
         DatePicker datePicker = new DatePicker();
@@ -104,13 +105,13 @@ public class nowaWizyta {
         accpetDateBtn.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(accpetDateBtn, Priority.ALWAYS);
         HBox date = new HBox(10);
-        date.setAlignment(Pos.CENTER_LEFT);
+        date.setAlignment(Pos.TOP_CENTER);
         date.getChildren().addAll(calendarIcon, datePicker );
 
         //Panel do wybrania specjalizacji
         HBox searchBox2 = new HBox(10);
         searchBox2.setAlignment(Pos.CENTER_LEFT);
-        searchBox2.getChildren().addAll(searchIcon, searchField2);
+        searchBox2.getChildren().addAll(searchIcon2, searchField2);
         searchField2.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(searchField2, Priority.ALWAYS);
         acceptBtn2.setMaxWidth(Double.MAX_VALUE);
@@ -201,6 +202,7 @@ public class nowaWizyta {
             Utworzenie panelu wybierania daty po jego wcześniejszym wyszukaniu
          */
         HBox lekarz = new HBox(10);
+        VBox.setVgrow(lekarz, Priority.ALWAYS);
         lekarz.setAlignment(Pos.CENTER_LEFT);
         lekarz.getChildren().addAll(
                 innerBoxDate,
@@ -305,8 +307,10 @@ public class nowaWizyta {
         iconUser.setGlyphSize(60);
         iconUser.setVisible(true);
         iconUser.setStyleClass("my-user-icon");
-        searchIcon.setGlyphSize(30);
-        searchIcon.setStyleClass("my-search-icon");
+        searchIcon1.setGlyphSize(30);
+        searchIcon1.setStyleClass("my-search-icon");
+        searchIcon2.setGlyphSize(30);
+        searchIcon2.setStyleClass("my-search-icon");
 
         exitButton.getStyleClass().add("exit-btn");
         titleLabel.getStyleClass().add("title-label");

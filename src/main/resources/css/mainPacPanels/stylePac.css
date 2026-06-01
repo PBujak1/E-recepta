@@ -134,9 +134,17 @@
     -fx-fill: white;
 }
 
+.default-color0.chart-bar {
+    -fx-bar-fill: rgba(15, 159, 15, 0.94);
+}
+
 .bar-chart .axis, .axis-label, .chart-legend-item {
     -fx-text-fill: white;
     -fx-tick-label-fill: white;
+}
+
+.default-color0.chart-pie {
+    -fx-pie-color: green;
 }
 
 .pie-chart .chart-pie-label, .chart-legend-item {

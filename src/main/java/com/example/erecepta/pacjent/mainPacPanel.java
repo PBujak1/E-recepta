@@ -171,6 +171,7 @@ public class mainPacPanel {
         VBox mainButtonBox = new VBox();
         VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
         HBox charts = new HBox(10);
+        VBox.setVgrow(charts, Priority.ALWAYS);
         Region spacer2 = new Region();
         CategoryAxis xAxis = new CategoryAxis();
         NumberAxis yAxis = new NumberAxis();
@@ -212,6 +213,7 @@ public class mainPacPanel {
         pieChart.getStyleClass().add("pie-chart");
         mainButtonBox.getStyleClass().add("mainButtonBox");
         mainButtonBox.setAlignment(Pos.TOP_CENTER);
+        VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
         charts.getChildren().addAll(
                 barChart,
                 pieChart
@@ -300,9 +302,10 @@ public class mainPacPanel {
         GridPane.setHgrow(historia, Priority.ALWAYS);
         GridPane.setHgrow(dawkowanie, Priority.ALWAYS);
 
+        Region spacer1 = new Region();
         mainButtonBox.getChildren().addAll(
                 charts,
-                spacer2,
+                spacer2, spacer1,
                 mainButtonPanel
         );
 
