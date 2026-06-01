@@ -74,7 +74,6 @@ public class nowaWizyta {
             Panel do wybrania formy e-wizyty
          */
         VBox selectionBox = new VBox(15);
-        selectionBox.getStyleClass().add("selection");
         HBox selection = new HBox(20);
         selection.setAlignment(Pos.CENTER);
 
@@ -143,9 +142,6 @@ public class nowaWizyta {
         Label hDane = new Label("dane");
         Label hOpis = new Label("Opis");
 
-        hProfil.getStyleClass().add("header-label");
-        hDane.getStyleClass().add("header-label");
-        hOpis.getStyleClass().add("header-label");
 
         // Ustawienie szerokości kolumn (procentowo)
         ColumnConstraints col1 = new ColumnConstraints();
@@ -159,18 +155,15 @@ public class nowaWizyta {
         // Zawartość kolumny 1: Ikona i napis "Profil"
         VBox profilBox = new VBox(10, iconUser);
         profilBox.setAlignment(Pos.CENTER);
-        profilBox.getStyleClass().add("cell-border");
 
         // Zawartość kolumny 2: Dane tekstowe
         VBox daneBox = new VBox(5);
         daneBox.setAlignment(Pos.CENTER_LEFT);
-        daneBox.getStyleClass().addAll("cell-border", "padding-left");
 
         // Zawartość kolumny 3: Opis
         Label opisLabel = new Label("Lekarz kardiologii z 20 letnim doświadczeniem...");
         opisLabel.setWrapText(true);
         VBox opisBox = new VBox(opisLabel);
-        opisBox.getStyleClass().addAll("cell-border", "padding-left");
 
         //ustawienie, aby kolumny rozciągały się na całą wysokość
         profilBox.setMaxHeight(Double.MAX_VALUE);
@@ -213,9 +206,6 @@ public class nowaWizyta {
         innerBox.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(innerBox, Priority.ALWAYS);
         HBox.setHgrow(innerBoxDate, Priority.ALWAYS);
-        lekarz.getStyleClass().add("lekarz");
-        innerBoxDate.getStyleClass().add("inner-box-date");
-        innerBox.getStyleClass().add("inner-box-lekarz");
 
         root.getChildren().addAll(
                 titleLabel,
@@ -288,39 +278,50 @@ public class nowaWizyta {
         /*
             Ustawienie wyglądu ikon
          */
-        root.getStyleClass().add("main-panel");
-        searchField1.setPromptText("Wyszukaj lekarza");
-        searchField1.getStyleClass().add("search-field1");
-        searchField2.setPromptText("Wyszukaj specjalizację");
-        searchField2.getStyleClass().add("search-field2");
+        root.getStyleClass().add("nowaWizyta-main-panel");
+        searchField1.setPromptText("nowaWizyta-Wyszukaj lekarza");
+        searchField1.getStyleClass().add("nowaWizyta-search-field1");
+        searchField2.setPromptText("nowaWizyta-Wyszukaj specjalizację");
+        searchField2.getStyleClass().add("nowaWizyta-search-field2");
 
-        acceptBtn1.getStyleClass().add("acceptBtn1");
-        searchBox1.getStyleClass().add("top-panel");
-        acceptBtn2.getStyleClass().add("acceptBtn2");
-        accpetDateBtn.getStyleClass().add("accpetDateBtn");
+        acceptBtn1.getStyleClass().add("nowaWizyta-acceptBtn1");
+        searchBox1.getStyleClass().add("nowaWizyta-top-panel");
+        acceptBtn2.getStyleClass().add("nowaWizyta-acceptBtn2");
+        accpetDateBtn.getStyleClass().add("nowaWizyta-accpetDateBtn");
 
-        date.getStyleClass().add("date");
-        searchBox2.getStyleClass().add("search-panel2");
-        specjalnoscLabel.getStyleClass().add("specjalnoscLabel");
-        wyborDaty.getStyleClass().add("wyborDatyLabel");
+        date.getStyleClass().add("nowaWizyta-date");
+        searchBox2.getStyleClass().add("nowaWizyta-search-panel2");
+        specjalnoscLabel.getStyleClass().add("nowaWizyta-specjalnoscLabel");
+        wyborDaty.getStyleClass().add("nowaWizyta-wyborDatyLabel");
 
         iconUser.setGlyphSize(60);
         iconUser.setVisible(true);
-        iconUser.setStyleClass("my-user-icon");
+        iconUser.setStyleClass("nowaWizyta-my-user-icon");
         searchIcon1.setGlyphSize(30);
-        searchIcon1.setStyleClass("my-search-icon");
+        searchIcon1.setStyleClass("nowaWizyta-my-search-icon");
         searchIcon2.setGlyphSize(30);
-        searchIcon2.setStyleClass("my-search-icon");
+        searchIcon2.setStyleClass("nowaWizyta-my-search-icon");
 
-        exitButton.getStyleClass().add("exit-btn");
-        titleLabel.getStyleClass().add("title-label");
+        exitButton.getStyleClass().add("nowaWizyta-exit-btn");
+        titleLabel.getStyleClass().add("nowaWizyta-title-label");
 
-        daneBox.getStyleClass().add("dane-lekarza");
-        datePicker.getStyleClass().add("date-picker");
-        calendarIcon.getStyleClass().add("calendar-icon");
+        daneBox.getStyleClass().add("nowaWizyta-dane-lekarza");
+        datePicker.getStyleClass().add("nowaWizyta-date-picker");
+        calendarIcon.getStyleClass().add("nowaWizyta-calendar-icon");
         calendarIcon.setGlyphSize(30);
 
-        tabelaLekarza.getStyleClass().add("tabela-lekarza");
+        tabelaLekarza.getStyleClass().add("nowaWizyta-tabela-lekarza");
+        selectionBox.getStyleClass().add("nowaWizyta-selection");
+
+        hProfil.getStyleClass().add("nowaWizyta-header-label");
+        hDane.getStyleClass().add("nowaWizyta-header-label");
+        hOpis.getStyleClass().add("nowaWizyta-header-label");
+        profilBox.getStyleClass().add("cell-border");
+        daneBox.getStyleClass().addAll("nowaWizyta-cell-border", "nowaWizyta-padding-left");
+        opisBox.getStyleClass().addAll("nowaWizyta-cell-border", "nowaWizyta-padding-left");
+        lekarz.getStyleClass().add("nowaWizyta-lekarz");
+        innerBoxDate.getStyleClass().add("nowaWizyta-inner-box-date");
+        innerBox.getStyleClass().add("nowaWizyta-inner-box-lekarz");
     }
 
     public static void suggestrions(List<String> lekarze, TextField searchField) {

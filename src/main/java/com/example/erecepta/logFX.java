@@ -98,7 +98,7 @@ public class logFX{
         HBox headMode = new HBox();
         headMode.setAlignment(Pos.TOP_CENTER);
         headMode.getChildren().add(mode);
-        mode.setFont(Font.font("Manrope", 20));
+        mode.setFont(Font.font("Manrope", 30));
 
         //Panel do którego dodajemy wprowadzenie loginu i hasła
         GridPane gridPane = new GridPane();

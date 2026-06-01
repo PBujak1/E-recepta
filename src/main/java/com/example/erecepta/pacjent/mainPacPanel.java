@@ -53,7 +53,7 @@ public class mainPacPanel {
 
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
-        root.getStyleClass().add("main-panel");
+
 
         ServerConnection serverConnection = new ServerConnection(login, password);
         String daneWizyty = serverConnection.getPacjent("getWizytaPacjenta", password);
@@ -83,7 +83,7 @@ public class mainPacPanel {
             Label imieNazwisko = new Label(nazwa);
 
             nameBox.setAlignment(Pos.CENTER_LEFT);
-            nameBox.getStyleClass().add("nameBox");
+
             nameBox.getChildren().addAll(
                     profileIcon,
                     imieNazwisko,
@@ -103,7 +103,7 @@ public class mainPacPanel {
             Label imieNazwisko = new Label(nazwa);
 
             nameBox.setAlignment(Pos.CENTER_LEFT);
-            nameBox.getStyleClass().add("nameBox");
+
             nameBox.getChildren().addAll(
                     profileIcon,
                     imieNazwisko,
@@ -116,13 +116,16 @@ public class mainPacPanel {
         Kolejny panel górny który zawiera powiadomienia oraz przycisk do wypisywania e-recepty
          */
         VBox warningsBox = new VBox(10);
+
         for (int i = 1; i < warningLabel.length ; i++) {
             HBox warningBox = new HBox(10);
             warningBox.setAlignment(Pos.CENTER_LEFT);
-            warningBox.getStyleClass().add("warningBox");
+            warningBox.getStyleClass().add("mainPacPanel-warningBox");
+
             FontAwesomeIconView warningIcon = new FontAwesomeIconView(FontAwesomeIcon.WARNING);
+            warningIcon.getStyleClass().add("mainPacPanel-warningIcon");
             warningIcon.setFill(Color.ORANGE);
-            warningIcon.getStyleClass().add("warningIcon");
+
             warningBox.getChildren().addAll(warningIcon, warningLabel[i]);
             warningsBox.getChildren().add(warningBox);
         }
@@ -131,12 +134,13 @@ public class mainPacPanel {
 
         VBox nowaReceptaBox = new VBox(10);
         VBox.setVgrow(nowaReceptaBox, Priority.ALWAYS);
+
         for (int i = 0; i < notificationLabel.length; i++) {
             HBox nowaReceptaView = new HBox(10);
             nowaReceptaView.setMaxWidth(Double.MAX_VALUE);
             HBox.setHgrow(nowaReceptaView, Priority.ALWAYS);
             nowaReceptaView.setAlignment(Pos.CENTER_LEFT);
-            nowaReceptaView.getStyleClass().add("nowaReceptaBox");
+            nowaReceptaView.getStyleClass().add("mainPacPanel-nowaReceptaBox");
             Image newDocumentImage = new Image(
                     getClass().getResourceAsStream("/icons/new-document.png")
             );
@@ -152,7 +156,7 @@ public class mainPacPanel {
         VBox receptyBox = new VBox(20);
         receptyBox.setAlignment(Pos.CENTER);
         VBox.setVgrow(receptyBox, Priority.ALWAYS);
-        receptyBox.getStyleClass().add("receptyBox");
+
         receptyBox.getChildren().addAll(
                 warningsBox,new Separator(),
                 nowaReceptaBox
@@ -162,7 +166,7 @@ public class mainPacPanel {
         VBox.setVgrow(receptyScrollPane, Priority.ALWAYS);
         receptyScrollPane.setFitToWidth(true);
         receptyScrollPane.setFitToHeight(true);
-        receptyScrollPane.getStyleClass().add("receptyScrollPane");
+
 
 
         /*
@@ -209,9 +213,8 @@ public class mainPacPanel {
         }
         pieChart.setLegendVisible(false);
 
-        barChart.getStyleClass().add("bar-chart");
-        pieChart.getStyleClass().add("pie-chart");
-        mainButtonBox.getStyleClass().add("mainButtonBox");
+
+
         mainButtonBox.setAlignment(Pos.TOP_CENTER);
         VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
         charts.getChildren().addAll(
@@ -311,11 +314,23 @@ public class mainPacPanel {
 
         HBox wylogujBox = new HBox();
         wylogujBox.setAlignment(Pos.BOTTOM_LEFT);
-        wylogujBox.getStyleClass().add("wylogujBox");
+
         wylogujBox.getChildren().add(wyloguj);
         /*
            SCENA
         */
+        root.getStyleClass().add("mainPacPanel-main-panel");
+        nameBox.getStyleClass().add("mainPacPanel-nameBox");
+        nameBox.getStyleClass().add("mainPacPanel-nameBox");
+        receptyBox.getStyleClass().add("mainPacPanel-receptyBox");
+        receptyScrollPane.getStyleClass().add("mainPacPanel-receptyScrollPane");
+        barChart.getStyleClass().add("mainPacPanel-bar-chart");
+        pieChart.getStyleClass().add("mainPacPanel-pie-chart");
+        mainButtonBox.getStyleClass().add("mainPacPanel-mainButtonBox");
+        wylogujBox.getStyleClass().add("mainPacPanel-wylogujBox");
+        profileIcon.getStyleClass().add("mainPacPanel-profileIcon");
+        belloIcon.getStyleClass().add("mainPacPanel-belloIcon");
+
         boczek.setAlignment(Pos.TOP_CENTER);
         boczek.getChildren().addAll(
                 nameBox, new Separator(),
@@ -327,9 +342,9 @@ public class mainPacPanel {
                 receptyScrollPane
         );
 
-        profileIcon.getStyleClass().add("profileIcon");
+
         profileIcon.setGlyphSize(60);
-        belloIcon.getStyleClass().add("belloIcon");
+
         belloIcon.setGlyphSize(60);
     }
     public Button getWizytaButton() {

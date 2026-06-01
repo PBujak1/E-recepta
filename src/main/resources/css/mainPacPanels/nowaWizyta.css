@@ -1,4 +1,4 @@
-.main-panel {
+.nowaWizyta-main-panel {
     -fx-padding: 20;
     -fx-border-insets: 20;
     -fx-background-color: linear-gradient(to bottom , white, #34495E);
@@ -6,7 +6,7 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.title-label {
+.nowaWizyta-title-label {
     -fx-text-fill: Black;
     -fx-font-weight: bold;
     -fx-font-size: 30;
@@ -16,7 +16,7 @@
 /*
     Panel centralny
  */
-.selection {
+.nowaWizyta-selection {
     -fx-background-color: #2C3E50;
     -fx-alignment: center;
     -fx-padding: 20;
@@ -25,14 +25,14 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.selection .label {
+.nowaWizyta-selection .label {
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 20;
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.selection .radio-button {
+.nowaWizyta-selection .radio-button {
     -fx-background-color: #212F3D;
     -fx-border-color: #455A64;
     -fx-border-radius: 15;
@@ -43,8 +43,8 @@
     -fx-min-height: 50px;
 }
 
-.selection .radio-button .radio,
-.selection .radio-button .radio .dot {
+.nowaWizyta-selection .radio-button .radio,
+.nowaWizyta-selection .radio-button .radio .dot {
     -fx-background-color: transparent;
     -fx-background-image: null;
     -fx-padding: 0;
@@ -54,7 +54,7 @@
     -fx-max-width: 0;
 }
 
-.selection .radio-button:selected {
+.nowaWizyta-selection .radio-button:selected {
     -fx-background-color: black;
     -fx-background-radius: 15;
     -fx-text-fill: white;
@@ -63,7 +63,7 @@
 /*
     Panel wybierania daty terminu
  */
-.date {
+.nowaWizyta-date {
     -fx-background-color: #2C3E50;
     -fx-pref-height: 100;
     -fx-max-height: 100;
@@ -74,31 +74,31 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.date-picker {
+.nowaWizyta-date-picker {
     -fx-background-color: white;
     -fx-pref-height: 30px;
 }
 
-.date-picker .text-field {
+.nowaWizyta-date-picker .text-field {
     -fx-background-color: white;
     -fx-text-fill: black;
     -fx-font-size: 14px;
 }
 
-.date-picker .arrow-button {
+.nowaWizyta-date-picker .arrow-button {
     -fx-background-color: #4a90e2;
     -fx-background-radius: 0 10 10 0;
 }
 
-.date-picker .arrow-button:hover {
+.nowaWizyta-date-picker .arrow-button:hover {
     -fx-background-color: #5aa0ff;
 }
 
-.date-picker .arrow {
+.nowaWizyta-date-picker .arrow {
     -fx-background-color: white;
 }
 
-.inner-box-date, .inner-box-lekarz {
+.nowaWizyta-inner-box-date, .nowaWizyta-inner-box-lekarz {
     -fx-background-color: #3E5A72;
     -fx-background-radius: 10;
     -fx-border-color: black;
@@ -110,7 +110,7 @@
 /*
     Panel dla wybioru lekarza
  */
-.lekarz{
+.nowaWizyta-lekarz{
     -fx-background-color: #2C3E50;
     -fx-pref-height: 400;
     -fx-alignment: center;
@@ -120,21 +120,21 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.my-search-icon {
+.nowaWizyta-my-search-icon {
     -fx-fill: white;
     -fx-glyph-size: 16px;
 }
 
-.my-user-icon,.calendar-icon {
+.nowaWizyta-my-user-icon,.nowaWizyta-calendar-icon {
     -fx-fill: white;
     -fx-glyph-size: 30px;
 }
 
-.dane-lekarza {
+.nowaWizyta-dane-lekarza {
     -fx-pref-height: 150;
 }
 
-.dane-lekarza .label, .specjalnoscLabel, .wyborDatyLabel, .header-label{
+.nowaWizyta-dane-lekarza .label, .nowaWizyta-specjalnoscLabel, .nowaWizyta-wyborDatyLabel, .nowaWizyta-header-label{
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 20;
@@ -145,7 +145,7 @@
     Panel dolny
  */
 
-.exit-btn {
+.nowaWizyta-exit-btn {
     -fx-background-color: #C0392B;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -157,14 +157,14 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.exit-btn:hover {
+.nowaWizyta-exit-btn:hover {
     -fx-background-color: #F08080;
 }
 
 /*
     guziczki
  */
-.acceptBtn1, .acceptBtn2, .accpetDateBtn {
+.nowaWizyta-acceptBtn1, .nowaWizyta-acceptBtn2, .nowaWizyta-accpetDateBtn {
     -fx-background-color: #2980B9;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -176,7 +176,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.acceptBtn1:hover, .acceptBtn2:hover, .accpetDateBtn:hover {
+.nowaWizyta-acceptBtn1:hover, .nowaWizyta-acceptBtn2:hover, .nowaWizyta-accpetDateBtn:hover {
     -fx-background-color: #3498DB;
 }
 
@@ -184,7 +184,7 @@
 /*
     panele wyszukiwania
  */
-.top-panel, .search-panel2 {
+.nowaWizyta-top-panel, .nowaWizyta-search-panel2 {
     -fx-background-color: #2C3E50;
     -fx-padding: 20;
     -fx-border-insets: 20;
@@ -193,15 +193,11 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.top-panel .search-field {
-    -fx-fill: black;
-}
-
 /*
     dane informacyjne dla lekarza
  */
 /* Styl dla całej tabeli wewnątrz panelu */
-.tabela-lekarza {
+.nowaWizyta-tabela-lekarza {
     -fx-background-color: #2C3E50;
     -fx-border-color: #5D6D7E;
     -fx-border-insets: 20;
@@ -211,7 +207,7 @@
 }
 
 /* Nagłówki tabeli */
-.header-label {
+.nowaWizyta-header-label {
     -fx-text-fill: white;
     -fx-font-size: 22;
     -fx-font-weight: bold;
@@ -223,14 +219,14 @@
 }
 
 /* Komórki z danymi */
-.cell-border {
+.nowaWizyta-cell-border {
     -fx-border-color: #5D6D7E;
     -fx-border-width: 0 1 0 0; /* Tylko linia pionowa z prawej */
     -fx-padding: 15;
 }
 
 /* Mniejsza czcionka dla danych i opisu */
-.cell-border .label {
+.nowaWizyta-cell-border .label {
     -fx-text-fill: white;
     -fx-font-size: 14; /* Zmniejszone z 30 */
     -fx-font-family: "Segoe UI";
