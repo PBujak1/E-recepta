@@ -110,6 +110,15 @@
 /*
     Panel dla wybioru lekarza
  */
+.nowaWizyta-search-field2, .nowaWizyta-search-field1 {
+    -fx-background-color: white;
+    -fx-fill: white;
+    -fx-background-radius: 15;
+    -fx-border-color: black;
+    -fx-pref-height: 150;
+    -fx-border-radius: 15;
+}
+
 .nowaWizyta-lekarz{
     -fx-background-color: #2C3E50;
     -fx-pref-height: 400;

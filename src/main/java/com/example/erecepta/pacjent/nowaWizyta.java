@@ -279,9 +279,9 @@ public class nowaWizyta {
             Ustawienie wyglądu ikon
          */
         root.getStyleClass().add("nowaWizyta-main-panel");
-        searchField1.setPromptText("nowaWizyta-Wyszukaj lekarza");
+        searchField1.setPromptText("Wyszukaj lekarza");
         searchField1.getStyleClass().add("nowaWizyta-search-field1");
-        searchField2.setPromptText("nowaWizyta-Wyszukaj specjalizację");
+        searchField2.setPromptText("Wyszukaj specjalizację");
         searchField2.getStyleClass().add("nowaWizyta-search-field2");
 
         acceptBtn1.getStyleClass().add("nowaWizyta-acceptBtn1");
@@ -316,7 +316,7 @@ public class nowaWizyta {
         hProfil.getStyleClass().add("nowaWizyta-header-label");
         hDane.getStyleClass().add("nowaWizyta-header-label");
         hOpis.getStyleClass().add("nowaWizyta-header-label");
-        profilBox.getStyleClass().add("cell-border");
+        profilBox.getStyleClass().add("nowaWizyta-cell-border");
         daneBox.getStyleClass().addAll("nowaWizyta-cell-border", "nowaWizyta-padding-left");
         opisBox.getStyleClass().addAll("nowaWizyta-cell-border", "nowaWizyta-padding-left");
         lekarz.getStyleClass().add("nowaWizyta-lekarz");
