@@ -3,20 +3,20 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.titleLabel {
+.historiaPac-titleLabel {
     -fx-font-weight: bold;
     -fx-font-size: 30px;
 }
 
-.informationLabel {
+.historiaPac-informationLabel {
     -fx-font-size: 10px;
 }
 
-.daneLabel {
+.historiaPac-daneLabel {
     -fx-font-size: 20px;
 }
 
-.main-panel-content {
+.historiaPac-main-panel-content {
     -fx-background-color: #2C3E50;
     -fx-padding: 20;
     -fx-border-insets: 20;
@@ -26,17 +26,17 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.main-panel-content .viewport {
+.historiaPac-main-panel-content .viewport {
     -fx-background-color: transparent;
 }
 
-.main-panel-content .label {
+.historiaPac-main-panel-content .label {
     -fx-font-size: 15;
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
 
-.exit-btn {
+.historiaPac-exit-btn {
     -fx-background-color: #C0392B;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -48,6 +48,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.exit-btn:hover {
+.historiaPac-exit-btn:hover {
     -fx-background-color: #F08080;
 }

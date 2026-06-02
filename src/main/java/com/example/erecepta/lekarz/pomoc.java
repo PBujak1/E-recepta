@@ -27,11 +27,11 @@ public class pomoc {
     private Button wyjdz = new Button("Wyjdz");
 
     public pomoc() {
-        wyjdz.getStyleClass().add("exit-btn");
+        wyjdz.getStyleClass().add("pomoc-exit-btn");
         Region spacer = new Region();
 
         VBox center = new VBox(20);
-        center.getStyleClass().add("center");
+        center.getStyleClass().add("pomoc-center");
         center.setAlignment(Pos.CENTER);
         center.setPadding(new Insets(40));
 

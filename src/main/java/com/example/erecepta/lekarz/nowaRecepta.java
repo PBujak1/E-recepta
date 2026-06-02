@@ -45,9 +45,9 @@ public class nowaRecepta {
         root.setPadding(new Insets(20, 10, 20, 10));
 
         VBox titlePane = new VBox(10);
-        titlePane.getStyleClass().add("title-pane");
+
         Label nazwaPacjenta = new Label(imie + " " + nazwisko + " (" + PESEL + ") ");
-        nazwaPacjenta.getStyleClass().add("nazwa-pacjenta");
+
         titlePane.getChildren().addAll(
                 pacjentLabel, new Separator(),
                 nazwaPacjenta
@@ -55,16 +55,16 @@ public class nowaRecepta {
 
         HBox dolnyPanel = new HBox(600);
         dolnyPanel.setAlignment(Pos.CENTER);
-        dolnyPanel.getStyleClass().add("dolnyPanel");
+
         //Przycisk
         HBox wyjdzHbox = new HBox();
         wyjdzHbox.setAlignment(Pos.CENTER);
-        wyjdz.getStyleClass().add("exit-btn");
+
         wyjdzHbox.getChildren().addAll(wyjdz);
         //napis do resetowania
         HBox resetujHbox = new HBox();
         resetujHbox.setAlignment(Pos.CENTER);
-        dodaj.getStyleClass().add("dalej-btn");
+
         resetujHbox.getChildren().add(dodaj);
         dolnyPanel.getChildren().addAll(resetujHbox, wyjdzHbox);
 
@@ -72,7 +72,7 @@ public class nowaRecepta {
 
         VBox mainPane = new VBox(15);
         mainPane.setPadding(new Insets(10, 5, 10, 5));
-        mainPane.getStyleClass().add("main-pane");
+
         VBox.setVgrow(liczbaOpakowan, Priority.ALWAYS);
         VBox.setVgrow(liczbaOpakowan, Priority.ALWAYS);
         mainPane.getChildren().addAll(
@@ -84,6 +84,13 @@ public class nowaRecepta {
                 odplatnosc, spacer,
                 dolnyPanel
         );
+
+        titlePane.getStyleClass().add("nowaRecepta-title-pane");
+        nazwaPacjenta.getStyleClass().add("nowaRecepta-nazwa-pacjenta");
+        dolnyPanel.getStyleClass().add("nowaRecepta-dolnyPanel");
+        wyjdz.getStyleClass().add("nowaRecepta-exit-btn");
+        dodaj.getStyleClass().add("nowaRecepta-dalej-btn");
+        mainPane.getStyleClass().add("nowaRecepta-main-pane");
 
         root.getChildren().addAll(
                 titlePane,

@@ -1,15 +1,15 @@
 /* LEWY PANEL */
-.left-panel {
+.mainLekPanel-left-panel {
     -fx-background-color: #2C3E50;
     -fx-padding: 20;
     -fx-pref-width: 300;
 }
 
-.left-btn-panel{
+.mainLekPanel-left-btn-panel{
     -fx-pref-height: 380;
 }
 
-.left-btn-panel .button {
+.mainLekPanel-left-btn-panel .button {
     -fx-background-color: #34495E;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -17,68 +17,68 @@
     -fx-padding: 20 0 20 0;
 }
 
-.left-btn-panel .button:hover {
+.mainLekPanel-left-btn-panel .button:hover {
     -fx-background-color: #3E5A72;
     -fx-font-size: 20px;
 }
 
-.left-panel .logout-btn {
+.mainLekPanel-left-panel .mainLekPanel-logout-btn {
     -fx-background-color: #C0392B;
     -fx-text-fill: white;
 }
 
-.left-panel .logout-btn:hover {
+.mainLekPanel-left-panel .mainLekPanel-logout-btn:hover {
     -fx-background-color: #F08080;
 }
 
-.left-panel .doctor-info {
+.mainLekPanel-left-panel .mainLekPanel-doctor-info {
     -fx-font-size: 15px;
     -fx-text-fill: #ECF0F1;
 }
 
 
 /* PANEL ŚRODKOWY */
-.center-panel {
+.mainLekPanel-center-panel {
     -fx-padding: 25;
 }
 
-.center-panel .title-middle {
+.mainLekPanel-center-panel .mainLekPanel-title-middle {
     -fx-background-color: white;
     -fx-background-radius: 15;
     -fx-padding: 20;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.center-panel .title-middle .karta{
+.mainLekPanel-center-panel .mainLekPanel-title-middle .mainLekPanel-karta{
     -fx-font-size: 30;
     -fx-font-weight: bold;
     -fx-effecet: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.center-panel .imie-nazwisko {
+.mainLekPanel-center-panel .mainLekPanel-imie-nazwisko {
     -fx-font-size: 20;
     -fx-font-weight: bold;
 }
 
-.center-panel .dane-pacjenta .label{
+.mainLekPanel-center-panel .mainLekPanel-dane-pacjenta .label{
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-vgap: 10;
     -fx-hgap: 10;
 }
 
-.center-panel .center-title {
+.mainLekPanel-center-panel .mainLekPanel-center-title {
     -fx-font-size: 24px;
     -fx-font-weight: bold;
 }
 
-.center-panel .subtitle {
+.mainLekPanel-center-panel .mainLekPanel-subtitle {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-padding: 10 0 5 0;
 }
 
-.center-panel .blue-btn {
+.mainLekPanel-center-panel .mainLekPanel-blue-btn {
     -fx-background-color: #2980B9;
     -fx-border-color: #64748B;
     -fx-text-fill: white;
@@ -90,20 +90,20 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);
 }
 
-.center-panel .blue-btn:hover {
+.mainLekPanel-center-panel .mainLekPanel-blue-btn:hover {
     -fx-background-color: #3498DB;
     -fx-border-color: #64748B;
 }
 
 /*wyszukiwanie pacjenta i leku napisy*/
-.bottom-btn {
+.mainLekPanel-bottom-btn {
     -fx-background-color: white;
     -fx-background-radius: 15;
     -fx-padding: 10;
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.search-box, .search-box2 {
+.mainLekPanel-search-box, .mainLekPanel-search-box2 {
     -fx-background-color: white;
     -fx-border-color: #CBD5E1;
     -fx-border-radius: 5;
@@ -112,12 +112,12 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);
 }
 
-.search-icon, .search-icon2 {
+.mainLekPanel-search-icon, .mainLekPanel-search-icon2 {
     -fx-text-fill: #64748B;
     -fx-font-size: 16px;
 }
 
-.search-field, .search-field2{
+.mainLekPanel-search-field, .mainLekPanel-search-field2{
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-text-fill: #0F172A;
@@ -126,21 +126,21 @@
     -fx-padding: 6 0 6 0;
 }
 
-.lek-scrollpane {
+.mainLekPanel-lek-scrollpane {
     -fx-background-color: transparent;
     -fx-border-color: transparent;
     -fx-vgap: 5;
 }
 
-.lek-scrollpane .viewport {
+.mainLekPanel-lek-scrollpane .viewport {
     -fx-background-color: transparent;
 }
 
-.lek-scrollpane .label {
+.mainLekPanel-lek-scrollpane .label {
     -fx-font-size: 20;
 }
 
-.wypisz-recepte {
+.mainLekPanel-wypisz-recepte {
     -fx-background-color: #2980B9;
     -fx-border-color: #64748B;
     -fx-text-fill: white;
@@ -152,7 +152,7 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.08), 6, 0, 0, 2);
 }
 
-.wypisz-recepte:hover {
+.mainLekPanel-wypisz-recepte:hover {
     -fx-background-color: #3498DB;
     -fx-border-color: #64748B;
 }
@@ -160,19 +160,19 @@
 
 
 /* PANEL PRAWY */
-.right-panel {
+.mainLekPanel-right-panel {
     -fx-background-color: #2C3E50;
     -fx-padding: 20;
     -fx-pref-width: 300;
 }
 
-.allergy-title {
+.mainLekPanel-allergy-title {
     -fx-text-fill: white;
     -fx-font-size: 22px;
     -fx-font-weight: bold;
 }
 
-.allergy-container {
+.mainLekPanel-allergy-container {
     -fx-background-color: #3E5A72;
     -fx-pref-height: 300;
     -fx-padding: 16;
@@ -181,7 +181,7 @@
     -fx-border-color: rgba(255,255,255,0.15);
 }
 
-.allergy-chip1{
+.mainLekPanel-allergy-chip1{
     -fx-background-color: #54a0c7;
     -fx-padding: 10 16 10 16;
     -fx-background-radius: 12;
@@ -190,18 +190,18 @@
     -fx-alignment: center-left;
 }
 
-.allergy-chip1 .label {
+.mainLekPanel-allergy-chip1 .label {
     -fx-font-weight: bold;
     -fx-text-fill: white;
     -fx-font-size: 15;
 }
 
-.historia-title {
+.mainLekPanel-historia-title {
     -fx-text-fill: white;
     -fx-font-size: 22px;
 }
 
-.zobacz-wszystko {
+.mainLekPanel-zobacz-wszystko {
     -fx-background-color: #34495E;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -209,11 +209,11 @@
     -fx-padding: 20 0 20 0;
 }
 
-.zobacz-wszystko:hover {
+.mainLekPanel-zobacz-wszystko:hover {
     -fx-background-color: #3E5A72;
 }
 
-.main-panel-content {
+.mainLekPanel-main-panel-content {
     -fx-background-color: #2C3E50;
     -fx-padding: 20;
     -fx-border-insets: 20;
@@ -221,10 +221,10 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
-.main-panel-content .viewport {
+.mainLekPanel-main-panel-content .viewport {
     -fx-background-color: transparent;
 }
 
-.main-panel-content .label{
+.mainLekPanel-main-panel-content .label{
     -fx-text-fill: white;
 }

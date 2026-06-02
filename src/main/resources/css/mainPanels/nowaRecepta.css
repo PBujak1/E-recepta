@@ -3,7 +3,7 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.title-pane {
+.nowaRecepta-title-pane {
     -fx-background-color: #2C3E50;
     -fx-padding: 50;
     -fx-vgap: 10;
@@ -13,18 +13,18 @@
     -fx-alignment: CENTER;
 }
 
-.title-pane .label{
+.nowaRecepta-title-pane .label{
     -fx-font-size: 20px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.title-pane .nazwa-pacjenta {
+.nowaRecepta-title-pane .nowaRecepta-nazwa-pacjenta {
     -fx-font-size: 15px;
     -fx-text-fill: white;
 }
 
-.main-pane {
+.nowaRecepta-main-pane {
     -fx-background-color: #2C3E50;
     -fx-padding: 50;
     -fx-vgap: 10;
@@ -34,13 +34,13 @@
     -fx-alignment: CENTER;
 }
 
-.main-pane .label {
+.nowaRecepta-main-pane .label {
     -fx-font-size: 20px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.main-pane .text-field{
+.nowaRecepta-main-pane .text-field{
     -fx-background-color: #ECF0F1;
     -fx-background-radius: 5;
     -fx-padding: 10;
@@ -49,12 +49,12 @@
     -fx-border-color: transparent;
 }
 
-.main-pane .text-field:focused{
+.nowaRecepta-main-pane .text-field:focused{
     -fx-border-color: #2980B9;
     -fx-border-width: 2;
 }
 
-.exit-btn {
+.nowaRecepta-exit-btn {
     -fx-background-color: #C0392B;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -66,11 +66,11 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.exit-btn:hover {
+.nowaRecepta-exit-btn:hover {
     -fx-background-color: #F08080;
 }
 
-.dalej-btn {
+.nowaRecepta-dalej-btn {
     -fx-background-color: #2980B9;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -82,6 +82,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.dalej-btn:hover {
+.nowaRecepta-dalej-btn:hover {
     -fx-background-color: #3498DB;
 }

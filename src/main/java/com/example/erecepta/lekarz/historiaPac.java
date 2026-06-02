@@ -40,9 +40,8 @@ public class historiaPac {
         contentPane.setFitToWidth(true);
         VBox.setVgrow(contentPane, Priority.ALWAYS);
         contentPane.setMaxHeight(Double.MAX_VALUE);
-        contentPane.getStyleClass().add("main-panel-content");
-        contentPane.setContent(receptyPane);
 
+        contentPane.setContent(receptyPane);
         VBox bottomPane = new VBox();
         bottomPane.setAlignment(Pos.CENTER);
         bottomPane.getChildren().addAll(wyjdz);
@@ -51,10 +50,11 @@ public class historiaPac {
         root.setTop(titleBox);
         root.setBottom(bottomPane);
 
-        titleLabel.getStyleClass().add("titleLabel");
-        informationLabel.getStyleClass().add("informationLabel");
-        daneLabel.getStyleClass().add("daneLabel");
-        wyjdz.getStyleClass().add("exit-btn");
+        contentPane.getStyleClass().add("historiaPac-main-panel-content");
+        titleLabel.getStyleClass().add("historiaPac-titleLabel");
+        informationLabel.getStyleClass().add("historiaPac-informationLabel");
+        daneLabel.getStyleClass().add("historiaPac-daneLabel");
+        wyjdz.getStyleClass().add("historiaPac-exit-btn");
     }
 
     public Button getWyjdz() {return wyjdz;}

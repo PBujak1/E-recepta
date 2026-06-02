@@ -41,7 +41,7 @@ public class mojeRecepty {
         contentPane.setFitToWidth(true);
         VBox.setVgrow(contentPane, Priority.ALWAYS);
         contentPane.setMaxHeight(Double.MAX_VALUE);
-        contentPane.getStyleClass().add("main-panel-content");
+
         contentPane.setContent(receptyPane);
 
         VBox bottomPane = new VBox();
@@ -52,10 +52,11 @@ public class mojeRecepty {
         root.setTop(titleBox);
         root.setBottom(bottomPane);
 
-        titleLabel.getStyleClass().add("titleLabel");
-        informationLabel.getStyleClass().add("informationLabel");
-        daneLabel.getStyleClass().add("daneLabel");
-        wyjdz.getStyleClass().add("exit-btn");
+        contentPane.getStyleClass().add("mojeRecepty-main-panel-content");
+        titleLabel.getStyleClass().add("mojeRecepty-titleLabel");
+        informationLabel.getStyleClass().add("mojeRecepty-informationLabel");
+        daneLabel.getStyleClass().add("mojeRecepty-daneLabel");
+        wyjdz.getStyleClass().add("mojeRecepty-exit-btn");
     }
 
     public Button getWyjdz() {return wyjdz;}

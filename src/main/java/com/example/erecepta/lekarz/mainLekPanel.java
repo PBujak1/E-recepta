@@ -93,10 +93,6 @@ public class mainLekPanel {
         pomoc.setMaxWidth(Double.MAX_VALUE);
         wyloguj.setMaxWidth(Double.MAX_VALUE);
 
-        doctorInfo.getStyleClass().add("doctor-info");
-        wyloguj.getStyleClass().add("logout-btn");
-        leftPanel.getStyleClass().add("left-panel");
-        leftPanelButtons.getStyleClass().add("left-btn-panel");
 
         leftPanelButtons.getChildren().addAll(
                 nowaRecepta,
@@ -146,7 +142,6 @@ public class mainLekPanel {
         HBox searchBox1 = new HBox(8);
         searchField.setPromptText("Wyszukaj Pacjenta (PESEL):");
         searchBox1.getChildren().addAll(searchIcon, searchField);
-        searchBox1.getStyleClass().add("search-box");
         searchBox1.setAlignment(Pos.CENTER_LEFT);
 
         HBox.setHgrow(searchField, Priority.ALWAYS);
@@ -216,9 +211,6 @@ public class mainLekPanel {
             throw new RuntimeException(ex);
         }
 
-        karta.getStyleClass().add("karta");
-        imieINazwiskoPacjenta.getStyleClass().add("imie-nazwisko");
-        searchBox2.getStyleClass().add("search-box2");
         searchBox2.setAlignment(Pos.CENTER_LEFT);
 
         HBox.setHgrow(lekField, Priority.ALWAYS);
@@ -248,7 +240,6 @@ public class mainLekPanel {
         bottomBtn.setAlignment(Pos.CENTER);
         VBox.setVgrow(bottomBtn, Priority.ALWAYS);
         bottomBtn.getChildren().addAll(wypiszBtn);
-        wypiszBtn.getStyleClass().add("wypisz-recepte");
 
         botBox.getChildren().addAll(
                 typReceptyLabel,
@@ -256,7 +247,6 @@ public class mainLekPanel {
                 lekiScrollPane,
                 bottomBtn
         );
-        botBox.getStyleClass().add("bottom-btn");
 
         centerPanel.getChildren().addAll(
                 titleBox,
@@ -278,28 +268,22 @@ public class mainLekPanel {
         warningIcon.setFitWidth(50);
         warningIcon.setFitHeight(50);
         warningIcon.setPreserveRatio(true);
-        warningIcon.getStyleClass().add("allergy-alert-icon");
 
         Label allergyTitle = new Label("Alergie");
-        allergyTitle.getStyleClass().add("allergy-title");
 
         HBox titleBoxP = new HBox(10);
         titleBoxP.setAlignment(Pos.CENTER);
         titleBoxP.getChildren().addAll(warningIcon, allergyTitle);
 
-        allergyList.getStyleClass().add("allergy-container");
 
         ScrollPane contentPane2 = new ScrollPane(allergyList);
         contentPane2.setFitToWidth(true);
         contentPane2.setMaxHeight(Double.MAX_VALUE);
-        contentPane2.getStyleClass().add("main-panel-content");
 
         VBox historyBox = new VBox(12);
         historyBox.setAlignment(Pos.CENTER);
         historyBox.getChildren().addAll(historiaTitle, zobaczWszystko);
-        historiaTitle.getStyleClass().add("historia-title");
         zobaczWszystko.setMaxWidth(Double.MAX_VALUE);
-        zobaczWszystko.getStyleClass().add("zobacz-wszystko");
 
         VBox emptyPane = new VBox(new Label());
         emptyPane.setAlignment(Pos.TOP_CENTER);
@@ -307,7 +291,6 @@ public class mainLekPanel {
         contentPane.setFitToWidth(true);
         VBox.setVgrow(contentPane, Priority.ALWAYS);
         contentPane.setMaxHeight(Double.MAX_VALUE);
-        contentPane.getStyleClass().add("main-panel-content");
         contentPane.setContent(emptyPane);
 
         VBox rightPanel = new VBox(20);
@@ -317,8 +300,6 @@ public class mainLekPanel {
                 historyBox,
                 contentPane
         );
-        rightPanel.getStyleClass().add("right-panel");
-        alergieTitle.getStyleClass().add("subtitle");
 
 
         /*
@@ -332,16 +313,35 @@ public class mainLekPanel {
         /*
            SCENA
         */
-        titleMiddle.getStyleClass().add("title-middle");
-        centerPanel.getStyleClass().add("center-panel");
-        title.getStyleClass().add("center-title");
-        wczytajBtn.getStyleClass().add("blue-btn");
-        typReceptyLabel.getStyleClass().add("subtitle");
-        danePacjenta.getStyleClass().add("dane-pacjenta");
-        dodajLekBtn.getStyleClass().add("blue-btn");
-        searchField.getStyleClass().add("search-field");
-        lekField.getStyleClass().add("search-field2");
-        lekiScrollPane.getStyleClass().add("lek-scrollpane");
+        doctorInfo.getStyleClass().add("mainLekPanel-doctor-info");
+        wyloguj.getStyleClass().add("mainLekPanel-logout-btn");
+        leftPanel.getStyleClass().add("mainLekPanel-left-panel");
+        leftPanelButtons.getStyleClass().add("mainLekPanel-left-btn-panel");
+        searchBox1.getStyleClass().add("mainLekPanel-search-box");
+        karta.getStyleClass().add("mainLekPanel-karta");
+        imieINazwiskoPacjenta.getStyleClass().add("mainLekPanel-imie-nazwisko");
+        searchBox2.getStyleClass().add("mainLekPanel-search-box2");
+        wypiszBtn.getStyleClass().add("mainLekPanel-wypisz-recepte");
+        botBox.getStyleClass().add("mainLekPanel-bottom-btn");
+        warningIcon.getStyleClass().add("mainLekPanel-allergy-alert-icon");
+        allergyTitle.getStyleClass().add("mainLekPanel-allergy-title");
+        allergyList.getStyleClass().add("mainLekPanel-allergy-container");
+        contentPane2.getStyleClass().add("mainLekPanel-main-panel-content");
+        historiaTitle.getStyleClass().add("mainLekPanel-historia-title");
+        zobaczWszystko.getStyleClass().add("mainLekPanel-zobacz-wszystko");
+        contentPane.getStyleClass().add("mainLekPanel-main-panel-content");
+        rightPanel.getStyleClass().add("mainLekPanel-right-panel");
+        alergieTitle.getStyleClass().add("mainLekPanel-subtitle");
+        titleMiddle.getStyleClass().add("mainLekPanel-title-middle");
+        centerPanel.getStyleClass().add("mainLekPanel-center-panel");
+        title.getStyleClass().add("mainLekPanel-center-title");
+        wczytajBtn.getStyleClass().add("mainLekPanel-blue-btn");
+        typReceptyLabel.getStyleClass().add("mainLekPanel-subtitle");
+        danePacjenta.getStyleClass().add("mainLekPanel-dane-pacjenta");
+        dodajLekBtn.getStyleClass().add("mainLekPanel-blue-btn");
+        searchField.getStyleClass().add("mainLekPanel-search-field");
+        lekField.getStyleClass().add("mainLekPanel-search-field2");
+        lekiScrollPane.getStyleClass().add("mainLekPanel-lek-scrollpane");
 
         nowaRecepta.setOnAction(a -> {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");

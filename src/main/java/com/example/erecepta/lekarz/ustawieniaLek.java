@@ -83,12 +83,12 @@ public class ustawieniaLek {
         root.setPadding(new Insets(10, 10, 10, 10));
 
         VBox titlePane = new VBox();
-        titlePane.getStyleClass().add("title-pane");
+
         titlePane.setAlignment(Pos.TOP_CENTER);
         titlePane.getChildren().add(title);
 
         VBox mainPane = new VBox(50);
-        mainPane.getStyleClass().add("main-pane");
+
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
@@ -147,18 +147,24 @@ public class ustawieniaLek {
 
         HBox dolnyPanel = new HBox(600);
         dolnyPanel.setAlignment(Pos.CENTER);
-        dolnyPanel.getStyleClass().add("dolnyPanel");
+
         HBox wyjdzHbox = new HBox();
         wyjdzHbox.setAlignment(Pos.CENTER);
-        wyjdz.getStyleClass().add("exit-btn");
+
         wyjdzHbox.getChildren().addAll(wyjdz);
         HBox resetujHbox = new HBox();
         resetujHbox.setAlignment(Pos.CENTER);
-        akceptuj.getStyleClass().add("dalej-btn");
+
         resetujHbox.getChildren().add(akceptuj);
         dolnyPanel.getChildren().addAll(resetujHbox, wyjdzHbox);
 
         mainPane.getChildren().addAll(gridPane, dolnyPanel);
+
+        titlePane.getStyleClass().add("ustawieniaLek-title-pane");
+        mainPane.getStyleClass().add("ustawieniaLek-main-pane");
+        dolnyPanel.getStyleClass().add("ustawieniaLek-dolnyPanel");
+        wyjdz.getStyleClass().add("ustawieniaLek-exit-btn");
+        akceptuj.getStyleClass().add("ustawieniaLek-dalej-btn");
 
         root.getChildren().addAll(
                 titlePane,

@@ -3,12 +3,12 @@
     -fx-font-family: "Segoe UI", sans-serif;
 }
 
-.title-pane .label{
+.ustawieniaLek-title-pane .label{
     -fx-font-size: 30px;
     -fx-font-weight: bold;
 }
 
-.main-pane {
+.ustawieniaLek-main-pane {
     -fx-background-color: #2C3E50;
     -fx-padding: 50;
     -fx-vgap: 10;
@@ -18,13 +18,13 @@
     -fx-alignment: CENTER;
 }
 
-.main-pane .label{
+.ustawieniaLek-main-pane .label{
     -fx-font-size: 20px;
     -fx-text-fill: white;
     -fx-font-weight: bold;
 }
 
-.main-pane .text-field{
+.ustawieniaLek-main-pane .text-field{
     -fx-background-color: #ECF0F1;
     -fx-background-radius: 5;
     -fx-padding: 10;
@@ -33,12 +33,12 @@
     -fx-border-color: transparent;
 }
 
-.main-pane .text-field:focused{
+.ustawieniaLek-main-pane .text-field:focused{
     -fx-border-color: #2980B9;
     -fx-border-width: 2;
 }
 
-.exit-btn {
+.ustawieniaLek-exit-btn {
     -fx-background-color: #C0392B;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -50,11 +50,11 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.exit-btn:hover {
+.ustawieniaLek-exit-btn:hover {
     -fx-background-color: #F08080;
 }
 
-.dalej-btn {
+.ustawieniaLek-dalej-btn {
     -fx-background-color: #2980B9;
     -fx-text-fill: white;
     -fx-font-size: 15px;
@@ -66,6 +66,6 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
 }
 
-.dalej-btn:hover {
+.ustawieniaLek-dalej-btn:hover {
     -fx-background-color: #3498DB;
 }
