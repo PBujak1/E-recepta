@@ -1,5 +1,6 @@
 package com.example.erecepta;
 import com.example.erecepta.lekarz.*;
+import com.example.erecepta.pacjent.historiaWizyt;
 import com.example.erecepta.pacjent.mainPacPanel;
 import com.example.erecepta.pacjent.nowaWizyta;
 import javafx.application.Application;
@@ -141,7 +142,18 @@ public class logika extends Application {
                             });
 
                             mainPanelPac.getHistoriaButton().setOnAction(event -> {
+                                try {
+                                    String historia = serverConnection.getPacjent("getHistoriaWizyt", PESEL);
+                                    System.out.println(PESEL);
+                                    historiaWizyt historiaWizyt = new historiaWizyt(historia);
+                                    scene.setRoot(historiaWizyt.getView());
 
+                                    historiaWizyt.getWyjdz().setOnAction(e1 -> {
+                                        scene.setRoot(mainPanelPac.getView());
+                                    });
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
                             });
 
                             mainPanelPac.getWizytaButton().setOnAction(event -> {

@@ -197,7 +197,7 @@ public class ServerConnection {
                     response = responseBuilder.toString();
                     System.out.println(response);
                     return response;
-                case "getWizytaPacjenta":
+                case "getHistoriaWizyt":
                     out.println(data);
                     out.println(PESEL);
                     responseBuilder = new StringBuilder();
