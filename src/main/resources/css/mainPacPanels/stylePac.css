@@ -126,11 +126,11 @@
     -fx-border-color: transparent;
 }
 
-.belloIcon {
+.mainPacPanel-belloIcon {
     -fx-fill: #2980B9;
 }
 
-.profileIcon {
+.mainPacPanel-profileIcon {
     -fx-fill: white;
 }
 

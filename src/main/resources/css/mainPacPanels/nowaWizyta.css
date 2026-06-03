@@ -87,7 +87,6 @@
 
 .nowaWizyta-date-picker .arrow-button {
     -fx-background-color: #4a90e2;
-    -fx-background-radius: 0 10 10 0;
 }
 
 .nowaWizyta-date-picker .arrow-button:hover {
