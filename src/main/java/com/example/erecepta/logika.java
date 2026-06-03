@@ -2,6 +2,7 @@ package com.example.erecepta;
 import com.example.erecepta.lekarz.*;
 import com.example.erecepta.pacjent.historiaWizyt;
 import com.example.erecepta.pacjent.mainPacPanel;
+import com.example.erecepta.pacjent.nadchodzaceWizyty;
 import com.example.erecepta.pacjent.nowaWizyta;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -170,7 +171,17 @@ public class logika extends Application {
                             });
 
                             mainPanelPac.getNadchodzaceWizyty().setOnAction(event -> {
+                                try {
+                                    String nadchodzaceWizyty = serverConnection.getPacjent("getNadchodzaceWizyty", PESEL);
+                                    nadchodzaceWizyty nadchodzaceWizyty1 = new nadchodzaceWizyty(nadchodzaceWizyty);
+                                    scene.setRoot(nadchodzaceWizyty1.getView());
 
+                                    nadchodzaceWizyty1.getWyjdz().setOnAction(e1 -> {
+                                        scene.setRoot(mainPanelPac.getView());
+                                    });
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
                             });
 
                             mainPanelPac.getWylogujButton().setOnAction(event -> {
