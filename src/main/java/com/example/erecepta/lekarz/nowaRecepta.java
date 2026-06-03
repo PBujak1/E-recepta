@@ -30,6 +30,8 @@ public class nowaRecepta {
     private TextField liczbaOpakowan = new TextField();
     private Label odplatnoscLabel = new Label("ODPŁATNOŚĆ");
     private TextField odplatnosc = new TextField();
+    private Label dawkowanieLabel = new Label("DAWKOWANIE");
+    private TextField dawkowanie = new TextField();
 
 
 
@@ -72,17 +74,18 @@ public class nowaRecepta {
 
         VBox mainPane = new VBox(15);
         mainPane.setPadding(new Insets(10, 5, 10, 5));
+        mainPane.setAlignment(Pos.TOP_CENTER);
 
-        VBox.setVgrow(liczbaOpakowan, Priority.ALWAYS);
-        VBox.setVgrow(liczbaOpakowan, Priority.ALWAYS);
+        VBox.setVgrow(mainPane, Priority.ALWAYS);
         mainPane.getChildren().addAll(
                 lekLabel,
                 nazwaLeku,
                 liczbaOpakowanLabel,
                 liczbaOpakowan,
                 odplatnoscLabel,
-                odplatnosc, spacer,
-                dolnyPanel
+                odplatnosc,
+                dawkowanieLabel,
+                dawkowanie
         );
 
         titlePane.getStyleClass().add("nowaRecepta-title-pane");
@@ -94,7 +97,9 @@ public class nowaRecepta {
 
         root.getChildren().addAll(
                 titlePane,
-                mainPane
+                mainPane, new Separator(),
+                spacer,
+                dolnyPanel
         );
     }
 
@@ -108,4 +113,5 @@ public class nowaRecepta {
     public TextField getNazwaLeku() { return nazwaLeku; }
     public TextField getLiczbaOpakowan() { return liczbaOpakowan; }
     public TextField getOdplatnosc() { return odplatnosc; }
+    public TextField getDawkowanie() { return dawkowanie; }
 }

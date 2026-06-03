@@ -1,9 +1,6 @@
 package com.example.erecepta;
 import com.example.erecepta.lekarz.*;
-import com.example.erecepta.pacjent.historiaWizyt;
-import com.example.erecepta.pacjent.mainPacPanel;
-import com.example.erecepta.pacjent.nadchodzaceWizyty;
-import com.example.erecepta.pacjent.nowaWizyta;
+import com.example.erecepta.pacjent.*;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -139,7 +136,17 @@ public class logika extends Application {
                             scene.setRoot(mainPanelPac.getView());
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
+                                try {
+                                    String dawkowanie1 = serverConnection.getPacjent("getDawkowanie", PESEL);
+                                    dawkowanie dawkowaniePanel = new dawkowanie(dawkowanie1);
+                                    scene.setRoot(dawkowaniePanel.getView());
 
+                                    dawkowaniePanel.getWyjdz().setOnAction(e1 -> {
+                                        scene.setRoot(mainPanelPac.getView());
+                                    });
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
                             });
 
                             mainPanelPac.getHistoriaButton().setOnAction(event -> {
@@ -264,9 +271,10 @@ public class logika extends Application {
                                                 String lek = Recepta.getNazwaLeku().getText();
                                                 String opakowania = Recepta.getLiczbaOpakowan().getText();
                                                 String odplatnosci = Recepta.getOdplatnosc().getText();
+                                                String dawkowanie = Recepta.getDawkowanie().getText();
 
                                                 try {
-                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, lek, opakowania, odplatnosci, PESEL);
+                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, lek, opakowania, odplatnosci, PESEL, dawkowanie);
                                                     Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                                     alert.initOwner(primaryStage);
                                                     alert.setTitle("UWAGA!");
@@ -307,7 +315,7 @@ public class logika extends Application {
                                         mainPanelLek.getWypiszBtn().setOnAction(e2 -> {
                                             for (int i = 0; i < mainPanelLek.getMedList().size(); i++) {
                                                 try {
-                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "0", PESEL);
+                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "0", PESEL, "1");
                                                 } catch (IOException ex) {
                                                     throw new RuntimeException(ex);
                                                 }

@@ -386,7 +386,7 @@ public class ServerConnection {
     }
 
     public void getUpdateRec(String data, String PESEL, String lek, String opakowania
-    , String odplatnosc, String PESELLek) throws IOException {
+    , String odplatnosc, String PESELLek, String Dawkowanie) throws IOException {
         try {
             Socket socket = new Socket(server, port);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -401,6 +401,7 @@ public class ServerConnection {
                     out.println(opakowania);
                     out.println(odplatnosc);
                     out.println(PESELLek);
+                    out.println(Dawkowanie);
 
             default:
                     response = "Valid request!";
