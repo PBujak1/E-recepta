@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -61,7 +62,7 @@ public class stworzKontoPac {
         GridPane daneGrid = new GridPane();
         VDaneOsobowe.getStyleClass().add("daneGrid");
         daneGrid.setHgap(30);
-        daneGrid.setVgap(20);
+        daneGrid.setVgap(5);
 
         daneGrid.add(labelImie, 0, 0);
         daneGrid.add(textImie, 0, 1);
@@ -111,8 +112,8 @@ public class stworzKontoPac {
         GridPane.setHgrow(textTelefon, Priority.ALWAYS);
         GridPane.setHgrow(textEmail, Priority.ALWAYS);
 
-
-        VDaneOsobowe.getChildren().addAll(labelDane, daneGrid);
+        Region spacer = new Region();
+        VDaneOsobowe.getChildren().addAll(labelDane, spacer, daneGrid);
 
         Vkontakt.getChildren().addAll(
                 labelKontakt,
@@ -121,8 +122,8 @@ public class stworzKontoPac {
 
         // ===== Root =====
 
-        root.setPadding(new Insets(30));
-        root.setAlignment(Pos.TOP_LEFT);
+        root.setPadding(new Insets(15));
+        root.setAlignment(Pos.TOP_CENTER);
 
         root.getChildren().addAll(
                 labelTitle,

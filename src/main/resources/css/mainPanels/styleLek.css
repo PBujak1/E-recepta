@@ -24,6 +24,7 @@
 
 .mainLekPanel-left-panel .mainLekPanel-logout-btn {
     -fx-background-color: #C0392B;
+    -fx-pref-height: 35;
     -fx-text-fill: white;
 }
 

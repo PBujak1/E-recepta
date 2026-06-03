@@ -89,12 +89,12 @@ public class stworzKontoLek {
         root.setPadding(new Insets(10, 10, 10, 10));
 
         VBox titlePane = new VBox();
-        titlePane.getStyleClass().add("title-pane");
+        titlePane.getStyleClass().add("ustawieniaLek-title-pane");
         titlePane.setAlignment(Pos.TOP_CENTER);
         titlePane.getChildren().add(title);
 
         VBox mainPane = new VBox(50);
-        mainPane.getStyleClass().add("main-pane");
+        mainPane.getStyleClass().add("ustawieniaLek-main-pane");
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
@@ -102,7 +102,7 @@ public class stworzKontoLek {
 
         ColumnConstraints col3 = new ColumnConstraints();
         col3.setHalignment(HPos.RIGHT);
-        col3.setPercentWidth(20);
+        col3.setPercentWidth(12);
         ColumnConstraints col4 = new ColumnConstraints();
         col4.setHalignment(HPos.RIGHT);
         col4.setHgrow(Priority.ALWAYS);
@@ -131,14 +131,14 @@ public class stworzKontoLek {
 
         HBox dolnyPanel = new HBox(600);
         dolnyPanel.setAlignment(Pos.CENTER);
-        dolnyPanel.getStyleClass().add("dolnyPanel");
+        dolnyPanel.getStyleClass().add("ustawieniaLek-dolnyPanel");
         HBox wyjdzHbox = new HBox();
         wyjdzHbox.setAlignment(Pos.CENTER);
-        wyjdz.getStyleClass().add("exit-btn");
+        wyjdz.getStyleClass().add("ustawieniaLek-exit-btn");
         wyjdzHbox.getChildren().addAll(wyjdz);
         HBox resetujHbox = new HBox();
         resetujHbox.setAlignment(Pos.CENTER);
-        akceptuj.getStyleClass().add("dalej-btn");
+        akceptuj.getStyleClass().add("ustawieniaLek-dalej-btn");
         resetujHbox.getChildren().add(akceptuj);
         dolnyPanel.getChildren().addAll(resetujHbox, wyjdzHbox);
 
