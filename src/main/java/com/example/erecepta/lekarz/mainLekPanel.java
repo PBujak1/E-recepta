@@ -3,6 +3,8 @@ package com.example.erecepta.lekarz;
 import com.example.erecepta.ServerConnection;
 import com.example.erecepta.logika;
 import com.example.erecepta.pacjent.nowaWizyta;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -20,12 +22,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import static com.example.erecepta.pacjent.nowaWizyta.setImage;
+
 public class mainLekPanel {
 
     String nazwisko;
     String imie;
     String login;
     String password;
+
+    private final FontAwesomeIconView profileIcon = new FontAwesomeIconView(FontAwesomeIcon.USER_CIRCLE);
 
     //Zmienne lewego panelu
     private final Button nowaRecepta = new Button("NOWA E-RECEPTA");
@@ -82,7 +88,12 @@ public class mainLekPanel {
         VBox leftPanel = new VBox(15);
         Region spacer = new Region();
         VBox.setVgrow(spacer, Priority.ALWAYS);
+
+        HBox docLeftPanel = new HBox(10);
+        docLeftPanel.setAlignment(Pos.CENTER_LEFT);
+        profileIcon.setGlyphSize(60);
         Label doctorInfo = new Label("Lekarz: " + imie + " " + nazwisko + " \nPWZ: 1234567");
+        docLeftPanel.getChildren().addAll(profileIcon, doctorInfo);
 
         VBox leftPanelButtons = new VBox(15);
 
@@ -103,7 +114,7 @@ public class mainLekPanel {
         );
 
         leftPanel.getChildren().addAll(
-                doctorInfo, new Separator(),
+                docLeftPanel, new Separator(),
                 leftPanelButtons, new Separator(),
                 spacer,
                 wyloguj
@@ -361,6 +372,10 @@ public class mainLekPanel {
         wypiszBtn.setOnAction(a -> {
             Alert alert = new Alert(Alert.AlertType.WARNING, "Nie wybrano pacjenta!");
             alert.showAndWait();
+        });
+
+        profileIcon.setOnMouseClicked(event -> {
+            setImage(login, password);
         });
     }
 

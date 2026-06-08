@@ -21,6 +21,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.example.erecepta.pacjent.nowaWizyta.setImage;
+
 public class mainPacPanel {
 
     HBox root = new HBox(1);
@@ -47,9 +49,13 @@ public class mainPacPanel {
     private final Button wyloguj = new Button("Wyloguj") ;
 
     public mainPacPanel(String login, String password, String nazwa) throws IOException {
-        this.login = login;
-        this.password = password;
-        this.nazwa = nazwa;
+        this.login = login; //imie
+        this.password = password; //PEsel
+        this.nazwa = nazwa; //imie i nazwisko
+
+        System.out.println(nazwa + "nazwa");
+        System.out.println(login + "login");
+        System.out.println(password + "password");
 
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
@@ -346,6 +352,10 @@ public class mainPacPanel {
         profileIcon.setGlyphSize(60);
 
         belloIcon.setGlyphSize(60);
+
+        profileIcon.setOnMouseClicked(event -> {
+            setImage(login, password);
+        });
     }
     public Button getWizytaButton() {
         return wizyta;

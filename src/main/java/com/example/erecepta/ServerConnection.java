@@ -284,6 +284,17 @@ public class ServerConnection {
                     response = responseBuilder.toString();
                     System.out.println(response);
                     return response;
+                case "getSpecjalizacje":
+                    out.println(data);
+                    responseBuilder = new StringBuilder();
+
+                    while (!(line = in.readLine()).equals("END")) {
+                        responseBuilder.append(line).append("\n");
+                    }
+
+                    response = responseBuilder.toString();
+                    System.out.println(response);
+                    return response;
                 case "getLeki":
                     out.println(data);
                     responseBuilder = new StringBuilder();
@@ -447,7 +458,23 @@ public class ServerConnection {
                     response = in.readLine();
                     System.out.println(response);
                     return response;
+                case "getPESELLekarza":
+                    out.println(data);
+                    out.println(imie);
+                    out.println(nazwisko);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
                 case "getTelefonLekarza":
+                    out.println(data);
+                    out.println(imie);
+                    out.println(nazwisko);
+
+                    response = in.readLine();
+                    System.out.println(response);
+                    return response;
+                case "getOpisLekarza":
                     out.println(data);
                     out.println(imie);
                     out.println(nazwisko);
@@ -489,15 +516,22 @@ public class ServerConnection {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            out.println("imageGetter");
             out.println(idLekarza);
             String base64 = in.readLine();
+
+            // ZABEZPIECZENIE: Jeśli serwer przysłał pustą linię lub null, przerywamy
+            if (base64 == null || base64.trim().isEmpty()) {
+                System.out.println("Lekarz nie ma ustawionego awatara.");
+                return null; // Tutaj możesz też zwrócić jakiś domyślny obrazek: return domyslnyAvatar;
+            }
+
+            // Dopiero gdy jesteśmy pewni, że mamy stringa Base64, dekodujemy go:
             byte[] imageBytes = Base64.getDecoder().decode(base64);
             Image image = new Image(new ByteArrayInputStream(imageBytes));
             return image;
 
         } catch (IOException e) {
-            System.out.println( "Brak danych" + e.getMessage());
+            System.out.println("Brak danych: " + e.getMessage());
         }
         return null;
     }

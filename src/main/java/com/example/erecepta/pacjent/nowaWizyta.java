@@ -55,10 +55,11 @@ public class nowaWizyta {
 
         root.setAlignment(Pos.TOP_CENTER);
 
-
         ServerConnection connection = new ServerConnection(imie, PESEL);
         String daneLekarze = connection.getPacjent("getLekarze", PESEL);
+        String specjalizacje = connection.getPacjent("getSpecjalizacje", PESEL);
         List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarze.split("\n")));
+        List<String> specjalizacjeList = new ArrayList<>(Arrays.asList(specjalizacje.split("\n")));
 
         /*
             Wyszukiwania
@@ -116,7 +117,7 @@ public class nowaWizyta {
         acceptBtn2.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(acceptBtn2, Priority.ALWAYS);
 
-        suggestrions(lekarze, searchField2);
+        suggestrions(specjalizacjeList, searchField2);
 
         innerBoxDate.getChildren().addAll(
                 wyborDaty,
@@ -158,12 +159,12 @@ public class nowaWizyta {
 
         // Zawartość kolumny 2: Dane tekstowe
         VBox daneBox = new VBox(5);
-        daneBox.setAlignment(Pos.CENTER_LEFT);
+        daneBox.setAlignment(Pos.CENTER);
 
         // Zawartość kolumny 3: Opis
         Label opisLabel = new Label("Lekarz kardiologii z 20 letnim doświadczeniem...");
         opisLabel.setWrapText(true);
-        VBox opisBox = new VBox(opisLabel);
+        VBox opisBox = new VBox(5);
 
         //ustawienie, aby kolumny rozciągały się na całą wysokość
         profilBox.setMaxHeight(Double.MAX_VALUE);
@@ -230,13 +231,16 @@ public class nowaWizyta {
                     String nrPZW = serverConnection.getLekarz("getPZWLekarza", imie1, nazwisko);
                     String email = serverConnection.getLekarz("getEmailLekarza", imie1, nazwisko);
                     String telefon = serverConnection.getLekarz("getTelefonLekarza", imie1, nazwisko);
+                    String opis = serverConnection.getLekarz("getOpisLekarza", imie1, nazwisko);
+                    String PESELLekarza = serverConnection.getLekarz("getPESELLekarza", imie1, nazwisko);
                     daneBox.getChildren().addAll(
                             new Label(imieNazwisko),
                             new Label(nrPZW),
                             new Label(email),
                             new Label(telefon)
                     );
-                    Image img = serverConnection.getImage("imageGetter", 1);
+                    Image img = serverConnection.getImage("imageGetter", Integer.parseInt(PESELLekarza));
+                    System.out.println("Piotruś rządzi!");
 
                     ImageView imgView = new ImageView(img);
                     imgView.setFitHeight(150);
@@ -245,6 +249,9 @@ public class nowaWizyta {
                         profilBox.getChildren().clear();
                     }
                     profilBox.getChildren().add(imgView);
+
+                    opisBox.getChildren().clear();
+                    opisBox.getChildren().add(new Label(opis));
                 } catch (IOException e){
                     throw new RuntimeException(e);
                 }
@@ -255,24 +262,7 @@ public class nowaWizyta {
         });
 
         acceptBtn2.setOnAction(event -> {
-            ServerConnection serverConnection = new ServerConnection(imie, PESEL);
-            FileChooser chooser = new FileChooser();
-
-
-            // filtrowanie plików (opcjonalnie)
-            chooser.getExtensionFilters().add(
-                    new FileChooser.ExtensionFilter("Obrazy", "*.png", "*.jpg", "*.jpeg")
-            );
-
-            File selectedFile = chooser.showOpenDialog(null);
-            if (selectedFile != null) {
-                try {
-                    serverConnection.setImage("imageSetter", selectedFile, 1);
-                    new Alert(Alert.AlertType.INFORMATION, "Plik został wysłany").showAndWait();
-                } catch (IOException e) {
-                    new Alert(Alert.AlertType.ERROR, "Nie udało się wysłać pliku").showAndWait();
-                }
-            }
+            String specjalizacjaSzukana = searchField2.getText().trim();
         });
 
         /*
@@ -351,6 +341,27 @@ public class nowaWizyta {
                 }
             }
         });
+    }
+
+    public static void setImage(String imie, String pesel) {
+        ServerConnection serverConnection = new ServerConnection(imie, pesel);
+        FileChooser chooser = new FileChooser();
+
+
+        // filtrowanie plików (opcjonalnie)
+        chooser.getExtensionFilters().add(
+                new FileChooser.ExtensionFilter("Obrazy", "*.png", "*.jpg", "*.jpeg")
+        );
+
+        File selectedFile = chooser.showOpenDialog(null);
+        if (selectedFile != null) {
+            try {
+                serverConnection.setImage("imageSetter", selectedFile, 1);
+                new Alert(Alert.AlertType.INFORMATION, "Plik został wysłany").showAndWait();
+            } catch (IOException e) {
+                new Alert(Alert.AlertType.ERROR, "Nie udało się wysłać pliku").showAndWait();
+            }
+        }
     }
 
     public Button getWyjdzButton() {

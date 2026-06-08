@@ -1,12 +1,17 @@
 module com.example.erecepta {
+    requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
     requires de.jensd.fx.glyphs.fontawesome;
     requires org.controlsfx.controls;
 
-    opens com.example.erecepta to javafx.graphics;
-        exports com.example.erecepta;
+    // Pozwalamy JavaFX (w tym FXML) na dostęp do Twoich klas
+    opens com.example.erecepta to javafx.fxml, javafx.graphics;
+    opens com.example.erecepta.pacjent to javafx.fxml, javafx.graphics;
+    opens com.example.erecepta.lekarz to javafx.fxml, javafx.graphics;
+
+    // Eksportujemy pakiety, żeby były widoczne w projekcie
+    exports com.example.erecepta;
     exports com.example.erecepta.pacjent;
-    opens com.example.erecepta.pacjent to javafx.graphics;
     exports com.example.erecepta.lekarz;
-    opens com.example.erecepta.lekarz to javafx.graphics;
 }
