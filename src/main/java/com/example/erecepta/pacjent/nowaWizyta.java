@@ -233,13 +233,14 @@ public class nowaWizyta {
                     String telefon = serverConnection.getLekarz("getTelefonLekarza", imie1, nazwisko);
                     String opis = serverConnection.getLekarz("getOpisLekarza", imie1, nazwisko);
                     String PESELLekarza = serverConnection.getLekarz("getPESELLekarza", imie1, nazwisko);
+                    daneBox.getChildren().clear();
                     daneBox.getChildren().addAll(
                             new Label(imieNazwisko),
                             new Label(nrPZW),
                             new Label(email),
                             new Label(telefon)
                     );
-                    Image img = serverConnection.getImage("imageGetter", Integer.parseInt(PESELLekarza));
+                    Image img = serverConnection.getImage("imageGetter", PESELLekarza);
                     System.out.println("Piotruś rządzi!");
 
                     ImageView imgView = new ImageView(img);
@@ -343,8 +344,8 @@ public class nowaWizyta {
         });
     }
 
-    public static void setImage(String imie, String pesel) {
-        ServerConnection serverConnection = new ServerConnection(imie, pesel);
+    public static void setImage(String naziwsko, String pesel) {
+        ServerConnection serverConnection = new ServerConnection(naziwsko, pesel);
         FileChooser chooser = new FileChooser();
 
 
@@ -356,7 +357,7 @@ public class nowaWizyta {
         File selectedFile = chooser.showOpenDialog(null);
         if (selectedFile != null) {
             try {
-                serverConnection.setImage("imageSetter", selectedFile, 1);
+                serverConnection.setImage("imageSetter", selectedFile, 11);
                 new Alert(Alert.AlertType.INFORMATION, "Plik został wysłany").showAndWait();
             } catch (IOException e) {
                 new Alert(Alert.AlertType.ERROR, "Nie udało się wysłać pliku").showAndWait();

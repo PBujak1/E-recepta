@@ -375,7 +375,8 @@ public class mainLekPanel {
         });
 
         profileIcon.setOnMouseClicked(event -> {
-            setImage(login, password);
+            System.out.print(login);
+            setImage(password, login);
         });
     }
 

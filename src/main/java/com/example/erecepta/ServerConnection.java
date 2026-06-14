@@ -510,11 +510,13 @@ public class ServerConnection {
         }
     }
 
-    public Image getImage(String data, int idLekarza) throws IOException {
+    public Image getImage(String data, String idLekarza) throws IOException {
         try {
             Socket socket = new Socket(server, port);
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+            out.println(data);
 
             out.println(idLekarza);
             String base64 = in.readLine();
