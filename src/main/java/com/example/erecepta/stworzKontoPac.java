@@ -88,7 +88,7 @@ public class stworzKontoPac {
         // ===== Grid kontakt =====
         VBox Vkontakt = new VBox();
         Vkontakt.getStyleClass().add("Vkontakt");
-        Vkontakt.setAlignment(Pos.TOP_CENTER);
+        Vkontakt.setAlignment(Pos.CENTER);
         GridPane kontaktGrid = new GridPane();
         kontaktGrid.setAlignment(Pos.CENTER);
         kontaktGrid.setHgap(30);
@@ -113,8 +113,11 @@ public class stworzKontoPac {
         GridPane.setHgrow(textEmail, Priority.ALWAYS);
 
         Region spacer = new Region();
+
+        VBox.setVgrow(VDaneOsobowe, Priority.ALWAYS);
         VDaneOsobowe.getChildren().addAll(labelDane, spacer, daneGrid);
 
+        VBox.setVgrow(Vkontakt, Priority.ALWAYS);
         Vkontakt.getChildren().addAll(
                 labelKontakt,
                 kontaktGrid

@@ -142,6 +142,7 @@ public class stworzKontoLek {
         resetujHbox.getChildren().add(akceptuj);
         dolnyPanel.getChildren().addAll(resetujHbox, wyjdzHbox);
 
+        VBox.setVgrow(mainPane, Priority.ALWAYS);
         mainPane.getChildren().addAll(gridPane, dolnyPanel);
 
         root.getChildren().addAll(

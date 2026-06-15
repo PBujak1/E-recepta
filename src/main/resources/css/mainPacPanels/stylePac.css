@@ -147,7 +147,7 @@
     -fx-pie-color: green;
 }
 
-.pie-chart .chart-pie-label, .chart-legend-item {
+.pie-chart, .chart-pie-label, .chart-legend-item {
     -fx-fill: white;
     -fx-text-fill: white;
 }
