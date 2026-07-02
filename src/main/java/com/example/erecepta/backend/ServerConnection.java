@@ -1,4 +1,4 @@
-package com.example.erecepta;
+package com.example.erecepta.backend;
 
 import javafx.scene.image.Image;
 

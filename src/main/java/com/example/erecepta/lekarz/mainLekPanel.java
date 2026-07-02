@@ -1,26 +1,22 @@
 package com.example.erecepta.lekarz;
 
-import com.example.erecepta.ServerConnection;
-import com.example.erecepta.logika;
+import com.example.erecepta.backend.ServerConnection;
 import com.example.erecepta.pacjent.nowaWizyta;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import static com.example.erecepta.pacjent.nowaWizyta.setImage;
 

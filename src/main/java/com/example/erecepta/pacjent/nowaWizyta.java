@@ -1,6 +1,6 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.ServerConnection;
+import com.example.erecepta.backend.ServerConnection;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Pos;

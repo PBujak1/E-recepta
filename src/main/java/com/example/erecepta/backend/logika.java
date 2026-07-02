@@ -1,6 +1,9 @@
-package com.example.erecepta;
+package com.example.erecepta.backend;
 import com.example.erecepta.lekarz.*;
+import com.example.erecepta.logFX;
 import com.example.erecepta.pacjent.*;
+import com.example.erecepta.stworzKontoLek;
+import com.example.erecepta.stworzKontoPac;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;

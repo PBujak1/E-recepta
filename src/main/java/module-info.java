@@ -14,4 +14,6 @@ module com.example.erecepta {
     exports com.example.erecepta;
     exports com.example.erecepta.pacjent;
     exports com.example.erecepta.lekarz;
+    exports com.example.erecepta.backend;
+    opens com.example.erecepta.backend to javafx.fxml, javafx.graphics;
 }
