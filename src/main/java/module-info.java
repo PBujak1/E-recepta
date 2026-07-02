@@ -4,6 +4,8 @@ module com.example.erecepta {
     requires javafx.graphics;
     requires de.jensd.fx.glyphs.fontawesome;
     requires org.controlsfx.controls;
+    requires java.net.http;
+    requires com.fasterxml.jackson.databind;
 
     // Pozwalamy JavaFX (w tym FXML) na dostęp do Twoich klas
     opens com.example.erecepta to javafx.fxml, javafx.graphics;
