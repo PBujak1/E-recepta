@@ -124,6 +124,33 @@ public class logika extends Application {
                 int mode = logFX1.getChosenMode();
                 ServerConnection serverConnection = new ServerConnection(PESEL, password);
 
+                /*
+                *
+                * TEST ZAMIANY BAZY DANYCH LOKALNEJ NA SIECIOWĄ
+                *
+                * */
+
+                String nazwisko123 = logFX1.getLogin();
+                String pesel123 = logFX1.getPassword();
+                AuthService authService = new AuthService();
+
+                LoginResponse response = null;
+                try {
+                    response = authService.loginPacjent(nazwisko123, pesel123);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+
+                String dane = response.getImie() + " " + response.getNazwisko();
+                System.out.println("Dane ze springa: " + dane);
+
+
+                /*
+                 *
+                 * KONIEC TESTU
+                 *
+                 * */
+
                 switch (mode) {
                     case 1:
                         try {
