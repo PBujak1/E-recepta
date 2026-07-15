@@ -165,6 +165,7 @@ This produces a self-contained application image (see the `jlink`-related config
 
 Contributions, issues, and feature requests are welcome. Feel free to open a pull request or an issue.
 
-## Author
+## Authors
 
 **Piotr Bujak** ([@PBujak1](https://github.com/PBujak1))
+**Bober Weronika**
