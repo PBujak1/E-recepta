@@ -22,7 +22,7 @@ public class AuthService {
                 String json = mapper.writeValueAsString(requestBody);
 
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("http://localhost:8080/api/login/pacjent"))
+                        .uri(URI.create("http://localhost:8080/api/login"))
                         .header("Content-Type", "application/json")
                         .POST(HttpRequest.BodyPublishers.ofString(json))
                         .build();
