@@ -2,7 +2,8 @@ package com.example.erecepta.pacjent;
 
 import com.example.erecepta.backend.client.ApiClient;
 import com.example.erecepta.backend.client.ServerConnection;
-import com.example.erecepta.backend.client.WizytaClient;
+import com.example.erecepta.backend.client.PacjentController;
+import com.example.erecepta.backend.dto.PacjentResponse;
 import com.example.erecepta.backend.dto.WizytaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -16,9 +17,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.example.erecepta.pacjent.nowaWizyta.setImage;
@@ -57,22 +55,16 @@ public class mainPacPanel {
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
 
-        ServerConnection serverConnection = new ServerConnection(imie, pesel);
-
-
-
         ApiClient apiClient = new ApiClient();
-        WizytaClient wizytaClient = new WizytaClient(apiClient);
-        List<WizytaResponse> response = wizytaClient.getWizytyPacjenta(pesel);
-        String[] daty = new String[response.size()];
+        PacjentController danePacjenta = new PacjentController(apiClient);
+        List<WizytaResponse> wizyty = danePacjenta.getWizytyPacjenta(pesel);
+        String[] daty = new String[wizyty.size()];
 
-        for (int i = 0; i < response.size(); i++) {
-            daty[i] = response.get(i).getDataWizyty().substring(0, 4);
+        for (int i = 0; i < wizyty.size(); i++) {
+            daty[i] = wizyty.get(i).getDataWizyty().substring(0, 4);
         }
 
-        String daneLekarzy = serverConnection.getPacjent("getLekarzePacjenta", pesel);
-        List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarzy.split("\n")));
-
+        List<PacjentResponse> lekarze = danePacjenta.getLekarzePacjenta(pesel);
         Label[] warningLabel = new Label[]{
                 warningTestLabel1,
                 warningTestLabel2,
@@ -179,8 +171,6 @@ public class mainPacPanel {
         receptyScrollPane.setFitToWidth(true);
         receptyScrollPane.setFitToHeight(true);
 
-
-
         /*
             Dodanie wykresu do środkowego panelu
          */
@@ -220,12 +210,12 @@ public class mainPacPanel {
                     lekarze.remove(j);
                 }
             }
-            PieChart.Data slice = new PieChart.Data(lekarze.get(i), PieCounter);
+
+            PieChart.Data slice = new PieChart.Data(lekarze.get(i).getNazwaLekarza(), PieCounter);
+
             pieChart.getData().add(slice);
         }
         pieChart.setLegendVisible(false);
-
-
 
         mainButtonBox.setAlignment(Pos.TOP_CENTER);
         VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
