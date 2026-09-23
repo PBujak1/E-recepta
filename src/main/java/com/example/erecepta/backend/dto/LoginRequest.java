@@ -1,4 +1,4 @@
-package com.example.erecepta.backend;
+package com.example.erecepta.backend.dto;
 
 public class LoginRequest {
 

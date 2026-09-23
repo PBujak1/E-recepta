@@ -1,6 +1,6 @@
 package com.example.erecepta.lekarz;
 
-import com.example.erecepta.backend.ServerConnection;
+import com.example.erecepta.backend.client.ServerConnection;
 import com.example.erecepta.pacjent.nowaWizyta;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;

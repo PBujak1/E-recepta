@@ -18,4 +18,10 @@ module com.example.erecepta {
     exports com.example.erecepta.lekarz;
     exports com.example.erecepta.backend;
     opens com.example.erecepta.backend to javafx.fxml, javafx.graphics;
+    exports com.example.erecepta.backend.client;
+    opens com.example.erecepta.backend.client to javafx.fxml, javafx.graphics;
+    exports com.example.erecepta.backend.dto;
+    opens com.example.erecepta.backend.dto to javafx.fxml, javafx.graphics;
+    exports com.example.erecepta.backend.services;
+    opens com.example.erecepta.backend.services to javafx.fxml, javafx.graphics;
 }

@@ -1,6 +1,9 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.backend.ServerConnection;
+import com.example.erecepta.backend.client.ApiClient;
+import com.example.erecepta.backend.client.ServerConnection;
+import com.example.erecepta.backend.client.WizytaClient;
+import com.example.erecepta.backend.dto.WizytaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
@@ -25,8 +28,7 @@ public class mainPacPanel {
     HBox root = new HBox(1);
     String nazwisko;
     String imie;
-    String login;
-    String password;
+    String pesel;
     String nazwa;
 
     private final FontAwesomeIconView profileIcon = new FontAwesomeIconView(FontAwesomeIcon.USER_CIRCLE);
@@ -45,23 +47,33 @@ public class mainPacPanel {
 
     private final Button wyloguj = new Button("Wyloguj") ;
 
-    public mainPacPanel(String login, String password, String nazwa) throws IOException {
-        this.login = login; //imie
-        this.password = password; //PEsel
-        this.nazwa = nazwa; //imie i nazwisko
+    public mainPacPanel(String imie, String nazwisko, String pesel) throws Exception {
+        this.imie = imie; //imie
+        this.pesel = pesel; //PESEL
+        this.nazwisko = nazwisko; //imie i nazwisko
 
-        System.out.println(nazwa + "nazwa");
-        System.out.println(login + "login");
-        System.out.println(password + "password");
+        nazwa = imie + " " + nazwisko;
 
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
 
 
-        ServerConnection serverConnection = new ServerConnection(login, password);
-        String daneWizyty = serverConnection.getPacjent("getWizytaPacjenta", password);
-        String[] daty = daneWizyty.split("\n");
-        String daneLekarzy = serverConnection.getPacjent("getLekarzePacjenta", password);
+        ServerConnection serverConnection = new ServerConnection(imie, pesel);
+//        String daneWizyty = serverConnection.getPacjent("getWizytaPacjenta", pesel);
+//        String[] daty = daneWizyty.split("\n");
+
+
+        ApiClient apiClient = new ApiClient();
+        WizytaClient wizytaClient = new WizytaClient(apiClient);
+        List<WizytaResponse> response = wizytaClient.getWizytyPacjenta(pesel);
+        String[] daty = new String[response.size()];
+
+        for (int i = 0; i < response.size(); i++) {
+            daty[i] = response.get(i).getDataWizyty();
+            System.out.println(daty[i]);
+        }
+
+        String daneLekarzy = serverConnection.getPacjent("getLekarzePacjenta", pesel);
         List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarzy.split("\n")));
 
         Label[] warningLabel = new Label[]{
@@ -351,7 +363,7 @@ public class mainPacPanel {
         belloIcon.setGlyphSize(60);
 
         profileIcon.setOnMouseClicked(event -> {
-            setImage(login, password);
+            setImage(imie, pesel);
         });
     }
     public Button getWizytaButton() {

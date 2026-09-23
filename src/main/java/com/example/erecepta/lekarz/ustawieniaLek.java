@@ -1,6 +1,6 @@
 package com.example.erecepta.lekarz;
 
-import com.example.erecepta.backend.ServerConnection;
+import com.example.erecepta.backend.client.ServerConnection;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

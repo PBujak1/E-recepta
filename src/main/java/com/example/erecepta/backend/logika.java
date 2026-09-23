@@ -1,4 +1,7 @@
 package com.example.erecepta.backend;
+import com.example.erecepta.backend.client.ServerConnection;
+import com.example.erecepta.backend.dto.LoginResponse;
+import com.example.erecepta.backend.services.AuthService;
 import com.example.erecepta.lekarz.*;
 import com.example.erecepta.logFX;
 import com.example.erecepta.pacjent.*;
@@ -7,10 +10,7 @@ import com.example.erecepta.stworzKontoPac;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -28,7 +28,7 @@ public class logika extends Application {
     private Button submit = logFX1.getSubmitButton();
     private Button clear = logFX1.getClearButton();
     private TextField loginField = logFX1.getLoginTextField();
-    private TextField passwordField = logFX1.getPasswordField();
+    private PasswordField passwordField = logFX1.getPasswordField();
     private String getImie = "getImie";
     private String getNazwisko = "getNazwisko";
     private String imie;
@@ -119,24 +119,28 @@ public class logika extends Application {
                 alert.setContentText("Hasło nie może być puste!");
                 alert.showAndWait();
             } else {
-                String password = logFX1.getLogin();
+                String NAZWISKO = logFX1.getLogin();
                 String PESEL = logFX1.getPassword();
                 int mode = logFX1.getChosenMode();
-                ServerConnection serverConnection = new ServerConnection(PESEL, password);
+
+
+                // Logowanie starym sposobem lokalnie
+                ServerConnection serverConnection = new ServerConnection(PESEL, NAZWISKO);
 
                 /*
                 *
-                * TEST ZAMIANY BAZY DANYCH LOKALNEJ NA SIECIOWĄ
+                *  ZAMIANY BAZY DANYCH LOKALNEJ NA SIECIOWĄ
                 *
                 * */
 
-                String nazwisko123 = logFX1.getLogin();
-                String pesel123 = logFX1.getPassword();
-                AuthService authService = new AuthService();
+                String nazwisko123 = loginField.getText();
+                String pesel123 = passwordField.getText();
 
+                AuthService authService = new AuthService();
                 LoginResponse response = null;
+                System.out.println(mode);
                 try {
-                    response = authService.loginPacjent(nazwisko123, pesel123);
+                    response = authService.login(nazwisko123, pesel123, mode);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
@@ -147,22 +151,27 @@ public class logika extends Application {
 
                 /*
                  *
-                 * KONIEC TESTU
+                 * KONIEC
                  *
                  * */
 
                 switch (mode) {
                     case 1:
                         try {
+                            /*
+                            *
+                            *  TWORZENIE LOGOWANIA LOKALNIE
+                            *
+                            * */
                             String result = serverConnection.getPacjent("loginPacjent", PESEL);
                             if ("Brak danych".equals(result)) {
                                 new Alert(Alert.AlertType.INFORMATION, "Błędny Login lub Hasło!").showAndWait();
                                 return;
                             } else {
-                            imie = serverConnection.getPacjent("getImiePacjent", PESEL);
-                            nazwisko = serverConnection.getPacjent("getNazwiskoPacjent", PESEL);
+                            imie = response.getImie();
+                            nazwisko = response.getNazwisko();
                             nazwaPacjenta = imie + " " + nazwisko;
-                            mainPacPanel mainPanelPac = new mainPacPanel(imie, PESEL, nazwaPacjenta);
+                            mainPacPanel mainPanelPac = new mainPacPanel(imie, nazwisko, PESEL);
                             scene.setRoot(mainPanelPac.getView());
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
@@ -229,6 +238,8 @@ public class logika extends Application {
                             }
                         } catch (IOException ex) {
                             new Alert(Alert.AlertType.WARNING, "Brak połączenia!").showAndWait();
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
                         }
                         break;
                     case 2:
@@ -249,7 +260,7 @@ public class logika extends Application {
                                 String wiek1 = serverConnection.getPacjent("getWiekLekarz", PESEL);
                                 String plec1 = serverConnection.getPacjent("getPlecLekarz", PESEL);
                                 nazwaPacjenta = imie + nazwisko;
-                                mainLekPanel mainPanelLek = new mainLekPanel(PESEL, password, imie, nazwisko);
+                                mainLekPanel mainPanelLek = new mainLekPanel(PESEL, NAZWISKO, imie, nazwisko);
                                 scene.setRoot(mainPanelLek.getView());
 
                                 mainPanelLek.getWyloguj().setOnAction(event -> {

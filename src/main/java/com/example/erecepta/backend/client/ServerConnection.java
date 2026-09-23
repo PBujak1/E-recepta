@@ -1,4 +1,4 @@
-package com.example.erecepta.backend;
+package com.example.erecepta.backend.client;
 
 import javafx.scene.image.Image;
 
@@ -206,6 +206,7 @@ public class ServerConnection {
                         responseBuilder.append(response).append("\n");
                     }
                     response = responseBuilder.toString();
+                    System.out.println("\nWypisanie ze starego serwera dat wizyt pacjenta");
                     System.out.println(response);
                     return response;
                 case "getHistoriaWizyt":
