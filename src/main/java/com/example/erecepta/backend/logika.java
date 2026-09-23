@@ -132,23 +132,16 @@ public class logika extends Application {
                 *  ZAMIANY BAZY DANYCH LOKALNEJ NA SIECIOWĄ
                 *
                 * */
-
                 String nazwisko123 = loginField.getText();
                 String pesel123 = passwordField.getText();
 
                 AuthService authService = new AuthService();
                 LoginResponse response = null;
-                System.out.println(mode);
                 try {
                     response = authService.login(nazwisko123, pesel123, mode);
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
-
-                String dane = response.getImie() + " " + response.getNazwisko();
-                System.out.println("Dane ze springa: " + dane);
-
-
                 /*
                  *
                  * KONIEC
@@ -163,11 +156,6 @@ public class logika extends Application {
                             *  TWORZENIE LOGOWANIA LOKALNIE
                             *
                             * */
-                            String result = serverConnection.getPacjent("loginPacjent", PESEL);
-                            if ("Brak danych".equals(result)) {
-                                new Alert(Alert.AlertType.INFORMATION, "Błędny Login lub Hasło!").showAndWait();
-                                return;
-                            } else {
                             imie = response.getImie();
                             nazwisko = response.getNazwisko();
                             nazwaPacjenta = imie + " " + nazwisko;
@@ -235,18 +223,15 @@ public class logika extends Application {
                                 logFX1.getLoginTextField().clear();
                                 logFX1.getPasswordField().clear();
                             });
-                            }
-                        } catch (IOException ex) {
-                            new Alert(Alert.AlertType.WARNING, "Brak połączenia!").showAndWait();
+                            } catch (IOException ex) {
+                            throw new RuntimeException(ex);
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
-                        break;
                     case 2:
                         try {
                             String result = serverConnection.getPacjent("loginLekarz", PESEL);
                             if ("Brak danych".equals(result)) {
-                                new Alert(Alert.AlertType.INFORMATION, "Brak połączenia").showAndWait();
                                 return;
                             } else {
                                 imie = serverConnection.getPacjent("getImieLekarz", PESEL);

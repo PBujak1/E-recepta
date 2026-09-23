@@ -3,6 +3,8 @@ package com.example.erecepta.backend.services;
 import com.example.erecepta.backend.dto.LoginRequest;
 import com.example.erecepta.backend.dto.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.scene.control.Alert;
+import javafx.stage.Window;
 
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -22,9 +24,6 @@ public class AuthService {
         requestBody.setPESEL(pesel);
 
         String json = mapper.writeValueAsString(requestBody);
-
-        System.out.println("Wysyłany JSON: " + json);
-
         String endpoint = (mode == 1) ? "/api/login/pacjent" : "/api/login/lekarz";
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -38,7 +37,22 @@ public class AuthService {
         System.out.println("STATUS: " + response.statusCode());
         System.out.println("BODY: " + response.body());
 
+        if (response.statusCode() == 500) {
+            Alert alert = new Alert(Alert.AlertType.ERROR, "Błędny Login lub Hasło!");
+
+            // Pobiera obecnie aktywne okno aplikacji
+            Window activeWindow = Window.getWindows().stream()
+                    .filter(Window::isShowing)
+                    .findFirst()
+                    .orElse(null);
+
+            alert.initOwner(activeWindow);
+            alert.showAndWait();
+            return null;
+        }
+
         return mapper.readValue(response.body(), LoginResponse.class);
+
     }
 }
 

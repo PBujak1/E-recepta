@@ -50,17 +50,15 @@ public class mainPacPanel {
     public mainPacPanel(String imie, String nazwisko, String pesel) throws Exception {
         this.imie = imie; //imie
         this.pesel = pesel; //PESEL
-        this.nazwisko = nazwisko; //imie i nazwisko
+        this.nazwisko = nazwisko; //nazwisko
 
         nazwa = imie + " " + nazwisko;
 
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
 
-
         ServerConnection serverConnection = new ServerConnection(imie, pesel);
-//        String daneWizyty = serverConnection.getPacjent("getWizytaPacjenta", pesel);
-//        String[] daty = daneWizyty.split("\n");
+
 
 
         ApiClient apiClient = new ApiClient();
@@ -69,8 +67,7 @@ public class mainPacPanel {
         String[] daty = new String[response.size()];
 
         for (int i = 0; i < response.size(); i++) {
-            daty[i] = response.get(i).getDataWizyty();
-            System.out.println(daty[i]);
+            daty[i] = response.get(i).getDataWizyty().substring(0, 4);
         }
 
         String daneLekarzy = serverConnection.getPacjent("getLekarzePacjenta", pesel);
