@@ -1,6 +1,7 @@
 package com.example.erecepta.backend.client;
 
-import com.example.erecepta.backend.dto.PacjentResponse;
+import com.example.erecepta.backend.dto.DawkowanieResponse;
+import com.example.erecepta.backend.dto.PacjentLekarzResponse;
 import com.example.erecepta.backend.dto.WizytaResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,7 +20,7 @@ public class PacjentController {
 
     public List<WizytaResponse> getWizytyPacjenta(String pesel) throws Exception {
 
-        String response = apiClient.get("/login/pacjent/" + pesel + "/wizyty");
+        String response = apiClient.get("/pacjent/" + pesel + "/wizyty");
 
         WizytaResponse[] wizyty = mapper.readValue(
                 response,
@@ -29,16 +30,32 @@ public class PacjentController {
         return Arrays.asList(wizyty);
     }
 
-    public List<PacjentResponse> getLekarzePacjenta(String pesel) throws Exception {
-        String response = apiClient.get("/login/pacjent/" + pesel + "/lekarzePacjenta");
-        PacjentResponse[] lekarze = mapper.readValue(
+    public List<PacjentLekarzResponse> getLekarzePacjenta(String pesel) throws Exception {
+        String response = apiClient.get("/pacjent/" + pesel + "/lekarzePacjenta");
+        PacjentLekarzResponse[] lekarze = mapper.readValue(
                 response,
-                PacjentResponse[].class
+                PacjentLekarzResponse[].class
         );
 
         return Arrays.stream(lekarze)
-                .map(lekarz -> new PacjentResponse(
+                .map(lekarz -> new PacjentLekarzResponse(
                         lekarz.getImieLekarza() + " " + lekarz.getNazwiskoLekarza()
+                ))
+                .toList();
+    }
+
+    public List<DawkowanieResponse> getRecepty(String pesel) throws Exception {
+        String response = apiClient.get("/pacjent/" + pesel + "/dawkowanie");
+        DawkowanieResponse[] dawkowanie = mapper.readValue(
+                response,
+                DawkowanieResponse[].class
+        );
+
+        return Arrays.stream(dawkowanie)
+                .map(dawkowanieResponse -> new DawkowanieResponse(
+                        dawkowanieResponse.getNazwaLeku(),
+                        dawkowanieResponse.getLiczbaOpakowan(),
+                        dawkowanieResponse.getDawkowanie()
                 ))
                 .toList();
     }

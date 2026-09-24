@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PacjentResponse {
+public class PacjentLekarzResponse {
 
     @JsonProperty("imie")
     private String imieLekarza;
@@ -13,10 +13,10 @@ public class PacjentResponse {
     private String nazwiskoLekarza;
     private String nazwaLekarza;
 
-    public PacjentResponse() {
+    public PacjentLekarzResponse() {
     }
 
-    public PacjentResponse(String nazwaLekarza) {
+    public PacjentLekarzResponse(String nazwaLekarza) {
         this.nazwaLekarza = nazwaLekarza;
     }
 

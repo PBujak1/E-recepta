@@ -1,9 +1,8 @@
 package com.example.erecepta.pacjent;
 
 import com.example.erecepta.backend.client.ApiClient;
-import com.example.erecepta.backend.client.ServerConnection;
 import com.example.erecepta.backend.client.PacjentController;
-import com.example.erecepta.backend.dto.PacjentResponse;
+import com.example.erecepta.backend.dto.PacjentLekarzResponse;
 import com.example.erecepta.backend.dto.WizytaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
@@ -64,7 +63,7 @@ public class mainPacPanel {
             daty[i] = wizyty.get(i).getDataWizyty().substring(0, 4);
         }
 
-        List<PacjentResponse> lekarze = danePacjenta.getLekarzePacjenta(pesel);
+        List<PacjentLekarzResponse> lekarze = danePacjenta.getLekarzePacjenta(pesel);
         Label[] warningLabel = new Label[]{
                 warningTestLabel1,
                 warningTestLabel2,

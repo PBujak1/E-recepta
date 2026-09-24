@@ -1,6 +1,10 @@
 package com.example.erecepta.backend;
+import com.example.erecepta.backend.client.ApiClient;
+import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
+import com.example.erecepta.backend.dto.DawkowanieResponse;
 import com.example.erecepta.backend.dto.LoginResponse;
+import com.example.erecepta.backend.dto.WizytaResponse;
 import com.example.erecepta.backend.services.AuthService;
 import com.example.erecepta.lekarz.*;
 import com.example.erecepta.logFX;
@@ -16,6 +20,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class logika extends Application {
@@ -166,12 +171,26 @@ public class logika extends Application {
                                 try {
                                     String dawkowanie1 = serverConnection.getPacjent("getDawkowanie", PESEL);
                                     dawkowanie dawkowaniePanel = new dawkowanie(dawkowanie1);
+
+                                    ApiClient apiClient = new ApiClient();
+                                    PacjentController dawkowanie = new PacjentController(apiClient);
+                                    List<DawkowanieResponse> wizyty = dawkowanie.getRecepty(PESEL);
+                                    String[] daty = new String[wizyty.size()];
+
+                                    for (int i = 0; i < wizyty.size(); i++) {
+                                        System.out.println(wizyty.get(i).getNazwaLeku() + " " +
+                                                wizyty.get(i).getLiczbaOpakowan() + " " +
+                                                wizyty.get(i).getDawkowanie());
+                                    }
+
                                     scene.setRoot(dawkowaniePanel.getView());
 
                                     dawkowaniePanel.getWyjdz().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
                                 } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });
