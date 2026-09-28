@@ -169,21 +169,12 @@ public class logika extends Application {
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
                                 try {
-                                    String dawkowanie1 = serverConnection.getPacjent("getDawkowanie", PESEL);
-                                    dawkowanie dawkowaniePanel = new dawkowanie(dawkowanie1);
-//
                                     // DODANIE ŚCIĄGANIA DAWKOWANIA Z BAZY SIECIOWEJ - PRZYKLAD
 
-//                                    ApiClient apiClient = new ApiClient();
-//                                    PacjentController dawkowanie = new PacjentController(apiClient);
-//                                    List<DawkowanieResponse> wizyty = dawkowanie.getRecepty(PESEL);
-//                                    String[] daty = new String[wizyty.size()];
-//
-//                                    for (int i = 0; i < wizyty.size(); i++) {
-//                                        System.out.println(wizyty.get(i).getNazwaLeku() + " " +
-//                                                wizyty.get(i).getLiczbaOpakowan() + " " +
-//                                                wizyty.get(i).getDawkowanie());
-//                                    }
+                                    ApiClient apiClient = new ApiClient();
+                                    PacjentController dawkowanie = new PacjentController(apiClient);
+                                    List<DawkowanieResponse> wizyty = dawkowanie.getRecepty(PESEL);
+                                    dawkowanie dawkowaniePanel = new dawkowanie(wizyty);
 
                                     scene.setRoot(dawkowaniePanel.getView());
 
