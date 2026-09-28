@@ -54,8 +54,7 @@ public class mainPacPanel {
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
 
-        ApiClient apiClient = new ApiClient();
-        PacjentController danePacjenta = new PacjentController(apiClient);
+        PacjentController danePacjenta = new PacjentController();
         List<WizytaResponse> wizyty = danePacjenta.getWizytyPacjenta(pesel);
         String[] daty = new String[wizyty.size()];
 

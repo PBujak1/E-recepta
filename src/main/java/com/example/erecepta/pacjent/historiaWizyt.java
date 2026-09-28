@@ -16,8 +16,6 @@ public class historiaWizyt {
     private BorderPane root = new BorderPane();
     private String historiaString;
     private Label titleLabel = new Label("Moja Historia Wizyt");
-    private Label informationLabel = new Label("Ze względu na rodo wszystkie dane zapisane są za pomocą ID");
-    private Label daneLabel = new Label("Dane pokazują poszczególno IDWizyty, Datę wizyty, IDLekarza, IDPacjenta, IDRecepty");
     private Button wyjdz = new Button("Wyjdź");
 
     public historiaWizyt(String historia) {
@@ -29,7 +27,7 @@ public class historiaWizyt {
         VBox titleBox = new VBox(10);
         Region spacer = new Region();
         titleBox.setAlignment(Pos.TOP_CENTER);
-        titleBox.getChildren().addAll(titleLabel, informationLabel,spacer, daneLabel);
+        titleBox.getChildren().addAll(titleLabel,spacer);
 
         VBox receptyPane = new VBox(new Label(historiaString));
         receptyPane.setAlignment(Pos.TOP_CENTER);
@@ -50,8 +48,6 @@ public class historiaWizyt {
 
         contentPane.getStyleClass().add("historiaPac-main-panel-content");
         titleLabel.getStyleClass().add("historiaPac-titleLabel");
-        informationLabel.getStyleClass().add("historiaPac-informationLabel");
-        daneLabel.getStyleClass().add("historiaPac-daneLabel");
         wyjdz.getStyleClass().add("historiaPac-exit-btn");
     }
 

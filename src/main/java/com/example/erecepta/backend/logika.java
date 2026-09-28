@@ -3,6 +3,7 @@ import com.example.erecepta.backend.client.ApiClient;
 import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
 import com.example.erecepta.backend.dto.DawkowanieResponse;
+import com.example.erecepta.backend.dto.HistoriaPacjentaResponse;
 import com.example.erecepta.backend.dto.LoginResponse;
 import com.example.erecepta.backend.dto.WizytaResponse;
 import com.example.erecepta.backend.services.AuthService;
@@ -156,11 +157,6 @@ public class logika extends Application {
                 switch (mode) {
                     case 1:
                         try {
-                            /*
-                            *
-                            *  TWORZENIE LOGOWANIA LOKALNIE
-                            *
-                            * */
                             imie = response.getImie();
                             nazwisko = response.getNazwisko();
                             nazwaPacjenta = imie + " " + nazwisko;
@@ -169,10 +165,7 @@ public class logika extends Application {
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
                                 try {
-                                    // DODANIE ŚCIĄGANIA DAWKOWANIA Z BAZY SIECIOWEJ - PRZYKLAD
-
-                                    ApiClient apiClient = new ApiClient();
-                                    PacjentController dawkowanie = new PacjentController(apiClient);
+                                    PacjentController dawkowanie = new PacjentController();
                                     List<DawkowanieResponse> wizyty = dawkowanie.getRecepty(PESEL);
                                     dawkowanie dawkowaniePanel = new dawkowanie(wizyty);
 
@@ -190,8 +183,12 @@ public class logika extends Application {
 
                             mainPanelPac.getHistoriaButton().setOnAction(event -> {
                                 try {
+                                    /*
+                                    * nr wizyty, data wizyty, nazwisko i imie lekarza, imie i nazwisko pacjenta, nr recepty
+                                    * */
                                     String historia = serverConnection.getPacjent("getHistoriaWizyt", PESEL);
-                                    System.out.println(PESEL);
+                                    PacjentController historiaPacjenta = new PacjentController();
+                                    List<HistoriaPacjentaResponse> historiaa = historiaPacjenta.getHistoriaPacjenta(PESEL);
                                     historiaWizyt historiaWizyt = new historiaWizyt(historia);
                                     scene.setRoot(historiaWizyt.getView());
 
@@ -199,6 +196,8 @@ public class logika extends Application {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
                                 } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });
