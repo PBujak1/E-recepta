@@ -157,6 +157,7 @@ public class logika extends Application {
                 switch (mode) {
                     case 1:
                         try {
+                            PacjentController mainController = new PacjentController();
                             imie = response.getImie();
                             nazwisko = response.getNazwisko();
                             nazwaPacjenta = imie + " " + nazwisko;
@@ -165,54 +166,43 @@ public class logika extends Application {
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
                                 try {
-                                    PacjentController dawkowanie = new PacjentController();
-                                    List<DawkowanieResponse> wizyty = dawkowanie.getRecepty(PESEL);
-                                    dawkowanie dawkowaniePanel = new dawkowanie(wizyty);
+                                    List<DawkowanieResponse> dawkowanie = mainController.getRecepty(PESEL);
+                                    dawkowanie dawkowaniePanel = new dawkowanie(dawkowanie);
 
                                     scene.setRoot(dawkowaniePanel.getView());
 
                                     dawkowaniePanel.getWyjdz().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
                                 } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });
 
                             mainPanelPac.getHistoriaButton().setOnAction(event -> {
-                                try {
                                     /*
                                     * nr wizyty, data wizyty, nazwisko i imie lekarza, imie i nazwisko pacjenta, nr recepty
                                     * */
-                                    String historia = serverConnection.getPacjent("getHistoriaWizyt", PESEL);
-                                    PacjentController historiaPacjenta = new PacjentController();
-                                    List<HistoriaPacjentaResponse> historiaa = historiaPacjenta.getHistoriaPacjenta(PESEL);
+                                try {
+                                    List<HistoriaPacjentaResponse> historia = mainController.getHistoriaPacjenta(PESEL);
                                     historiaWizyt historiaWizyt = new historiaWizyt(historia);
                                     scene.setRoot(historiaWizyt.getView());
 
                                     historiaWizyt.getWyjdz().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
                                 } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });
 
                             mainPanelPac.getWizytaButton().setOnAction(event -> {
-                                try {
-                                    nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
-                                    scene.setRoot(nowaWizyta.getView());
-
-                                    nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
-                                        scene.setRoot(mainPanelPac.getView());
-                                    });
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
-                                }
+//                                    nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
+//                                    scene.setRoot(nowaWizyta.getView());
+//
+//                                    nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
+//                                        scene.setRoot(mainPanelPac.getView());
+//                                    });
                             });
 
                             mainPanelPac.getNadchodzaceWizyty().setOnAction(event -> {
