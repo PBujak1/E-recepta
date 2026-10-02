@@ -77,6 +77,7 @@ public class dawkowanie {
         root.setTop(titleBox);
         root.setBottom(bottomPane);
 
+        receptyPane.getStyleClass().add("historiaPac-gridPane");
         contentPane.getStyleClass().add("historiaPac-main-panel-content");
         titleLabel.getStyleClass().add("historiaPac-titleLabel");
         wyjdz.getStyleClass().add("historiaPac-exit-btn");

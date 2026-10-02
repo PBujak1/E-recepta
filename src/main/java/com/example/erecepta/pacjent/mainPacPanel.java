@@ -1,9 +1,8 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.backend.client.ApiClient;
 import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.dto.PacjentLekarzResponse;
-import com.example.erecepta.backend.dto.WizytaResponse;
+import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
@@ -55,7 +54,7 @@ public class mainPacPanel {
         HBox.setHgrow(boczek, Priority.ALWAYS);
 
         PacjentController danePacjenta = new PacjentController();
-        List<WizytaResponse> wizyty = danePacjenta.getWizytyPacjenta(pesel);
+        List<WizytaPacjentaResponse> wizyty = danePacjenta.getWizytyPacjenta(pesel);
         String[] daty = new String[wizyty.size()];
 
         for (int i = 0; i < wizyty.size(); i++) {

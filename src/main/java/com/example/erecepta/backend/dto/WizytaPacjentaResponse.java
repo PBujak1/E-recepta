@@ -1,13 +1,13 @@
 package com.example.erecepta.backend.dto;
 
-public class WizytaResponse {
+public class WizytaPacjentaResponse {
 
     private String dataWizyty;
 
-    public WizytaResponse() {
+    public WizytaPacjentaResponse() {
     }
 
-    public WizytaResponse(String dataWizyty) {
+    public WizytaPacjentaResponse(String dataWizyty) {
         this.dataWizyty = dataWizyty;
     }
 

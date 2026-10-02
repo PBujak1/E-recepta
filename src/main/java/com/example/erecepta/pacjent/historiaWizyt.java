@@ -1,6 +1,6 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.backend.dto.HistoriaPacjentaResponse;
+import com.example.erecepta.backend.dto.WizytyResponse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -23,7 +23,7 @@ public class historiaWizyt {
     private List<Label> nazwaPacjenta  = new ArrayList<>();
     private List<Label> nrRecepty = new ArrayList<>();
 
-    public historiaWizyt(List<HistoriaPacjentaResponse> response) {
+    public historiaWizyt(List<WizytyResponse> response) {
 
         for (int i = 0; i < response.size(); i++) {
             dataWizyty.add(new Label(response.get(i).getDataWizyty()));
@@ -40,16 +40,16 @@ public class historiaWizyt {
         titleBox.getChildren().addAll(titleLabel,spacer);
 
         GridPane receptyPane = new GridPane();
-        receptyPane.setPadding(new Insets(30));
+        //receptyPane.setPadding(new Insets(30));
         receptyPane.gridLinesVisibleProperty().set(true);
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(25);
+        col1.setPercentWidth(30);
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(25);
+        col2.setPercentWidth(30);
         ColumnConstraints col3 = new ColumnConstraints();
-        col3.setPercentWidth(25);
+        col3.setPercentWidth(30);
         ColumnConstraints col4 = new ColumnConstraints();
-        col3.setPercentWidth(25);
+        col4.setPercentWidth(10);
         receptyPane.getColumnConstraints().addAll(col1, col2, col3, col4);
 
         for (int i = 0; i < response.size(); i++) {
@@ -82,6 +82,7 @@ public class historiaWizyt {
         root.setTop(titleBox);
         root.setBottom(bottomPane);
 
+        receptyPane.getStyleClass().add("historiaPac-gridPane");
         contentPane.getStyleClass().add("historiaPac-main-panel-content");
         titleLabel.getStyleClass().add("historiaPac-titleLabel");
         wyjdz.getStyleClass().add("historiaPac-exit-btn");

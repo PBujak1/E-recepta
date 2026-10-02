@@ -1,17 +1,15 @@
 package com.example.erecepta.backend.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
-public class HistoriaPacjentaResponse {
+public class WizytyResponse {
     private String dataWizyty;
     private String nazwaLekarza;
     private String nazwaPacjenta;
     private String nrRecepty;
 
-    public HistoriaPacjentaResponse() {
+    public WizytyResponse() {
     }
 
-    public HistoriaPacjentaResponse(
+    public WizytyResponse(
             String dataWizyty,
             String nazwaLekarza,
             String nazwaPacjenta,

@@ -1,11 +1,9 @@
 package com.example.erecepta.backend;
-import com.example.erecepta.backend.client.ApiClient;
 import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
 import com.example.erecepta.backend.dto.DawkowanieResponse;
-import com.example.erecepta.backend.dto.HistoriaPacjentaResponse;
+import com.example.erecepta.backend.dto.WizytyResponse;
 import com.example.erecepta.backend.dto.LoginResponse;
-import com.example.erecepta.backend.dto.WizytaResponse;
 import com.example.erecepta.backend.services.AuthService;
 import com.example.erecepta.lekarz.*;
 import com.example.erecepta.logFX;
@@ -184,7 +182,7 @@ public class logika extends Application {
                                     * nr wizyty, data wizyty, nazwisko i imie lekarza, imie i nazwisko pacjenta, nr recepty
                                     * */
                                 try {
-                                    List<HistoriaPacjentaResponse> historia = mainController.getHistoriaPacjenta(PESEL);
+                                    List<WizytyResponse> historia = mainController.getHistoriaPacjenta(PESEL);
                                     historiaWizyt historiaWizyt = new historiaWizyt(historia);
                                     scene.setRoot(historiaWizyt.getView());
 
@@ -197,24 +195,29 @@ public class logika extends Application {
                             });
 
                             mainPanelPac.getWizytaButton().setOnAction(event -> {
-//                                    nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
-//                                    scene.setRoot(nowaWizyta.getView());
-//
-//                                    nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
-//                                        scene.setRoot(mainPanelPac.getView());
-//                                    });
+                                nowaWizyta nowaWizyta = null;
+                                try {
+                                    nowaWizyta = new nowaWizyta(PESEL, imie);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                                scene.setRoot(nowaWizyta.getView());
+
+                                    nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
+                                        scene.setRoot(mainPanelPac.getView());
+                                    });
                             });
 
                             mainPanelPac.getNadchodzaceWizyty().setOnAction(event -> {
                                 try {
-                                    String nadchodzaceWizyty = serverConnection.getPacjent("getNadchodzaceWizyty", PESEL);
+                                    List<WizytyResponse> nadchodzaceWizyty = mainController.getNadchodzaceWizyty(PESEL);
                                     nadchodzaceWizyty nadchodzaceWizyty1 = new nadchodzaceWizyty(nadchodzaceWizyty);
                                     scene.setRoot(nadchodzaceWizyty1.getView());
 
                                     nadchodzaceWizyty1.getWyjdz().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
-                                } catch (IOException ex) {
+                                } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });

@@ -1,9 +1,9 @@
 package com.example.erecepta.backend.client;
 
 import com.example.erecepta.backend.dto.DawkowanieResponse;
-import com.example.erecepta.backend.dto.HistoriaPacjentaResponse;
+import com.example.erecepta.backend.dto.WizytyResponse;
 import com.example.erecepta.backend.dto.PacjentLekarzResponse;
-import com.example.erecepta.backend.dto.WizytaResponse;
+import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Arrays;
@@ -18,13 +18,13 @@ public class PacjentController {
         this.mapper = new ObjectMapper();
     }
 
-    public List<WizytaResponse> getWizytyPacjenta(String pesel) throws Exception {
+    public List<WizytaPacjentaResponse> getWizytyPacjenta(String pesel) throws Exception {
 
         String response = apiClient.get("/pacjent/" + pesel + "/wizyty");
 
-        WizytaResponse[] wizyty = mapper.readValue(
+        WizytaPacjentaResponse[] wizyty = mapper.readValue(
                 response,
-                WizytaResponse[].class
+                WizytaPacjentaResponse[].class
         );
 
         return Arrays.asList(wizyty);
@@ -60,15 +60,32 @@ public class PacjentController {
                 .toList();
     }
 
-    public List<HistoriaPacjentaResponse> getHistoriaPacjenta(String pesel) throws Exception {
+    public List<WizytyResponse> getHistoriaPacjenta(String pesel) throws Exception {
         String response = apiClient.get("/pacjent/" + pesel + "/historia");
-        HistoriaPacjentaResponse[] historiaPacjenta = mapper.readValue(
+        WizytyResponse[] historiaPacjenta = mapper.readValue(
                 response,
-                HistoriaPacjentaResponse[].class
+                WizytyResponse[].class
         );
 
         return Arrays.stream(historiaPacjenta)
-                .map(historia -> new HistoriaPacjentaResponse(
+                .map(historia -> new WizytyResponse(
+                        historia.getDataWizyty(),
+                        historia.getNazwaLekarza(),
+                        historia.getNazwaPacjenta(),
+                        historia.getNrRecepty()
+                ))
+                .toList();
+    }
+
+    public List<WizytyResponse> getNadchodzaceWizyty(String pesel) throws Exception {
+        String response = apiClient.get("/pacjent/" + pesel + "/nadchodzaceWizyty");
+        WizytyResponse[] historiaPacjenta = mapper.readValue(
+                response,
+                WizytyResponse[].class
+        );
+
+        return Arrays.stream(historiaPacjenta)
+                .map(historia -> new WizytyResponse(
                         historia.getDataWizyty(),
                         historia.getNazwaLekarza(),
                         historia.getNazwaPacjenta(),
