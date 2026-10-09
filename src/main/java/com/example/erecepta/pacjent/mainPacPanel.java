@@ -1,24 +1,20 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.ServerConnection;
-import com.example.erecepta.logika;
+import com.example.erecepta.backend.client.PacjentController;
+import com.example.erecepta.backend.dto.PacjentLekarzResponse;
+import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.chart.*;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static com.example.erecepta.pacjent.nowaWizyta.setImage;
@@ -28,8 +24,7 @@ public class mainPacPanel {
     HBox root = new HBox(1);
     String nazwisko;
     String imie;
-    String login;
-    String password;
+    String pesel;
     String nazwa;
 
     private final FontAwesomeIconView profileIcon = new FontAwesomeIconView(FontAwesomeIcon.USER_CIRCLE);
@@ -48,25 +43,25 @@ public class mainPacPanel {
 
     private final Button wyloguj = new Button("Wyloguj") ;
 
-    public mainPacPanel(String login, String password, String nazwa) throws IOException {
-        this.login = login; //imie
-        this.password = password; //PEsel
-        this.nazwa = nazwa; //imie i nazwisko
+    public mainPacPanel(String imie, String nazwisko, String pesel) throws Exception {
+        this.imie = imie; //imie
+        this.pesel = pesel; //PESEL
+        this.nazwisko = nazwisko; //nazwisko
 
-        System.out.println(nazwa + "nazwa");
-        System.out.println(login + "login");
-        System.out.println(password + "password");
+        nazwa = imie + " " + nazwisko;
 
         VBox boczek = new VBox();
         HBox.setHgrow(boczek, Priority.ALWAYS);
 
+        PacjentController danePacjenta = new PacjentController();
+        List<WizytaPacjentaResponse> wizyty = danePacjenta.getWizytyPacjenta(pesel);
+        String[] daty = new String[wizyty.size()];
 
-        ServerConnection serverConnection = new ServerConnection(login, password);
-        String daneWizyty = serverConnection.getPacjent("getWizytaPacjenta", password);
-        String[] daty = daneWizyty.split("\n");
-        String daneLekarzy = serverConnection.getPacjent("getLekarzePacjenta", password);
-        List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarzy.split("\n")));
+        for (int i = 0; i < wizyty.size(); i++) {
+            daty[i] = wizyty.get(i).getDataWizyty().substring(0, 4);
+        }
 
+        List<PacjentLekarzResponse> lekarze = danePacjenta.getLekarzePacjenta(pesel);
         Label[] warningLabel = new Label[]{
                 warningTestLabel1,
                 warningTestLabel2,
@@ -173,8 +168,6 @@ public class mainPacPanel {
         receptyScrollPane.setFitToWidth(true);
         receptyScrollPane.setFitToHeight(true);
 
-
-
         /*
             Dodanie wykresu do środkowego panelu
          */
@@ -214,12 +207,12 @@ public class mainPacPanel {
                     lekarze.remove(j);
                 }
             }
-            PieChart.Data slice = new PieChart.Data(lekarze.get(i), PieCounter);
+
+            PieChart.Data slice = new PieChart.Data(lekarze.get(i).getNazwaLekarza(), PieCounter);
+
             pieChart.getData().add(slice);
         }
         pieChart.setLegendVisible(false);
-
-
 
         mainButtonBox.setAlignment(Pos.TOP_CENTER);
         VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
@@ -354,7 +347,7 @@ public class mainPacPanel {
         belloIcon.setGlyphSize(60);
 
         profileIcon.setOnMouseClicked(event -> {
-            setImage(login, password);
+            setImage(imie, pesel);
         });
     }
     public Button getWizytaButton() {

@@ -1,18 +1,25 @@
-package com.example.erecepta;
+package com.example.erecepta.backend;
+import com.example.erecepta.backend.client.PacjentController;
+import com.example.erecepta.backend.client.ServerConnection;
+import com.example.erecepta.backend.dto.DawkowanieResponse;
+import com.example.erecepta.backend.dto.WizytyResponse;
+import com.example.erecepta.backend.dto.LoginResponse;
+import com.example.erecepta.backend.services.AuthService;
 import com.example.erecepta.lekarz.*;
+import com.example.erecepta.logFX;
 import com.example.erecepta.pacjent.*;
+import com.example.erecepta.stworzKontoLek;
+import com.example.erecepta.stworzKontoPac;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class logika extends Application {
@@ -25,7 +32,7 @@ public class logika extends Application {
     private Button submit = logFX1.getSubmitButton();
     private Button clear = logFX1.getClearButton();
     private TextField loginField = logFX1.getLoginTextField();
-    private TextField passwordField = logFX1.getPasswordField();
+    private PasswordField passwordField = logFX1.getPasswordField();
     private String getImie = "getImie";
     private String getNazwisko = "getNazwisko";
     private String imie;
@@ -116,77 +123,101 @@ public class logika extends Application {
                 alert.setContentText("Hasło nie może być puste!");
                 alert.showAndWait();
             } else {
-                String password = logFX1.getLogin();
+                String NAZWISKO = logFX1.getLogin();
                 String PESEL = logFX1.getPassword();
                 int mode = logFX1.getChosenMode();
-                ServerConnection serverConnection = new ServerConnection(PESEL, password);
+
+
+                // Logowanie starym sposobem lokalnie
+                ServerConnection serverConnection = new ServerConnection(PESEL, NAZWISKO);
+
+                /*
+                *
+                *  ZAMIANY BAZY DANYCH LOKALNEJ NA SIECIOWĄ
+                *
+                * */
+                String nazwisko123 = loginField.getText();
+                String pesel123 = passwordField.getText();
+
+                AuthService authService = new AuthService();
+                LoginResponse response = null;
+                try {
+                    response = authService.login(nazwisko123, pesel123, mode);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+                /*
+                 *
+                 * KONIEC
+                 *
+                 * */
 
                 switch (mode) {
                     case 1:
                         try {
-                            String result = serverConnection.getPacjent("loginPacjent", PESEL);
-                            if ("Brak danych".equals(result)) {
-                                new Alert(Alert.AlertType.INFORMATION, "Błędny Login lub Hasło!").showAndWait();
-                                return;
-                            } else {
-                            imie = serverConnection.getPacjent("getImiePacjent", PESEL);
-                            nazwisko = serverConnection.getPacjent("getNazwiskoPacjent", PESEL);
+                            PacjentController mainController = new PacjentController();
+                            imie = response.getImie();
+                            nazwisko = response.getNazwisko();
                             nazwaPacjenta = imie + " " + nazwisko;
-                            mainPacPanel mainPanelPac = new mainPacPanel(imie, PESEL, nazwaPacjenta);
+                            mainPacPanel mainPanelPac = new mainPacPanel(imie, nazwisko, PESEL);
                             scene.setRoot(mainPanelPac.getView());
 
                             mainPanelPac.getDawkowanieButton().setOnAction(event -> {
                                 try {
-                                    String dawkowanie1 = serverConnection.getPacjent("getDawkowanie", PESEL);
-                                    dawkowanie dawkowaniePanel = new dawkowanie(dawkowanie1);
+                                    List<DawkowanieResponse> dawkowanie = mainController.getRecepty(PESEL);
+                                    dawkowanie dawkowaniePanel = new dawkowanie(dawkowanie);
+
                                     scene.setRoot(dawkowaniePanel.getView());
 
                                     dawkowaniePanel.getWyjdz().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
-                                } catch (IOException ex) {
+                                } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });
 
                             mainPanelPac.getHistoriaButton().setOnAction(event -> {
+                                    /*
+                                    * nr wizyty, data wizyty, nazwisko i imie lekarza, imie i nazwisko pacjenta, nr recepty
+                                    * */
                                 try {
-                                    String historia = serverConnection.getPacjent("getHistoriaWizyt", PESEL);
-                                    System.out.println(PESEL);
+                                    List<WizytyResponse> historia = mainController.getHistoriaPacjenta(PESEL);
                                     historiaWizyt historiaWizyt = new historiaWizyt(historia);
                                     scene.setRoot(historiaWizyt.getView());
 
                                     historiaWizyt.getWyjdz().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
-                                } catch (IOException ex) {
+                                } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });
 
                             mainPanelPac.getWizytaButton().setOnAction(event -> {
+                                nowaWizyta nowaWizyta = null;
                                 try {
-                                    nowaWizyta nowaWizyta = new nowaWizyta(PESEL, imie);
-                                    scene.setRoot(nowaWizyta.getView());
+                                    nowaWizyta = new nowaWizyta(PESEL, imie);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                                scene.setRoot(nowaWizyta.getView());
 
                                     nowaWizyta.getWyjdzButton().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
-                                }
                             });
 
                             mainPanelPac.getNadchodzaceWizyty().setOnAction(event -> {
                                 try {
-                                    String nadchodzaceWizyty = serverConnection.getPacjent("getNadchodzaceWizyty", PESEL);
+                                    List<WizytyResponse> nadchodzaceWizyty = mainController.getNadchodzaceWizyty(PESEL);
                                     nadchodzaceWizyty nadchodzaceWizyty1 = new nadchodzaceWizyty(nadchodzaceWizyty);
                                     scene.setRoot(nadchodzaceWizyty1.getView());
 
                                     nadchodzaceWizyty1.getWyjdz().setOnAction(e1 -> {
                                         scene.setRoot(mainPanelPac.getView());
                                     });
-                                } catch (IOException ex) {
+                                } catch (Exception ex) {
                                     throw new RuntimeException(ex);
                                 }
                             });
@@ -196,16 +227,15 @@ public class logika extends Application {
                                 logFX1.getLoginTextField().clear();
                                 logFX1.getPasswordField().clear();
                             });
-                            }
-                        } catch (IOException ex) {
-                            new Alert(Alert.AlertType.WARNING, "Brak połączenia!").showAndWait();
+                            } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        } catch (Exception ex) {
+                            throw new RuntimeException(ex);
                         }
-                        break;
                     case 2:
                         try {
                             String result = serverConnection.getPacjent("loginLekarz", PESEL);
                             if ("Brak danych".equals(result)) {
-                                new Alert(Alert.AlertType.INFORMATION, "Brak połączenia").showAndWait();
                                 return;
                             } else {
                                 imie = serverConnection.getPacjent("getImieLekarz", PESEL);
@@ -219,7 +249,7 @@ public class logika extends Application {
                                 String wiek1 = serverConnection.getPacjent("getWiekLekarz", PESEL);
                                 String plec1 = serverConnection.getPacjent("getPlecLekarz", PESEL);
                                 nazwaPacjenta = imie + nazwisko;
-                                mainLekPanel mainPanelLek = new mainLekPanel(PESEL, password, imie, nazwisko);
+                                mainLekPanel mainPanelLek = new mainLekPanel(PESEL, NAZWISKO, imie, nazwisko);
                                 scene.setRoot(mainPanelLek.getView());
 
                                 mainPanelLek.getWyloguj().setOnAction(event -> {
