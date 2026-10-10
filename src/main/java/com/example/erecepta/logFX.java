@@ -15,7 +15,7 @@ import java.lang.*;
 public class logFX{
 
     VBox root = new VBox(5);
-    /*
+    /* 
     Tworzenie zmiennych
     */
     private Label text1 = new Label("Nazwisko:");

@@ -16,13 +16,16 @@ public class dawkowanie {
 
     private BorderPane root = new BorderPane();
     private List<Label> nazwaLeku = new ArrayList<>();
-    private List<Integer> liczbaOpakowan = new ArrayList<>();
-    private List<Integer> dawkowanie = new ArrayList<>();
+    private List<String> liczbaOpakowan = new ArrayList<>();
+    private List<String> dawkowanie = new ArrayList<>();
     private Label titleLabel = new Label("Dawkowanie leków");
     private Button wyjdz = new Button("Wyjdź");
 
     public dawkowanie(List<DawkowanieResponse> response) {
 
+        nazwaLeku.add(new Label("Nazwa Leku"));
+        liczbaOpakowan.add("Liczba Opakowań");
+        dawkowanie.add("Dawkowanie Leku");
         for (int i = 0; i < response.size(); i++) {
             nazwaLeku.add(new Label(response.get(i).getNazwaLeku()));
             liczbaOpakowan.add(response.get(i).getLiczbaOpakowan());
@@ -40,11 +43,11 @@ public class dawkowanie {
         receptyPane.setPadding(new Insets(30));
         receptyPane.gridLinesVisibleProperty().set(true);
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(50);
+        col1.setPercentWidth(40);
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(25);
+        col2.setPercentWidth(30);
         ColumnConstraints col3 = new ColumnConstraints();
-        col3.setPercentWidth(25);
+        col3.setPercentWidth(30);
         receptyPane.getColumnConstraints().addAll(col1, col2, col3);
 
         for (int i = 0; i < response.size(); i++) {

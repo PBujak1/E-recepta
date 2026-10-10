@@ -73,6 +73,14 @@
     -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
 }
 
+.mainPacPanel-charts {
+    -fx-border-width: 5;
+    -fx-border-color: black;
+    -fx-background-radius: 24px;
+    -fx-border-radius: 20px;
+    -fx-background-color : #4f6086;
+}
+
 .mainPacPanel-mainButtonBox .button {
     -fx-background-color: white;
     -fx-border-color: #F5F5F5;

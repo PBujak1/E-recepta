@@ -6,6 +6,7 @@ import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.chart.*;
@@ -171,7 +172,7 @@ public class mainPacPanel {
         /*
             Dodanie wykresu do środkowego panelu
          */
-        VBox mainButtonBox = new VBox();
+        VBox mainButtonBox = new VBox(10);
         VBox.setVgrow(mainButtonBox, Priority.ALWAYS);
         HBox charts = new HBox(10);
         VBox.setVgrow(charts, Priority.ALWAYS);
@@ -327,6 +328,7 @@ public class mainPacPanel {
         pieChart.getStyleClass().add("mainPacPanel-pie-chart");
         mainButtonBox.getStyleClass().add("mainPacPanel-mainButtonBox");
         wylogujBox.getStyleClass().add("mainPacPanel-wylogujBox");
+        charts.getStyleClass().add("mainPacPanel-charts");
         profileIcon.getStyleClass().add("mainPacPanel-profileIcon");
         belloIcon.getStyleClass().add("mainPacPanel-belloIcon");
 
