@@ -5,7 +5,10 @@ import com.example.erecepta.backend.dto.WizytyResponse;
 import com.example.erecepta.backend.dto.PacjentLekarzResponse;
 import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.erecepta.backend.dto.LekarzResponse;
 
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 

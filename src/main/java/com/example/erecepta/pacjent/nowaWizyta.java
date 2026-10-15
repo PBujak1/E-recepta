@@ -1,19 +1,30 @@
 package com.example.erecepta.pacjent;
 
+import com.example.erecepta.backend.client.LekarzController;
+import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
+import com.example.erecepta.backend.dto.LekarzResponse;
+import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.animation.PauseTransition;
+import javafx.concurrent.Task;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class nowaWizyta {
@@ -28,7 +39,7 @@ public class nowaWizyta {
     private final FontAwesomeIconView searchIcon1 = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
     private final FontAwesomeIconView searchIcon2 = new FontAwesomeIconView(FontAwesomeIcon.SEARCH);
     private final TextField searchField1 = new TextField(); 
-    private final TextField searchField2 = new TextField();
+    private final TextField specjalizacjaTextField = new TextField();
 
     private final Button accpetDateBtn = new Button("Akceptuj");
     private final Button acceptBtn1 = new Button("Wybierz");
@@ -55,12 +66,6 @@ public class nowaWizyta {
 
         root.setAlignment(Pos.TOP_CENTER);
 
-        ServerConnection connection = new ServerConnection(imie, PESEL);
-        String daneLekarze = connection.getPacjent("getLekarze", PESEL);
-        String specjalizacje = connection.getPacjent("getSpecjalizacje", PESEL);
-        List<String> lekarze = new ArrayList<>(Arrays.asList(daneLekarze.split("\n")));
-        List<String> specjalizacjeList = new ArrayList<>(Arrays.asList(specjalizacje.split("\n")));
-
         /*
             Wyszukiwania
          */
@@ -69,7 +74,7 @@ public class nowaWizyta {
         searchBox1.getChildren().addAll(searchIcon1, searchField1, acceptBtn1);
         HBox.setHgrow(searchField1, Priority.ALWAYS);
 
-        suggestrions(lekarze, searchField1);
+        //suggestions(lekarze, searchField1);
 
         /*
             Panel do wybrania formy e-wizyty
@@ -93,8 +98,8 @@ public class nowaWizyta {
         /*
             Panel wybierający datę oraz specjalizację
          */
-        VBox innerBoxDate = new VBox(10);
-        innerBoxDate.setAlignment(Pos.TOP_CENTER);
+        VBox innerBoxDate = new VBox(20);
+        innerBoxDate.setAlignment(Pos.CENTER);
 
         //Panel do wybrania daty
         DatePicker datePicker = new DatePicker();
@@ -111,13 +116,38 @@ public class nowaWizyta {
         //Panel do wybrania specjalizacji
         HBox searchBox2 = new HBox(10);
         searchBox2.setAlignment(Pos.CENTER_LEFT);
-        searchBox2.getChildren().addAll(searchIcon2, searchField2);
-        searchField2.setMaxWidth(Double.MAX_VALUE);
-        HBox.setHgrow(searchField2, Priority.ALWAYS);
+        searchBox2.getChildren().addAll(searchIcon2, specjalizacjaTextField);
+        specjalizacjaTextField.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(specjalizacjaTextField, Priority.ALWAYS);
         acceptBtn2.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(acceptBtn2, Priority.ALWAYS);
 
-        suggestrions(specjalizacjeList, searchField2);
+        LekarzController lekarzController = new LekarzController();
+        suggestions(searchField1, fraza -> {
+            try {
+                List<LekarzResponse> wynik = lekarzController.szukajLekarzy(fraza);
+                List<String> nazwy = new ArrayList<>();
+                for (LekarzResponse l : wynik) {
+                    nazwy.add(l.getImie() + " " + l.getNazwisko());
+                }
+                return nazwy;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        suggestions(specjalizacjaTextField, fraza -> {
+            try {
+                List<LekarzResponse> wynik = lekarzController.getSpecjalizacja(fraza);
+                List<String> nazwy = new ArrayList<>();
+                for (LekarzResponse l : wynik) {
+                    nazwy.add(l.getSpecjalizacja());
+                }
+                return nazwy;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
 
         innerBoxDate.getChildren().addAll(
                 wyborDaty,
@@ -263,7 +293,7 @@ public class nowaWizyta {
         });
 
         acceptBtn2.setOnAction(event -> {
-            String specjalizacjaSzukana = searchField2.getText().trim();
+            String specjalizacjaSzukana = specjalizacjaTextField.getText().trim();
         });
 
         /*
@@ -272,8 +302,8 @@ public class nowaWizyta {
         root.getStyleClass().add("nowaWizyta-main-panel");
         searchField1.setPromptText("Wyszukaj lekarza");
         searchField1.getStyleClass().add("nowaWizyta-search-field1");
-        searchField2.setPromptText("Wyszukaj specjalizację");
-        searchField2.getStyleClass().add("nowaWizyta-search-field2");
+        specjalizacjaTextField.setPromptText("Wyszukaj specjalizację");
+        specjalizacjaTextField.getStyleClass().add("nowaWizyta-search-field2");
 
         acceptBtn1.getStyleClass().add("nowaWizyta-acceptBtn1");
         searchBox1.getStyleClass().add("nowaWizyta-top-panel");
@@ -315,32 +345,67 @@ public class nowaWizyta {
         innerBox.getStyleClass().add("nowaWizyta-inner-box-lekarz");
     }
 
-    public static void suggestrions(List<String> lekarze, TextField searchField) {
-        ContextMenu suggestionsMenu = new ContextMenu();
+    public static void suggestions(TextField searchField,
+                                   Function<String, List<String>> dbSearch) {
+
+        ContextMenu menu = new ContextMenu();
+        PauseTransition debounce = new PauseTransition(Duration.millis(250));
+        AtomicLong requestId = new AtomicLong();
+        AtomicBoolean ignoreChange = new AtomicBoolean(false);
+
         searchField.textProperty().addListener((obs, oldText, newText) -> {
-            if (newText.isEmpty()) {
-                suggestionsMenu.hide();
-            } else {
-                List<String> filtered = lekarze.stream().filter(name -> name.toLowerCase().contains(newText.toLowerCase()))
-                        .collect(Collectors.toList());
-                if (!filtered.isEmpty()) {
-                    // Tworzymy MenuItemy dla podpowiedzi
-                    suggestionsMenu.getItems().clear();
-                    for (String match : filtered) {
-                        MenuItem item = new MenuItem(match);
-                        item.setOnAction(e -> {
-                            searchField.setText(match);
-                            suggestionsMenu.hide();
-                        });
-                        suggestionsMenu.getItems().add(item);
-                    }
-                    if (!suggestionsMenu.isShowing()) {
-                        suggestionsMenu.show(searchField, javafx.geometry.Side.BOTTOM, 0, 0);
-                    }
-                } else {
-                    suggestionsMenu.hide();
-                }
+            if (ignoreChange.get()) return;
+
+            String query = newText == null ? "" : newText.trim();
+            if (query.length() < 2) {
+                debounce.stop();
+                menu.hide();
+                return;
             }
+
+            debounce.setOnFinished(e -> {
+                long id = requestId.incrementAndGet();
+
+                Task<List<String>> task = new Task<>() {
+                    @Override
+                    protected List<String> call() {
+                        return dbSearch.apply(query);
+                    }
+                };
+
+                task.setOnSucceeded(ev -> {
+                    if (id != requestId.get()) return;
+                    List<String> results = task.getValue();
+
+                    if (results.isEmpty() || !searchField.isFocused()) {
+                        menu.hide();
+                        return;
+                    }
+
+                    menu.getItems().clear();
+                    for (String match : results) {
+                        MenuItem item = new MenuItem(match);
+                        item.setOnAction(a -> {
+                            ignoreChange.set(true);
+                            searchField.setText(match);
+                            searchField.positionCaret(match.length());
+                            ignoreChange.set(false);
+                            menu.hide();
+                        });
+                        menu.getItems().add(item);
+                    }
+                    if (!menu.isShowing()) {
+                        menu.show(searchField, Side.BOTTOM, 0, 0);
+                    }
+                });
+                task.setOnFailed(ev -> menu.hide());
+
+                Thread t = new Thread(task);
+                t.setDaemon(true);
+                t.start();
+            });
+
+            debounce.playFromStart();
         });
     }
 

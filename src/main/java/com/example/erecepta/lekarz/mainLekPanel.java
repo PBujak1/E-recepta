@@ -213,7 +213,7 @@ public class mainLekPanel {
             ServerConnection connection = new ServerConnection(imie, password);
             String tablicaLekow = connection.getPacjent("getLeki", password);
             List<String> leki = new ArrayList<>(Arrays.asList(tablicaLekow.split("\n")));
-            nowaWizyta.suggestrions(leki, lekField);
+            //nowaWizyta.suggestions(leki, lekField);
         } catch (IOException ex) {
             throw new RuntimeException(ex);
         }
