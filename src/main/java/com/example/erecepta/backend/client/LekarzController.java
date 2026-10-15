@@ -1,6 +1,7 @@
 package com.example.erecepta.backend.client;
 
 import com.example.erecepta.backend.dto.LekarzResponse;
+import com.example.erecepta.backend.dto.WizytyResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.net.URLEncoder;
@@ -38,5 +39,20 @@ public class LekarzController {
                         lekarzResponse.getSpecjalizacja()))
                 .toList();
 
+    }
+
+    public List<LekarzResponse> getDaneLekarza(String imieINazwisko) throws Exception {
+        String response = apiClient.get("/lekarz/" + imieINazwisko + "/daneLekarza");
+        LekarzResponse[] lekarzResponses = mapper.readValue(response, LekarzResponse[].class);
+
+        return Arrays.stream(lekarzResponses)
+                .map(lekarze -> new LekarzResponse(
+                        lekarze.getNrPzw(),
+                        lekarze.getEmail(),
+                        lekarze.getNumerTelefonu(),
+                        lekarze.getOpis(),
+                        lekarze.getPesel()
+                ))
+                .toList();
     }
 }

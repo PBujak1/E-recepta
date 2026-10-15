@@ -1,10 +1,8 @@
 package com.example.erecepta.pacjent;
 
 import com.example.erecepta.backend.client.LekarzController;
-import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
 import com.example.erecepta.backend.dto.LekarzResponse;
-import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.PauseTransition;
@@ -25,7 +23,6 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class nowaWizyta {
     private VBox root = new VBox(10);
@@ -249,41 +246,42 @@ public class nowaWizyta {
             Akcje
          */
         acceptBtn1.setOnAction(event -> {
-            String imieNazwisko = searchField1.getText().trim();
-            String[] czesci = imieNazwisko.split("\\s+");
+            String poleTextoweLekarza = searchField1.getText().trim();
+            String[] czesci = poleTextoweLekarza.split("\\s+");
 
             if (czesci.length >= 2) {
                 String imie1 = czesci[0];
                 String nazwisko = czesci[1];
+                String imieNazwisko = imie1 + "_" + nazwisko;
                 try {
-                    ServerConnection serverConnection = new ServerConnection(imie1, nazwisko);
+                    List<LekarzResponse> daneLekarza = lekarzController.getDaneLekarza(imieNazwisko);
                     iconUser.setVisible(true);
-                    String nrPZW = serverConnection.getLekarz("getPZWLekarza", imie1, nazwisko);
-                    String email = serverConnection.getLekarz("getEmailLekarza", imie1, nazwisko);
-                    String telefon = serverConnection.getLekarz("getTelefonLekarza", imie1, nazwisko);
-                    String opis = serverConnection.getLekarz("getOpisLekarza", imie1, nazwisko);
-                    String PESELLekarza = serverConnection.getLekarz("getPESELLekarza", imie1, nazwisko);
+                    Label nrPZW = new Label(daneLekarza.get(0).getNrPzw());
+                    Label email = new Label(daneLekarza.get(0).getEmail());
+                    Label telefon = new Label(daneLekarza.get(0).getNumerTelefonu());
+                    Label opis = new Label(daneLekarza.get(0).getOpis());
+                    Label PESELLekarza = new Label(daneLekarza.get(0).getPesel());
                     daneBox.getChildren().clear();
+
                     daneBox.getChildren().addAll(
                             new Label(imieNazwisko),
-                            new Label(nrPZW),
-                            new Label(email),
-                            new Label(telefon)
+                            nrPZW,
+                            email,
+                            telefon
                     );
-                    Image img = serverConnection.getImage("imageGetter", PESELLekarza);
-                    System.out.println("Piotruś rządzi!");
+                    //Image img = serverConnection.getImage("imageGetter", PESELLekarza);
 
-                    ImageView imgView = new ImageView(img);
-                    imgView.setFitHeight(150);
-                    imgView.setFitWidth(150);
-                    if (img != null) {
-                        profilBox.getChildren().clear();
-                    }
-                    profilBox.getChildren().add(imgView);
+//                    ImageView imgView = new ImageView(img);
+//                    imgView.setFitHeight(150);
+//                    imgView.setFitWidth(150);
+//                    if (img != null) {
+//                        profilBox.getChildren().clear();
+//                    }
+//                    profilBox.getChildren().add(imgView);
 
                     opisBox.getChildren().clear();
-                    opisBox.getChildren().add(new Label(opis));
-                } catch (IOException e){
+                    opisBox.getChildren().add(opis);
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             } else {
