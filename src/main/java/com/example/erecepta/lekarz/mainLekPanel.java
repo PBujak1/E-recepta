@@ -21,11 +21,9 @@ import java.util.Objects;
 import static com.example.erecepta.pacjent.nowaWizyta.setImage;
 
 public class mainLekPanel {
-
-    String nazwisko;
-    String imie;
-    String login;
-    String password;
+    private String imie;
+    private String nazwisko;
+    private String pesel;
 
     private final FontAwesomeIconView profileIcon = new FontAwesomeIconView(FontAwesomeIcon.USER_CIRCLE);
 
@@ -40,7 +38,6 @@ public class mainLekPanel {
     //Zmienne środkowego panelu
     private Label title = new Label("Wystawianie E-Recepty");
     private Label karta = new Label("Karta Pacjenta");
-    private Label imieINazwiskoLabel = new Label("Imię i nazwisko:");
     private Label imieINazwiskoPacjenta = new Label("");
     private Label plecLabel = new Label("Płeć: ");
     private Label plec = new Label("");
@@ -58,10 +55,10 @@ public class mainLekPanel {
     private Button wczytajBtn = new Button("Wczytaj");
     private Button wypiszBtn = new Button("Wypisz Receptę");
     private Button dodajLekBtn = new Button("Dodaj Lek");
-    private TextField searchField = new TextField();
-    private TextField lekField = new TextField();
+    private final TextField searchField = new TextField();
+    private final TextField lekField = new TextField();
 
-    private VBox allergyList = new VBox(12);
+    private final VBox allergyList = new VBox(12);
     ScrollPane contentPane = new ScrollPane();
     List<String> MedList = new ArrayList<>();
 
@@ -72,9 +69,8 @@ public class mainLekPanel {
     private final Button zobaczWszystko = new Button("Zobacz Wszystko");
     VBox nowyLek = new VBox(10);
 
-    public mainLekPanel(String login, String password, String imie, String nazwisko) {
-        this.login = login;
-        this.password = password;
+    public mainLekPanel(String imie, String nazwisko, String pesel) {
+        this.pesel = pesel;
         this.imie = imie;
         this.nazwisko = nazwisko;
 
@@ -210,8 +206,8 @@ public class mainLekPanel {
         searchBox2.getChildren().addAll(searchIcon2, lekField);
 
         try {
-            ServerConnection connection = new ServerConnection(imie, password);
-            String tablicaLekow = connection.getPacjent("getLeki", password);
+            ServerConnection connection = new ServerConnection(imie, pesel);
+            String tablicaLekow = connection.getPacjent("getLeki", pesel);
             List<String> leki = new ArrayList<>(Arrays.asList(tablicaLekow.split("\n")));
             //nowaWizyta.suggestions(leki, lekField);
         } catch (IOException ex) {
@@ -320,6 +316,7 @@ public class mainLekPanel {
         /*
            SCENA
         */
+        root.getStyleClass().add("mainLekPanel-root");
         doctorInfo.getStyleClass().add("mainLekPanel-doctor-info");
         wyloguj.getStyleClass().add("mainLekPanel-logout-btn");
         leftPanel.getStyleClass().add("mainLekPanel-left-panel");
@@ -371,8 +368,8 @@ public class mainLekPanel {
         });
 
         profileIcon.setOnMouseClicked(event -> {
-            System.out.print(login);
-            setImage(password, login);
+            System.out.print(nazwisko);
+            setImage(pesel, nazwisko);
         });
     }
 

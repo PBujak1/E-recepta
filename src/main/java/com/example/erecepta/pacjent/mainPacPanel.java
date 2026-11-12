@@ -1,12 +1,11 @@
 package com.example.erecepta.pacjent;
 
 import com.example.erecepta.backend.client.PacjentController;
-import com.example.erecepta.backend.dto.PacjentLekarzResponse;
-import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
+import com.example.erecepta.backend.dto.response.PacjentLekarzResponse;
+import com.example.erecepta.backend.dto.response.WizytaPacjentaResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.chart.*;

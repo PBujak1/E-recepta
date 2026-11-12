@@ -1,8 +1,9 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.backend.client.LekarzController;
+import com.example.erecepta.backend.client.LekarzService;
 import com.example.erecepta.backend.client.ServerConnection;
-import com.example.erecepta.backend.dto.LekarzResponse;
+import com.example.erecepta.backend.dto.response.LekarzDaneResponse;
+import com.example.erecepta.backend.dto.response.LekarzResponse;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.animation.PauseTransition;
@@ -11,8 +12,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.Side;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
@@ -119,10 +118,10 @@ public class nowaWizyta {
         acceptBtn2.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(acceptBtn2, Priority.ALWAYS);
 
-        LekarzController lekarzController = new LekarzController();
+        LekarzService lekarzService = new LekarzService();
         suggestions(searchField1, fraza -> {
             try {
-                List<LekarzResponse> wynik = lekarzController.szukajLekarzy(fraza);
+                List<LekarzResponse> wynik = lekarzService.szukajLekarzy(fraza);
                 List<String> nazwy = new ArrayList<>();
                 for (LekarzResponse l : wynik) {
                     nazwy.add(l.getImie() + " " + l.getNazwisko());
@@ -135,7 +134,7 @@ public class nowaWizyta {
 
         suggestions(specjalizacjaTextField, fraza -> {
             try {
-                List<LekarzResponse> wynik = lekarzController.getSpecjalizacja(fraza);
+                List<LekarzResponse> wynik = lekarzService.getSpecjalizacja(fraza);
                 List<String> nazwy = new ArrayList<>();
                 for (LekarzResponse l : wynik) {
                     nazwy.add(l.getSpecjalizacja());
@@ -252,19 +251,18 @@ public class nowaWizyta {
             if (czesci.length >= 2) {
                 String imie1 = czesci[0];
                 String nazwisko = czesci[1];
-                String imieNazwisko = imie1 + "_" + nazwisko;
+                String imieNazwisko = imie1 + " " + nazwisko;
                 try {
-                    List<LekarzResponse> daneLekarza = lekarzController.getDaneLekarza(imieNazwisko);
+                    LekarzDaneResponse daneLekarza = lekarzService.getDaneLekarzaByFraza(imieNazwisko);
                     iconUser.setVisible(true);
-                    Label nrPZW = new Label(daneLekarza.get(0).getNrPzw());
-                    Label email = new Label(daneLekarza.get(0).getEmail());
-                    Label telefon = new Label(daneLekarza.get(0).getNumerTelefonu());
-                    Label opis = new Label(daneLekarza.get(0).getOpis());
-                    Label PESELLekarza = new Label(daneLekarza.get(0).getPesel());
+                    Label nrPZW = new Label(daneLekarza.getNrPzw());
+                    Label email = new Label(daneLekarza.getEmail());
+                    Label telefon = new Label(daneLekarza.getNumerTelefonu());
+                    Label opis = new Label(daneLekarza.getOpis());
                     daneBox.getChildren().clear();
 
                     daneBox.getChildren().addAll(
-                            new Label(imieNazwisko),
+                            new Label(daneLekarza.getImie() + " " + daneLekarza.getNazwisko()),
                             nrPZW,
                             email,
                             telefon
@@ -282,7 +280,7 @@ public class nowaWizyta {
                     opisBox.getChildren().clear();
                     opisBox.getChildren().add(opis);
                 } catch (Exception e) {
-                    throw new RuntimeException(e);
+                    new Alert(Alert.AlertType.ERROR, "Nie udało się pobrać danych lekarza: " + e.getMessage()).showAndWait();
                 }
             } else {
                 new Alert(Alert.AlertType.INFORMATION, "Wprowadzono błędne dane").showAndWait();

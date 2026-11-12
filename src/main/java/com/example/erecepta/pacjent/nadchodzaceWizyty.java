@@ -1,6 +1,6 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.backend.dto.WizytyResponse;
+import com.example.erecepta.backend.dto.response.WizytyResponse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;

@@ -1,175 +1,175 @@
 package com.example.erecepta;
 
-import javafx.geometry.HPos;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-import java.lang.*;
 
+public class logFX {
 
-public class logFX{
+    private final StackPane root = new StackPane();
 
-    VBox root = new VBox(5);
-    /* 
-    Tworzenie zmiennych
-    */
-    private Label text1 = new Label("Nazwisko:");
-    private Label text2 = new Label("PESEL:");
-    private Label welcome = new Label("Witaj ponownie!");
-    private Label subtitle = new Label("Zaloguj się, aby uzyskać dostęp do e-recept");
-    private Label title = new Label("E-recepta");
-    private Label mode = new Label("Zaloguj jako Pacjent");
-    private Label resetHasla = new Label("Zrestartuj swoje hasło");
+    private final Label title = new Label("E-Recepta");
+    private final Label welcome = new Label("Witaj ponownie!");
+    private final Label subtitle = new Label("Zaloguj się, aby uzyskać dostęp do systemu");
+    private final Label mode = new Label("Logowanie jako Pacjent");
+    private final Label resetHasla = new Label("Nie pamiętasz hasła? Zrestartuj");
 
-    private Button button1 = new Button("Wyczyść");
-    private Button button2 = new Button("Zaloguj");
-    private Button wyjdz = new Button("Wyjdz");
-    private Button zalogujPacjent = new Button("Zaloguj jako pacjent");
-    private Button zalogujLekarz = new Button("Zaloguj jako lekarz");
-    private Button stworzKontoPacjenta = new Button("stworz konto Pacjenta");
-    private Button stwórzKontoLekarza = new Button("Stwórz konto Lekarza");
+    private final Label text1 = new Label("Nazwisko:");
+    private final Label text2 = new Label("PESEL:");
+
+    private final Button button1 = new Button("Wyczyść");
+    private final Button button2 = new Button("Zaloguj się");
+    private final Button wyjdz = new Button("Zamknij aplikację");
+    private final Button zalogujPacjent = new Button("Pacjent");
+    private final Button zalogujLekarz = new Button("Lekarz");
+    private final Button stworzKontoPacjenta = new Button("Rejestracja Pacjenta");
+    private final Button stwórzKontoLekarza = new Button("Rejestracja Lekarza");
 
     public TextField textField1 = new TextField();
     public PasswordField passwordField1 = new PasswordField();
 
-    int chosenMode = 1;
+    private int chosenMode = 1;
 
     public logFX() {
+        root.setAlignment(Pos.CENTER);
+        root.getStyleClass().add("logFX-root-panel");
 
-        //Główny panel do którego dodajemy inne mniejsze
-        Region spacer = new Region();
-        VBox.setVgrow(spacer, Priority.ALWAYS);
+        // Główna karta logowania
+        VBox card = new VBox(20);
+        VBox.setMargin(card, new Insets(150));
+        card.setAlignment(Pos.CENTER);
+        card.getStyleClass().add("logFX-card");
 
-        //Panel ostatni z przyciskiem do zamknięcia aplikacji oraz resetem hasła
-        HBox dolnyPanel = new HBox(600);
-        dolnyPanel.setAlignment(Pos.CENTER);
-        //Przycisk
-        HBox wyjdzHbox = new HBox();
-        wyjdzHbox.setAlignment(Pos.CENTER);
-        wyjdzHbox.getChildren().addAll(wyjdz);
-        //napis do resetowania
-        HBox resetujHbox = new HBox();
-        resetujHbox.setAlignment(Pos.CENTER);
-        resetujHbox.getChildren().add(resetHasla);
-        dolnyPanel.getChildren().addAll(resetujHbox, wyjdzHbox);
+        // 1. Logo i nagłówek
+        FontAwesomeIconView brandIcon = new FontAwesomeIconView(FontAwesomeIcon.PLUS_SQUARE);
+        brandIcon.setGlyphSize(42);
+        brandIcon.getStyleClass().add("logFX-brand-icon");
 
-        //Panel który zawiera napis e-recepta
-        HBox header = new HBox();
-        header.setPadding(new Insets(16, 16, 8, 16));
-        header.setAlignment(Pos.CENTER);
-        title.setFont(Font.font("Manrope", 20));
-        header.getChildren().add(title);
+        HBox brandBox = new HBox(10);
+        brandBox.setAlignment(Pos.CENTER);
+        brandBox.getChildren().addAll(brandIcon, title);
+        title.getStyleClass().add("logFX-title");
 
-        // Panel który zawiera napis e-recepta i to z zalogowaniem
-        VBox headline = new VBox();
-        headline.setPadding(new Insets(20, 16, 8, 16));
-        headline.setAlignment(Pos.CENTER);
-        welcome.setFont(Font.font("Manrope", 35));
-        headline.getChildren().addAll(welcome, subtitle);
+        VBox headerBox = new VBox(6);
+        headerBox.setAlignment(Pos.CENTER);
+        welcome.getStyleClass().add("logFX-welcome");
+        subtitle.getStyleClass().add("logFX-subtitle");
+        headerBox.getChildren().addAll(brandBox, welcome, subtitle);
 
-        //panel który zawiera przyciski do wyboru jako co chcemy się zalogować
-        HBox leftPanel = new HBox(5);
-        leftPanel.setAlignment(Pos.CENTER);
+        // 2. Przełącznik ról
+        HBox roleSwitcher = new HBox(10);
+        roleSwitcher.setAlignment(Pos.CENTER);
+        roleSwitcher.getStyleClass().add("logFX-role-switcher");
+
         zalogujPacjent.setMaxWidth(Double.MAX_VALUE);
         zalogujLekarz.setMaxWidth(Double.MAX_VALUE);
-        stworzKontoPacjenta.setMaxWidth(Double.MAX_VALUE);
-        stwórzKontoLekarza.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(zalogujPacjent, Priority.ALWAYS);
         HBox.setHgrow(zalogujLekarz, Priority.ALWAYS);
-        HBox.setHgrow(stworzKontoPacjenta, Priority.ALWAYS);
-        HBox.setHgrow(stwórzKontoLekarza, Priority.ALWAYS);
-        leftPanel.getChildren().addAll(
-                zalogujPacjent,
-                zalogujLekarz,
-                stworzKontoPacjenta,
-                stwórzKontoLekarza
-        );
 
-        // Panel który zawiera napis e-recepta i to z zalogowaniem
-        VBox headLog = new VBox(40);
-        VBox.setVgrow(headLog, Priority.ALWAYS);
-
-        //Panel który zawiera napis e-recepta
-        HBox headMode = new HBox();
-        headMode.setAlignment(Pos.TOP_CENTER);
-        headMode.getChildren().add(mode);
-        mode.setFont(Font.font("Manrope", 30));
-
-        //Panel do którego dodajemy wprowadzenie loginu i hasła
-        GridPane gridPane = new GridPane();
-        //Konfiguracja Kolumn
-        ColumnConstraints col1 = new ColumnConstraints();
-        col1.setHalignment(HPos.RIGHT); // tekst wyrównany do prawej
-        col1.setPercentWidth(20); // Pierwsza kolumna zajmie 20% szerokości
-        ColumnConstraints col2 = new ColumnConstraints();
-        col2.setHalignment(HPos.RIGHT);
-        col2.setHgrow(Priority.ALWAYS);
-        col2.setFillWidth(true);
-        gridPane.getColumnConstraints().addAll(col1, col2);
-        //Rozciąganie pól tekstowych
-        textField1.setMaxWidth(Double.MAX_VALUE);
-        passwordField1.setMaxWidth(Double.MAX_VALUE);
-        button1.setMaxWidth(Double.MAX_VALUE);
-        button2.setMaxWidth(Double.MAX_VALUE);
-        gridPane.add(text1, 0, 0);
-        gridPane.add(textField1, 1, 0);
-        gridPane.add(text2, 0, 1);
-        gridPane.add(passwordField1, 1, 1);
-        gridPane.add(button1, 0, 2);
-        gridPane.add(button2, 1, 2);
-        gridPane.setGridLinesVisible(false);
-        button1.setMaxWidth(Double.MAX_VALUE);
-        button2.setMaxWidth(Double.MAX_VALUE);
-
-        headLog.getChildren().addAll(headMode, gridPane);
-
-        root.getChildren().addAll(
-                header,
-                headline, new Separator(),
-                leftPanel, new Separator(),
-                headLog, new Separator(),
-                dolnyPanel
-        );
+        roleSwitcher.getChildren().addAll(zalogujPacjent, zalogujLekarz);
+        updateRoleButtons();
 
         zalogujPacjent.setOnAction(e -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("LOGOWANIE");
-            alert.setHeaderText(null);
-            alert.setContentText("Logujesz się jako Pacjent");
-            alert.showAndWait();
-            mode.setText("Zaloguj jako Pacjent");
             chosenMode = 1;
+            mode.setText("Logowanie jako Pacjent");
+            updateRoleButtons();
         });
 
         zalogujLekarz.setOnAction(e -> {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("LOGOWANIE");
-            alert.setHeaderText(null);
-            alert.setContentText("Logujesz się jako Lekarz");
-            alert.showAndWait();
-            mode.setText("Zaloguj jako Lekarz");
             chosenMode = 2;
+            mode.setText("Logowanie jako Lekarz");
+            updateRoleButtons();
         });
 
-        root.getStyleClass().add("logFX-root-panel");
-        dolnyPanel.getStyleClass().add("logFX-dolnyPanel");
-        wyjdz.getStyleClass().add("logFX-exit-btn");
-        resetHasla.getStyleClass().add("logFX-reset-btn");
-        leftPanel.getStyleClass().add("logFX-left-panels");
-        headLog.getStyleClass().add("logFX-mode-pane");
-        headMode.getStyleClass().add("logFX-mode");
-        text1.getStyleClass().add("logFX-text1");
-        text2.getStyleClass().add("logFX-text2");
-        text1.getStyleClass().add("logFX-login-label");
-        text2.getStyleClass().add("logFX-haslo-label");
-        passwordField1.getStyleClass().add("logFX-password-field");
+        // 3. Pola formularza
+        VBox formBox = new VBox(14);
+        formBox.setAlignment(Pos.CENTER_LEFT);
+
+        text1.getStyleClass().add("logFX-input-label");
+        textField1.setPromptText("Wprowadź nazwisko...");
         textField1.getStyleClass().add("logFX-textfield");
-        gridPane.getStyleClass().add("logFX-grid-pane");
+        textField1.setMaxWidth(Double.MAX_VALUE);
+
+        text2.getStyleClass().add("logFX-input-label");
+        passwordField1.setPromptText("Wprowadź PESEL...");
+        passwordField1.getStyleClass().add("logFX-password-field");
+        passwordField1.setMaxWidth(Double.MAX_VALUE);
+
+        VBox input1Box = new VBox(6, text1, textField1);
+        VBox input2Box = new VBox(6, text2, passwordField1);
+
+        formBox.getChildren().addAll(input1Box, input2Box);
+
+        // 4. Przyciski akcji (Zaloguj, Wyczyść)
+        button2.setMaxWidth(Double.MAX_VALUE);
+        button2.getStyleClass().add("logFX-submit-btn");
+
+        button1.setMaxWidth(Double.MAX_VALUE);
+        button1.getStyleClass().add("logFX-clear-btn");
+
+        VBox actionsBox = new VBox(10);
+        actionsBox.setAlignment(Pos.CENTER);
+        actionsBox.getChildren().addAll(button2, button1);
+
+        // 5. Rejestracja nowych kont
+        Label noAccountLabel = new Label("Nie masz jeszcze konta?");
+        noAccountLabel.getStyleClass().add("logFX-small-label");
+
+        HBox registerBox = new HBox(12);
+        registerBox.setAlignment(Pos.CENTER);
+        stworzKontoPacjenta.getStyleClass().add("logFX-secondary-link-btn");
+        stwórzKontoLekarza.getStyleClass().add("logFX-secondary-link-btn");
+        stworzKontoPacjenta.setMaxWidth(Double.MAX_VALUE);
+        stwórzKontoLekarza.setMaxWidth(Double.MAX_VALUE);
+        HBox.setHgrow(stworzKontoPacjenta, Priority.ALWAYS);
+        HBox.setHgrow(stwórzKontoLekarza, Priority.ALWAYS);
+        registerBox.getChildren().addAll(stworzKontoPacjenta, stwórzKontoLekarza);
+
+        VBox registrationSection = new VBox(8);
+        registrationSection.setAlignment(Pos.CENTER);
+        registrationSection.getChildren().addAll(noAccountLabel, registerBox);
+
+        // 6. Stopka (Reset hasła + Wyjdź)
+        resetHasla.getStyleClass().add("logFX-reset-btn");
+        wyjdz.getStyleClass().add("logFX-exit-btn");
+
+        HBox footerBox = new HBox(20);
+        footerBox.setAlignment(Pos.CENTER);
+        Region footerSpacer = new Region();
+        HBox.setHgrow(footerSpacer, Priority.ALWAYS);
+        footerBox.getChildren().addAll(resetHasla, footerSpacer, wyjdz);
+
+        // Złożenie karty
+        card.getChildren().addAll(
+                headerBox,
+                new Separator(),
+                roleSwitcher,
+                formBox,
+                actionsBox,
+                new Separator(),
+                registrationSection,
+                new Separator(),
+                footerBox
+        );
+
+        root.getChildren().add(card);
+    }
+
+    private void updateRoleButtons() {
+        zalogujPacjent.getStyleClass().removeAll("logFX-role-btn-active", "logFX-role-btn-inactive");
+        zalogujLekarz.getStyleClass().removeAll("logFX-role-btn-active", "logFX-role-btn-inactive");
+
+        if (chosenMode == 1) {
+            zalogujPacjent.getStyleClass().add("logFX-role-btn-active");
+            zalogujLekarz.getStyleClass().add("logFX-role-btn-inactive");
+        } else {
+            zalogujPacjent.getStyleClass().add("logFX-role-btn-inactive");
+            zalogujLekarz.getStyleClass().add("logFX-role-btn-active");
+        }
     }
 
     public String getLogin() {
@@ -200,12 +200,19 @@ public class logFX{
         return chosenMode;
     }
 
-    public Parent getView() { return root; }
+    public Parent getView() {
+        return root;
+    }
 
-    public Button getWyjdzBtn() { return wyjdz; }
+    public Button getWyjdzBtn() {
+        return wyjdz;
+    }
 
-    public Button getStworzKontoPacjenta() { return stworzKontoPacjenta; }
+    public Button getStworzKontoPacjenta() {
+        return stworzKontoPacjenta;
+    }
 
-    public Button getStwórzKontoLekarza() { return stwórzKontoLekarza; }
+    public Button getStwórzKontoLekarza() {
+        return stwórzKontoLekarza;
+    }
 }
-

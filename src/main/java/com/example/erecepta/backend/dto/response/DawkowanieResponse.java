@@ -1,4 +1,4 @@
-package com.example.erecepta.backend.dto;
+package com.example.erecepta.backend.dto.response;
 
 public class DawkowanieResponse {
     private String nazwaLeku;

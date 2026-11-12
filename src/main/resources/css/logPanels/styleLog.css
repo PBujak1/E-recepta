@@ -1,63 +1,86 @@
+/* ==========================================================================
+   PANEL LOGOWANIA - FORMULARZ
+   ========================================================================== */
 
 .logFX-root {
-    -fx-background-color: linear-gradient(to bottom , white, #34495E);
-    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #497fa4;
+    -fx-font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
 }
 
+/* Karta formularza logowania */
 .logFX-mode-pane {
-    -fx-background-color: #2C3E50;
-    -fx-padding: 50;
-    -fx-vgap: 10;
-    -fx-hgap: 10;
-    -fx-background-radius: 15;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
+    -fx-background-color: #1E293B;
+    -fx-padding: 36 48 36 48;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-border-color: rgba(255, 255, 255, 0.08);
+    -fx-border-width: 1;
+    -fx-effect: dropshadow(gaussian, rgba(15, 23, 42, 0.18), 16, 0, 0, 6);
     -fx-alignment: CENTER;
 }
 
 .logFX-mode .label {
-    -fx-font-size: 20px;
-    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-text-fill: #F8FAFC;
     -fx-font-weight: bold;
 }
 
+/* Siatka pól formularza */
 .logFX-grid-pane {
-    -fx-vgap: 10;
-    -fx-hgap: 10;
+    -fx-vgap: 16;
+    -fx-hgap: 16;
     -fx-alignment: CENTER;
 }
 
-.logFX-grid-pane .logFX-text1{
-    -fx-font-size: 20px;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
+.logFX-grid-pane .logFX-text1,
+.logFX-grid-pane .logFX-text2,
+.logFX-grid-pane .logFX-login-label,
+.logFX-grid-pane .logFX-haslo-label {
+    -fx-font-size: 15px;
+    -fx-text-fill: #CBD5E1;
+    -fx-font-weight: 600;
 }
 
-.logFX-grid-pane .logFX-text2 {
-    -fx-font-size: 20px;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
-}
-
-.logFX-textfield, .logFX-password-field{
-    -fx-background-color: #ECF0F1;
-    -fx-background-radius: 5;
-    -fx-padding: 10;
-    -fx-font-size: 16px;
-    -fx-border-color: transparent;
-}
-
-.logFX-grid-pane .button {
-    -fx-background-color: #2980B9;
-    -fx-text-fill: white;
-    -fx-font-size: 18px;
+/* Pola tekstowe i hasła */
+.logFX-textfield,
+.logFX-password-field {
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #0F172A;
+    -fx-prompt-text-fill: #94A3B8;
     -fx-background-radius: 8;
-    -fx-padding: 10;
+    -fx-border-radius: 8;
+    -fx-border-color: #CBD5E1;
+    -fx-border-width: 1.5;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 15px;
+}
+
+.logFX-textfield:focused,
+.logFX-password-field:focused {
+    -fx-border-color: #3B82F6;
+    -fx-effect: dropshadow(gaussian, rgba(59, 130, 246, 0.25), 8, 0, 0, 2);
+}
+
+/* Przyciski formularza: Wyczyść i Zaloguj */
+.logFX-grid-pane .button {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: white;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 12 20 12 20;
     -fx-cursor: hand;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.2), 5, 0, 0, 2);
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.25), 8, 0, 0, 2);
 }
 
 .logFX-grid-pane .button:hover {
-    -fx-background-color: #3498DB;
+    -fx-background-color: #1D4ED8;
+    -fx-effect: dropshadow(gaussian, rgba(29, 78, 216, 0.35), 10, 0, 0, 3);
+}
+
+.logFX-grid-pane .button:pressed {
+    -fx-background-color: #1E40AF;
 }
 
 .col1 {
@@ -66,5 +89,5 @@
 
 .col2 {
     -fx-column-halignment: RIGHT;
-    -fx-fill-width: ALWAYS ;
+    -fx-fill-width: ALWAYS;
 }

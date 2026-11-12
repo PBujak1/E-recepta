@@ -1,7 +1,7 @@
-package com.example.erecepta.backend.services;
+package com.example.erecepta.backend.client;
 
-import com.example.erecepta.backend.dto.LoginRequest;
-import com.example.erecepta.backend.dto.LoginResponse;
+import com.example.erecepta.backend.dto.request.LoginRequest;
+import com.example.erecepta.backend.dto.response.LoginResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
 import javafx.stage.Window;
@@ -11,7 +11,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-public class AuthService {
+public class Authorization {
 
     private final HttpClient client = HttpClient.newHttpClient();
 
@@ -19,6 +19,9 @@ public class AuthService {
 
     public LoginResponse login(String nazwisko, String pesel, int mode) throws Exception {
 
+        /*
+            Obługa logowania
+         */
         LoginRequest requestBody = new LoginRequest();
         requestBody.setNazwisko(nazwisko);
         requestBody.setPESEL(pesel);
@@ -37,10 +40,12 @@ public class AuthService {
         System.out.println("STATUS: " + response.statusCode());
         System.out.println("BODY: " + response.body());
 
+        /*
+            Powiadomienie w przypadku podania błędnego hasła
+         */
         if (response.statusCode() == 500) {
             Alert alert = new Alert(Alert.AlertType.ERROR, "Błędny Login lub Hasło!");
 
-            // Pobiera obecnie aktywne okno aplikacji
             Window activeWindow = Window.getWindows().stream()
                     .filter(Window::isShowing)
                     .findFirst()
@@ -52,7 +57,6 @@ public class AuthService {
         }
 
         return mapper.readValue(response.body(), LoginResponse.class);
-
     }
 }
 

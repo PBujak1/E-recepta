@@ -1,6 +1,6 @@
 package com.example.erecepta.pacjent;
 
-import com.example.erecepta.backend.dto.DawkowanieResponse;
+import com.example.erecepta.backend.dto.response.DawkowanieResponse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;

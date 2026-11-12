@@ -1,10 +1,13 @@
 package com.example.erecepta.backend;
+import com.example.erecepta.backend.client.LekarzService;
 import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
-import com.example.erecepta.backend.dto.DawkowanieResponse;
-import com.example.erecepta.backend.dto.WizytyResponse;
-import com.example.erecepta.backend.dto.LoginResponse;
-import com.example.erecepta.backend.services.AuthService;
+import com.example.erecepta.backend.dto.response.DawkowanieResponse;
+import com.example.erecepta.backend.dto.response.LekarzDaneResponse;
+import com.example.erecepta.backend.dto.request.LekarzRequest;
+import com.example.erecepta.backend.dto.response.WizytyResponse;
+import com.example.erecepta.backend.dto.response.LoginResponse;
+import com.example.erecepta.backend.client.Authorization;
 import com.example.erecepta.lekarz.*;
 import com.example.erecepta.logFX;
 import com.example.erecepta.pacjent.*;
@@ -129,7 +132,7 @@ public class logika extends Application {
 
 
                 // Logowanie starym sposobem lokalnie
-                ServerConnection serverConnection = new ServerConnection(PESEL, NAZWISKO);
+                //ServerConnection serverConnection = new ServerConnection(PESEL, NAZWISKO);
 
                 /*
                 *
@@ -139,8 +142,8 @@ public class logika extends Application {
                 String nazwisko123 = loginField.getText();
                 String pesel123 = passwordField.getText();
 
-                AuthService authService = new AuthService();
-                LoginResponse response = null;
+                Authorization authService = new Authorization();
+                LoginResponse response;
                 try {
                     response = authService.login(nazwisko123, pesel123, mode);
                 } catch (Exception ex) {
@@ -178,9 +181,6 @@ public class logika extends Application {
                             });
 
                             mainPanelPac.getHistoriaButton().setOnAction(event -> {
-                                    /*
-                                    * nr wizyty, data wizyty, nazwisko i imie lekarza, imie i nazwisko pacjenta, nr recepty
-                                    * */
                                 try {
                                     List<WizytyResponse> historia = mainController.getHistoriaPacjenta(PESEL);
                                     historiaWizyt historiaWizyt = new historiaWizyt(historia);
@@ -227,29 +227,31 @@ public class logika extends Application {
                                 logFX1.getLoginTextField().clear();
                                 logFX1.getPasswordField().clear();
                             });
-                            } catch (IOException ex) {
-                            throw new RuntimeException(ex);
-                        } catch (Exception ex) {
+                            } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
                     case 2:
                         try {
-                            String result = serverConnection.getPacjent("loginLekarz", PESEL);
-                            if ("Brak danych".equals(result)) {
+                            if ("Brak danych".equals(response)) {
                                 return;
                             } else {
-                                imie = serverConnection.getPacjent("getImieLekarz", PESEL);
-                                nazwisko = serverConnection.getPacjent("getNazwiskoLekarz", PESEL);
-                                String IDLekarza = serverConnection.getPacjent("getIDLekarza", PESEL);
-                                String recepta = serverConnection.getPacjent("getRecepta", IDLekarza);
-                                String historia = serverConnection.getPacjent("getHistoria", IDLekarza);
-                                String adres1 = serverConnection.getPacjent("getAdresLekarz", PESEL);
-                                String telefon1 = serverConnection.getPacjent("getTelefonLekarz", PESEL);
-                                String email1 = serverConnection.getPacjent("getEmailLekarz", PESEL);
-                                String wiek1 = serverConnection.getPacjent("getWiekLekarz", PESEL);
-                                String plec1 = serverConnection.getPacjent("getPlecLekarz", PESEL);
+                                LekarzService lekarzService = new LekarzService();
+                                imie = response.getImie();
+                                nazwisko = response.getNazwisko();
+
+                                LekarzRequest lekarzRequest = new LekarzRequest(PESEL);
+                                LekarzDaneResponse daneLekarza = lekarzService.getDaneLekarza(String.valueOf(PESEL));
+
+                                String IDLekarza = daneLekarza.getIdLekarza() != null && !daneLekarza.getIdLekarza().isEmpty() ? daneLekarza.getIdLekarza() : lekarzService.getIdLekarza(PESEL);
+                                String recepta = lekarzService.getReceptyString(IDLekarza);
+                                String historia = lekarzService.getHistoriaString(IDLekarza);
+                                String adres1 = daneLekarza.getAdres();
+                                String telefon1 = daneLekarza.getTelefon();
+                                String email1 = daneLekarza.getEmail();
+                                String wiek1 = daneLekarza.getWiek();
+                                String plec1 = daneLekarza.getPlec();
                                 nazwaPacjenta = imie + nazwisko;
-                                mainLekPanel mainPanelLek = new mainLekPanel(PESEL, NAZWISKO, imie, nazwisko);
+                                mainLekPanel mainPanelLek = new mainLekPanel(imie, nazwisko, pesel123);
                                 scene.setRoot(mainPanelLek.getView());
 
                                 mainPanelLek.getWyloguj().setOnAction(event -> {
@@ -261,8 +263,6 @@ public class logika extends Application {
                                 mainPanelLek.getWczytajBtn().setOnAction(event -> {
                                     try {
                                         String PESELp = mainPanelLek.getSearchField().getText();
-                                        String IDLekarzap = serverConnection.getPacjent("getIDLekarza", PESEL);
-                                        String e_wizyty = serverConnection.getPacjent("getWizyta", IDLekarzap);
                                         String imie1 = serverConnection.getPacjent("getImiePacjent", PESELp);
                                         String nazwisko1 = serverConnection.getPacjent("getNazwiskoPacjent", PESELp);
                                         String adres1p = serverConnection.getPacjent("getAdres", PESELp);
@@ -411,7 +411,7 @@ public class logika extends Application {
                                     scene.setRoot(mainPanelLek.getView());
                                 });
                             }
-                        } catch (IOException ex) {
+                        } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
                         break;

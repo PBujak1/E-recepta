@@ -1,14 +1,11 @@
 package com.example.erecepta.backend.client;
 
-import com.example.erecepta.backend.dto.DawkowanieResponse;
-import com.example.erecepta.backend.dto.WizytyResponse;
-import com.example.erecepta.backend.dto.PacjentLekarzResponse;
-import com.example.erecepta.backend.dto.WizytaPacjentaResponse;
+import com.example.erecepta.backend.dto.response.DawkowanieResponse;
+import com.example.erecepta.backend.dto.response.WizytyResponse;
+import com.example.erecepta.backend.dto.response.PacjentLekarzResponse;
+import com.example.erecepta.backend.dto.response.WizytaPacjentaResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.example.erecepta.backend.dto.LekarzResponse;
 
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,14 +19,11 @@ public class PacjentController {
     }
 
     public List<WizytaPacjentaResponse> getWizytyPacjenta(String pesel) throws Exception {
-
         String response = apiClient.get("/pacjent/" + pesel + "/wizyty");
-
         WizytaPacjentaResponse[] wizyty = mapper.readValue(
                 response,
                 WizytaPacjentaResponse[].class
         );
-
         return Arrays.asList(wizyty);
     }
 
@@ -39,7 +33,6 @@ public class PacjentController {
                 response,
                 PacjentLekarzResponse[].class
         );
-
         return Arrays.stream(lekarze)
                 .map(lekarz -> new PacjentLekarzResponse(
                         lekarz.getImieLekarza() + " " + lekarz.getNazwiskoLekarza()
@@ -53,7 +46,6 @@ public class PacjentController {
                 response,
                 DawkowanieResponse[].class
         );
-
         return Arrays.stream(dawkowanie)
                 .map(dawkowanieResponse -> new DawkowanieResponse(
                         dawkowanieResponse.getNazwaLeku(),
@@ -69,7 +61,6 @@ public class PacjentController {
                 response,
                 WizytyResponse[].class
         );
-
         return Arrays.stream(historiaPacjenta)
                 .map(historia -> new WizytyResponse(
                         historia.getDataWizyty(),
@@ -86,7 +77,6 @@ public class PacjentController {
                 response,
                 WizytyResponse[].class
         );
-
         return Arrays.stream(historiaPacjenta)
                 .map(historia -> new WizytyResponse(
                         historia.getDataWizyty(),

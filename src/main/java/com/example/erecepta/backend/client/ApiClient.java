@@ -32,6 +32,28 @@ public class ApiClient {
         return response.body();
     }
 
+    public String post(String endpoint, String jsonBody) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody != null ? jsonBody : ""))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("POST: " + BASE_URL + endpoint);
+        System.out.println("STATUS: " + response.statusCode());
+        System.out.println("BODY: " + response.body());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new RuntimeException(
+                    "Błąd HTTP " + response.statusCode() + ": " + response.body()
+            );
+        }
+
+        return response.body();
+    }
+
     public HttpClient getClient() {
         return client;
     }

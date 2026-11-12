@@ -1,71 +1,220 @@
+/* ==========================================================================
+   PANEL STARTOWY LOGOWANIA
+   ========================================================================== */
 
-.logFX-root-panel {
-    -fx-background-color: white;
-    -fx-padding: 20;
-    -fx-border-insets: 20;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
+.root, .logFX-root-panel {
+    -fx-background-color: linear-gradient(to bottom right, #0F172A, #1E293B, #334155);
+    -fx-font-family: "Segoe UI", -apple-system, BlinkMacSystemFont, "Roboto", sans-serif;
+    -fx-padding: 30;
+    -fx-alignment: center;
 }
 
-.logFX-root-panel .label {
-    -fx-text-fill: black;
+/* ==========================================================================
+   GŁÓWNA KARTA LOGOWANIA
+   ========================================================================== */
+.logFX-card {
+    -fx-background-color: #e4f1ff;
+    -fx-background-radius: 18;
+    -fx-border-radius: 18;
+    -fx-pref-width: 700px;
+    -fx-max-width: 700px;
+    -fx-border-color: rgba(255, 255, 255, 0.1);
+    -fx-border-width: 1;
+    -fx-padding: 36 32 32 32;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.45), 32, 0, 0, 10);
+}
+
+/* Logo & Tytuły */
+.logFX-brand-icon {
+    -fx-fill: #2563EB;
+}
+
+.logFX-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: 800;
+    -fx-text-fill: #2563EB;
+    -fx-letter-spacing: 0.5px;
+}
+
+.logFX-welcome {
+    -fx-font-size: 22px;
+    -fx-font-weight: 700;
+    -fx-text-fill: #0F172A;
+}
+
+.logFX-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #64748B;
+}
+
+/* Separator wewnątrz karty */
+.logFX-card .separator *.line {
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1px;
+}
+
+/* ==========================================================================
+   PRZEŁĄCZNIK RÓL
+   ========================================================================== */
+.logFX-role-switcher {
+    -fx-background-color: #F1F5F9;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-padding: 4;
+}
+
+.logFX-role-btn-active {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 9 18 9 18;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.3), 8, 0, 0, 2);
 }
 
-.logFX-left-panels {
-    -fx-background-color: #2C3E50;
-    -fx-padding: 20;
-    -fx-border-insets: 20;
-    -fx-pref-height: 138;
-    -fx-background-radius: 15;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
+.logFX-role-btn-inactive {
+    -fx-background-color: transparent;
+    -fx-text-fill: #475569;
+    -fx-font-size: 14px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 9 18 9 18;
+    -fx-cursor: hand;
 }
 
-.logFX-left-panels .button {
-    -fx-background-color: #34495E;
-    -fx-text-fill: white;
+.logFX-role-btn-inactive:hover {
+    -fx-background-color: #E2E8F0;
+    -fx-text-fill: #1E293B;
+}
+
+/* ==========================================================================
+   ETYKIETY I POLA TEKSTOWE
+   ========================================================================== */
+.logFX-input-label {
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-text-fill: #334155;
+}
+
+.logFX-textfield,
+.logFX-password-field {
+    -fx-background-color: #F8FAFC;
+    -fx-text-fill: #0F172A;
+    -fx-prompt-text-fill: #94A3B8;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #CBD5E1;
+    -fx-border-width: 1.5;
+    -fx-padding: 10 14 10 14;
+    -fx-font-size: 14px;
+}
+
+.logFX-textfield:focused,
+.logFX-password-field:focused {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #2563EB;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.2), 8, 0, 0, 2);
+}
+
+/* ==========================================================================
+   PRZYCISKI FORMULARZA (ZALOGUJ, WYCZYŚĆ)
+   ========================================================================== */
+.logFX-submit-btn {
+    -fx-background-color: #2563EB;
+    -fx-text-fill: #FFFFFF;
     -fx-font-size: 15px;
-    -fx-background-radius: 5;
-    -fx-padding: 30 0 30 0;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-padding: 12 24 12 24;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(gaussian, rgba(37, 99, 235, 0.3), 10, 0, 0, 3);
 }
 
-.logFX-left-panels .button:hover {
-    -fx-background-color: #3E5A72;
-    -fx-font-size: 20px;
+.logFX-submit-btn:hover {
+    -fx-background-color: #1D4ED8;
+    -fx-effect: dropshadow(gaussian, rgba(29, 78, 216, 0.4), 12, 0, 0, 4);
 }
 
-.logFX-dolnyPanel {
-    -fx-background-color: #2C3E50;
-    -fx-padding: 16, 16, 8, 16;
-    -fx-background-radius: 15;
-    -fx-pref-height: 100;
-    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.25), 15, 0, 0, 5);
+.logFX-submit-btn:pressed {
+    -fx-background-color: #1E40AF;
+}
+
+.logFX-clear-btn {
+    -fx-background-color: transparent;
+    -fx-text-fill: #64748B;
+    -fx-font-size: 13px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #E2E8F0;
+    -fx-border-width: 1;
+    -fx-padding: 8 16 8 16;
+    -fx-cursor: hand;
+}
+
+.logFX-clear-btn:hover {
+    -fx-background-color: #F1F5F9;
+    -fx-text-fill: #334155;
+    -fx-border-color: #CBD5E1;
+}
+
+/* ==========================================================================
+   REJESTRACJA NOWEGO KONTA
+   ========================================================================== */
+.logFX-small-label {
+    -fx-font-size: 12px;
+    -fx-text-fill: #64748B;
+}
+
+.logFX-secondary-link-btn {
+    -fx-background-color: #F8FAFC;
+    -fx-text-fill: #2563EB;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-background-radius: 6;
+    -fx-border-radius: 6;
+    -fx-border-color: #DBEAFE;
+    -fx-border-width: 1;
+    -fx-padding: 8 12 8 12;
+    -fx-cursor: hand;
+}
+
+.logFX-secondary-link-btn:hover {
+    -fx-background-color: #EFF6FF;
+    -fx-border-color: #93C5FD;
+    -fx-text-fill: #1D4ED8;
+}
+
+/* ==========================================================================
+   STOPKA (RESET HASŁA & WYJŚCIE)
+   ========================================================================== */
+.logFX-reset-btn {
+    -fx-font-size: 12px;
+    -fx-text-fill: #2563EB;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+}
+
+.logFX-reset-btn:hover {
+    -fx-text-fill: #1D4ED8;
+    -fx-underline: true;
 }
 
 .logFX-exit-btn {
-    -fx-background-color: #C0392B;
-    -fx-text-fill: white;
-    -fx-font-size: 15px;
-    -fx-background-radius: 5;
-    -fx-pref-height: 10px;
-    -fx-pref-width: 300;
+    -fx-background-color: transparent;
+    -fx-text-fill: #EF4444;
+    -fx-font-size: 12px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 4 8 4 8;
 }
 
 .logFX-exit-btn:hover {
-    -fx-background-color: #F08080;
-    -fx-font-size: 15px;
-    -fx-background-radius: 5;
-    -fx-pref-height: 10px;
-    -fx-pref-width: 300;
-}
-
-.logFX-dolnyPanel .logFX-reset-btn{
-    -fx-font-size: 20px;
-    -fx-text-fill: #2980B9;
-    -fx-font-weight: bold;
-}
-
-.logFX-dolnyPanel .logFX-reset-btn:hover {
-    -fx-font-size: 20px;
-    -fx-text-fill: white;
-    -fx-font-weight: bold;
+    -fx-text-fill: #DC2626;
+    -fx-underline: true;
 }
