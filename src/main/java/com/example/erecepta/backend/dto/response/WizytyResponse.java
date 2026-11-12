@@ -119,4 +119,5 @@ public class WizytyResponse {
     public void setNrRecepty(String nrRecepty) {
         this.nrRecepty = nrRecepty;
     }
+
 }

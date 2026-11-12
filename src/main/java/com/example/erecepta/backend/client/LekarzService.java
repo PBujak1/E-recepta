@@ -18,19 +18,14 @@ public class LekarzService {
     public LekarzService() {
     }
 
-    public List<PacjentLekarzResponse> szukajDanePacjenta(String pesel) throws Exception {
+    public PacjentDaneResponse szukajDanePacjenta(String pesel) throws Exception {
         String response = apiClient.get("/lekarz/" + pesel + "/danePacjenta");
-        PacjentLekarzResponse[] lekarze = mapper.readValue(
-                response,
-                PacjentLekarzResponse[].class
-        );
-        return Arrays.stream(lekarze)
-                .map(lekarz -> new PacjentLekarzResponse(
-                        lekarz.getImieLekarza() + " " + lekarz.getNazwiskoLekarza()
-                ))
-                .toList();
-    }
 
+        return mapper.readValue(
+                response,
+                PacjentDaneResponse.class
+        );
+    }
     /**
      * Pobiera pełne dane lekarza na podstawie numeru PESEL.
      */

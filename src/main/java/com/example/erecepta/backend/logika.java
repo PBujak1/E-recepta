@@ -2,11 +2,8 @@ package com.example.erecepta.backend;
 import com.example.erecepta.backend.client.LekarzService;
 import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
-import com.example.erecepta.backend.dto.response.DawkowanieResponse;
-import com.example.erecepta.backend.dto.response.LekarzDaneResponse;
+import com.example.erecepta.backend.dto.response.*;
 import com.example.erecepta.backend.dto.request.LekarzRequest;
-import com.example.erecepta.backend.dto.response.WizytyResponse;
-import com.example.erecepta.backend.dto.response.LoginResponse;
 import com.example.erecepta.backend.client.Authorization;
 import com.example.erecepta.lekarz.*;
 import com.example.erecepta.logFX;
@@ -239,7 +236,6 @@ public class logika extends Application {
                                 imie = response.getImie();
                                 nazwisko = response.getNazwisko();
 
-                                LekarzRequest lekarzRequest = new LekarzRequest(PESEL);
                                 LekarzDaneResponse daneLekarza = lekarzService.getDaneLekarza(String.valueOf(PESEL));
 
                                 String IDLekarza = daneLekarza.getIdLekarza() != null && !daneLekarza.getIdLekarza().isEmpty() ? daneLekarza.getIdLekarza() : lekarzService.getIdLekarza(PESEL);
@@ -263,38 +259,34 @@ public class logika extends Application {
                                 mainPanelLek.getWczytajBtn().setOnAction(event -> {
                                     try {
                                         String PESELp = mainPanelLek.getSearchField().getText();
-                                        String imie1 = serverConnection.getPacjent("getImiePacjent", PESELp);
-                                        String nazwisko1 = serverConnection.getPacjent("getNazwiskoPacjent", PESELp);
-                                        String adres1p = serverConnection.getPacjent("getAdres", PESELp);
-                                        String telefon1p = serverConnection.getPacjent("getTelefon", PESELp);
-                                        String email1p = serverConnection.getPacjent("getEmail", PESELp);
-                                        String wiek1p = serverConnection.getPacjent("getWiek", PESELp);
-                                        String plec1p = serverConnection.getPacjent("getPlec", PESELp);
-                                        String historiaPacString = serverConnection.getPacjent("getHistoriaPac", PESELp);
-                                        String alergia1 = serverConnection.getPacjent("getAlergia", PESELp);
+                                        PacjentDaneResponse danePacjenta = lekarzService.szukajDanePacjenta(String.valueOf(PESELp));
+                                        String imiePacjenta = danePacjenta.getImie();
+                                        String nazwiskoPacjenta = danePacjenta.getNazwisko();
+                                        String adresPacjenta = danePacjenta.getAdres();
+                                        Integer wiekPacjenta = danePacjenta.getWiek();
+                                        String plecPacjenta = danePacjenta.getPlec();
+                                        List<String> alergieTablica = danePacjenta.getAlergie();
 
-                                        mainPanelLek.getImieINazwiskoPacjenta().setText(imie1 + " " + nazwisko1);
+                                        mainPanelLek.getImieINazwiskoPacjenta().setText(imiePacjenta + " " + nazwiskoPacjenta);
                                         mainPanelLek.getPESELPacjenta().setText(PESELp);
-                                        mainPanelLek.getAdresPacjenta().setText(adres1p);
-                                        mainPanelLek.getPlec().setText(plec1p);
-                                        mainPanelLek.getWiek().setText(wiek1p);
-                                        mainPanelLek.getTelefon().setText(telefon1p);
-                                        mainPanelLek.getEmail().setText(email1p);
+                                        mainPanelLek.getAdresPacjenta().setText(adresPacjenta);
+                                        mainPanelLek.getPlec().setText(plecPacjenta);
+                                        mainPanelLek.getWiek().setText(wiekPacjenta.toString());
 
-                                        String[] alergieTablica = alergia1.split("\\r?\\n");
-                                        mainPanelLek.getAllergyList().getChildren().clear();
-
-                                        for (int i = 0; i < alergieTablica.length; i++) {
+                                        for (String alergia : alergieTablica) {
                                             HBox allergyChip1 = new HBox(10);
-                                            Label alergieLabel = new Label(alergieTablica[i]);
-                                            allergyChip1.getChildren().addAll(alergieLabel);
+
+                                            Label alergieLabel = new Label(alergia);
+
+                                            allergyChip1.getChildren().add(alergieLabel);
                                             allergyChip1.getStyleClass().add("allergy-chip1");
                                             allergyChip1.setAlignment(Pos.CENTER);
+
                                             mainPanelLek.getAllergyList().getChildren().add(allergyChip1);
                                         }
 
                                         mainPanelLek.getNowaRecepta().setOnAction(a -> {
-                                            nowaRecepta Recepta = new nowaRecepta(imie1, nazwisko1, PESELp, PESEL);
+                                            nowaRecepta Recepta = new nowaRecepta(imiePacjenta, nazwiskoPacjenta, PESELp, PESEL);
                                             scene.setRoot(Recepta.getView());
 
                                             Recepta.getDodaj().setOnAction(actionEvent -> {
@@ -303,24 +295,38 @@ public class logika extends Application {
                                                 String odplatnosci = Recepta.getOdplatnosc().getText();
                                                 String dawkowanie = Recepta.getDawkowanie().getText();
 
-                                                try {
-                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, lek, opakowania, odplatnosci, PESEL, dawkowanie);
-                                                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                                    alert.initOwner(primaryStage);
-                                                    alert.setTitle("UWAGA!");
-                                                    alert.setHeaderText(null);
-                                                    alert.setContentText("Zmieniono dane!");
-                                                    alert.showAndWait();
-                                                } catch (IOException e2) {
-                                                    throw new RuntimeException(e2);
-                                                }
+                                                //serverConnection.getUpdateRec("updateWszystkoRec", PESELp, lek, opakowania, odplatnosci, PESEL, dawkowanie);
+                                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                                alert.initOwner(primaryStage);
+                                                alert.setTitle("UWAGA!");
+                                                alert.setHeaderText(null);
+                                                alert.setContentText("Dodano Lek do recepty!");
+                                                alert.showAndWait();
                                             });
                                         });
 
                                         mainPanelLek.getZobaczWszystko().setOnAction(a -> {
-                                            VBox historiaPane = new VBox(new Label(e_wizyty));
-                                            System.out.print(e_wizyty);
-                                            historiaPane.getStyleClass().add("historia");
+                                            VBox historiaPane = new VBox(10);
+
+                                            for (WizytyResponse wizyta : danePacjenta.getWizyty()) {
+
+                                                VBox wizytaPane = new VBox(5);
+
+                                                Label dataLabel = new Label("Data wizyty: " + wizyta.getDataWizyty());
+                                                Label lekarzLabel = new Label("Lekarz: " + wizyta.getNazwaLekarza());
+                                                Label receptaLabel = new Label("Nr recepty: " + wizyta.getNrRecepty());
+
+                                                wizytaPane.getChildren().addAll(
+                                                        dataLabel,
+                                                        lekarzLabel,
+                                                        receptaLabel,
+                                                        new Separator()
+                                                );
+
+                                                wizytaPane.getStyleClass().add("historia");
+                                                historiaPane.getChildren().add(wizytaPane);
+                                            }
+
                                             historiaPane.setAlignment(Pos.TOP_CENTER);
 
                                             mainPanelLek.getContentPane().setContent(historiaPane);
@@ -344,11 +350,7 @@ public class logika extends Application {
 
                                         mainPanelLek.getWypiszBtn().setOnAction(e2 -> {
                                             for (int i = 0; i < mainPanelLek.getMedList().size(); i++) {
-                                                try {
-                                                    serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "0", PESEL, "1");
-                                                } catch (IOException ex) {
-                                                    throw new RuntimeException(ex);
-                                                }
+                                                //serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "0", PESEL, "1");
                                             }
                                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
                                             alert.setTitle("UWAGA!");
@@ -357,7 +359,7 @@ public class logika extends Application {
                                             alert.showAndWait();
                                             mainPanelLek.getSearchField().setText("");
                                         });
-                                    } catch (IOException ex) {
+                                    } catch (Exception ex) {
                                         throw new RuntimeException(ex);
                                     }
                                 });

@@ -47,10 +47,6 @@ public class mainLekPanel {
     private Label PESELPacjenta = new Label("");
     private Label adresLabel = new Label("Adres: ");
     private Label adresPacjenta = new Label("");
-    private Label telefonLabel = new Label("Nr. Telefonu:");
-    private Label telefon = new Label("");
-    private Label emailLabel = new Label("Adres e-mail:");
-    private Label email = new Label("");
     private Label typReceptyLabel = new Label("Leki do recepty");
     private Button wczytajBtn = new Button("Wczytaj");
     private Button wypiszBtn = new Button("Wypisz Receptę");
@@ -389,8 +385,6 @@ public class mainLekPanel {
     public Label getAdresPacjenta() { return adresPacjenta; }
     public Label getPlec() { return plec; }
     public Label getWiek() { return wiek; }
-    public Label getTelefon() { return telefon; }
-    public Label getEmail() { return email; }
 
     public VBox getAllergyList() { return allergyList; }
 
