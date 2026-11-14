@@ -54,6 +54,50 @@ public class ApiClient {
         return response.body();
     }
 
+    public String patch(String endpoint, String jsonBody) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .header("Content-Type", "application/json")
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonBody != null ? jsonBody : ""))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("PATCH: " + BASE_URL + endpoint);
+        System.out.println("STATUS: " + response.statusCode());
+        System.out.println("BODY: " + response.body());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new RuntimeException(
+                    "Błąd HTTP " + response.statusCode() + ": " + response.body()
+            );
+        }
+
+        return response.body();
+    }
+
+    public String put(String endpoint, String jsonBody) throws Exception {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + endpoint))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(jsonBody != null ? jsonBody : ""))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        System.out.println("PUT: " + BASE_URL + endpoint);
+        System.out.println("STATUS: " + response.statusCode());
+        System.out.println("BODY: " + response.body());
+
+        if (response.statusCode() < 200 || response.statusCode() >= 300) {
+            throw new RuntimeException(
+                    "Błąd HTTP " + response.statusCode() + ": " + response.body()
+            );
+        }
+
+        return response.body();
+    }
+
     public HttpClient getClient() {
         return client;
     }

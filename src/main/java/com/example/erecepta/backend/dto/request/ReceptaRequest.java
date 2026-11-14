@@ -1,22 +1,31 @@
 package com.example.erecepta.backend.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ReceptaRequest {
-
-    private String idLekarza;
-    private String peselPacjenta;
+    @JsonIgnore
+    private Integer peselPacjenta;
+    private Integer peselLekarza;
     private String nazwaLeku;
-    private String liczbaOpakowan;
-    private String odplatnosc;
-    private String dawkowanie;
+    private Integer liczbaOpakowan;
+    private Integer odplatnosc;
+    private Integer dawkowanie;
 
     public ReceptaRequest() {
     }
 
-    public ReceptaRequest(String idLekarza, String peselPacjenta, String nazwaLeku, String liczbaOpakowan, String odplatnosc, String dawkowanie) {
-        this.idLekarza = idLekarza;
+    public ReceptaRequest(Integer peselLekarza, Integer liczbaOpakowan, String nazwaLeku, Integer odplatnosc, Integer dawkowanie) {
+        this.peselLekarza = peselLekarza;
+        this.liczbaOpakowan = liczbaOpakowan;
+        this.nazwaLeku = nazwaLeku;
+        this.odplatnosc = odplatnosc;
+        this.dawkowanie = dawkowanie;
+    }
+
+    public ReceptaRequest(Integer idLekarza, Integer peselPacjenta, String nazwaLeku, Integer liczbaOpakowan, Integer odplatnosc, Integer dawkowanie) {
+        this.peselLekarza = idLekarza;
         this.peselPacjenta = peselPacjenta;
         this.nazwaLeku = nazwaLeku;
         this.liczbaOpakowan = liczbaOpakowan;
@@ -24,19 +33,19 @@ public class ReceptaRequest {
         this.dawkowanie = dawkowanie;
     }
 
-    public String getIdLekarza() {
-        return idLekarza;
+    public Integer getPeselLekarza() {
+        return peselLekarza;
     }
 
-    public void setIdLekarza(String idLekarza) {
-        this.idLekarza = idLekarza;
+    public void setPeselLekarza(Integer peselLekarza) {
+        this.peselLekarza = peselLekarza;
     }
 
-    public String getPeselPacjenta() {
+    public Integer getPeselPacjenta() {
         return peselPacjenta;
     }
 
-    public void setPeselPacjenta(String peselPacjenta) {
+    public void setPeselPacjenta(Integer peselPacjenta) {
         this.peselPacjenta = peselPacjenta;
     }
 
@@ -48,27 +57,27 @@ public class ReceptaRequest {
         this.nazwaLeku = nazwaLeku;
     }
 
-    public String getLiczbaOpakowan() {
+    public Integer getLiczbaOpakowan() {
         return liczbaOpakowan;
     }
 
-    public void setLiczbaOpakowan(String liczbaOpakowan) {
+    public void setLiczbaOpakowan(Integer liczbaOpakowan) {
         this.liczbaOpakowan = liczbaOpakowan;
     }
 
-    public String getOdplatnosc() {
+    public Integer getOdplatnosc() {
         return odplatnosc;
     }
 
-    public void setOdplatnosc(String odplatnosc) {
+    public void setOdplatnosc(Integer odplatnosc) {
         this.odplatnosc = odplatnosc;
     }
 
-    public String getDawkowanie() {
+    public Integer getDawkowanie() {
         return dawkowanie;
     }
 
-    public void setDawkowanie(String dawkowanie) {
+    public void setDawkowanie(Integer dawkowanie) {
         this.dawkowanie = dawkowanie;
     }
 }

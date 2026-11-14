@@ -53,6 +53,16 @@ public class ReceptaResponse {
         this.liczbaOpakowan = liczbaOpakowan;
     }
 
+    public ReceptaResponse(String idRecepty, String nazwaLeku, String idPacjenta, String liczbaOpakowan, String odplatnosc, String dawkowanie, String dataWystawienia) {
+        this.idRecepty = idRecepty;
+        this.nazwaLeku = nazwaLeku;
+        this.idPacjenta = idPacjenta;
+        this.liczbaOpakowan = liczbaOpakowan;
+        this.odplatnosc = odplatnosc;
+        this.dawkowanie = dawkowanie;
+        this.dataWystawienia = dataWystawienia;
+    }
+
     public String getIdRecepty() {
         return idRecepty;
     }
@@ -122,7 +132,10 @@ public class ReceptaResponse {
         if (idRecepty != null) sb.append(idRecepty).append(" ");
         if (nazwaLeku != null) sb.append(nazwaLeku).append(" ");
         if (idPacjenta != null) sb.append(idPacjenta).append(" ");
-        if (liczbaOpakowan != null) sb.append(liczbaOpakowan);
+        if (liczbaOpakowan != null) sb.append(liczbaOpakowan).append(" ");
+        if (odplatnosc != null) sb.append(odplatnosc).append(" ");
+        if (dawkowanie != null) sb.append(dawkowanie).append(" ");
+        if (dataWystawienia != null) sb.append(dataWystawienia);
         return sb.toString().trim();
     }
 }

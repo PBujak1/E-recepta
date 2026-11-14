@@ -1,6 +1,8 @@
 package com.example.erecepta.lekarz;
 
+import com.example.erecepta.backend.client.LekarzService;
 import com.example.erecepta.backend.client.ServerConnection;
+import com.example.erecepta.backend.dto.request.LekarzDaneRequest;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -87,7 +89,6 @@ public class ustawieniaLek {
         titlePane.getChildren().add(title);
 
         VBox mainPane = new VBox(50);
-
 
         GridPane gridPane = new GridPane();
         gridPane.setHgap(15);
@@ -180,16 +181,25 @@ public class ustawieniaLek {
             nowyWiek = wiekField.getText();
             nowaPlec = plecField.getText();
 
-            ServerConnection serverConnection = new ServerConnection(PESELString1, nazwiskoString1);
             try {
-                serverConnection.getUpdateLek("updateWszystkoLek", PESELString1, noweImie, noweNazwisko
-                ,nowyPesel, nowyAdres, nowyTelefon, nowyEmail, nowyWiek, nowaPlec);
+                LekarzService lekarzService = new LekarzService();
+                LekarzDaneRequest request = new LekarzDaneRequest();
+                request.setImie(noweImie.isEmpty() ? null : noweImie);
+                request.setNazwisko(noweNazwisko.isEmpty() ? null : noweNazwisko);
+                request.setNowyPesel(nowyPesel.isEmpty() ? null : nowyPesel);
+                request.setAdres(nowyAdres.isEmpty() ? null : nowyAdres);
+                request.setTelefon(nowyTelefon.isEmpty() ? null : nowyTelefon);
+                request.setEmail(nowyEmail.isEmpty() ? null : nowyEmail);
+                request.setWiek(nowyWiek.isEmpty() ? null : nowyWiek);
+                request.setPlec(nowaPlec.isEmpty() ? null : nowaPlec);
+
+                lekarzService.aktualizujDaneLekarza(PESELString1, request);
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("UWAGA!");
                 alert.setHeaderText(null);
                 alert.setContentText("Zmieniono dane!");
                 alert.showAndWait();
-            } catch (IOException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         });

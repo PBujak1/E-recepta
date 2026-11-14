@@ -2,6 +2,9 @@ package com.example.erecepta.backend;
 import com.example.erecepta.backend.client.LekarzService;
 import com.example.erecepta.backend.client.PacjentController;
 import com.example.erecepta.backend.client.ServerConnection;
+import com.example.erecepta.backend.dto.request.LekItemRequest;
+import com.example.erecepta.backend.dto.request.ReceptaRequest;
+import com.example.erecepta.backend.dto.request.ReceptaZbiorczaRequest;
 import com.example.erecepta.backend.dto.response.*;
 import com.example.erecepta.backend.dto.request.LekarzRequest;
 import com.example.erecepta.backend.client.Authorization;
@@ -19,6 +22,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -123,19 +127,8 @@ public class logika extends Application {
                 alert.setContentText("Hasło nie może być puste!");
                 alert.showAndWait();
             } else {
-                String NAZWISKO = logFX1.getLogin();
                 String PESEL = logFX1.getPassword();
                 int mode = logFX1.getChosenMode();
-
-
-                // Logowanie starym sposobem lokalnie
-                //ServerConnection serverConnection = new ServerConnection(PESEL, NAZWISKO);
-
-                /*
-                *
-                *  ZAMIANY BAZY DANYCH LOKALNEJ NA SIECIOWĄ
-                *
-                * */
                 String nazwisko123 = loginField.getText();
                 String pesel123 = passwordField.getText();
 
@@ -146,12 +139,6 @@ public class logika extends Application {
                 } catch (Exception ex) {
                     throw new RuntimeException(ex);
                 }
-                /*
-                 *
-                 * KONIEC
-                 *
-                 * */
-
                 switch (mode) {
                     case 1:
                         try {
@@ -227,192 +214,219 @@ public class logika extends Application {
                             } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }
+                        break;
                     case 2:
                         try {
-                            if ("Brak danych".equals(response)) {
-                                return;
-                            } else {
-                                LekarzService lekarzService = new LekarzService();
-                                imie = response.getImie();
-                                nazwisko = response.getNazwisko();
+                            LekarzService lekarzService = new LekarzService();
+                            imie = response.getImie();
+                            nazwisko = response.getNazwisko();
 
-                                LekarzDaneResponse daneLekarza = lekarzService.getDaneLekarza(String.valueOf(PESEL));
+                            nazwaPacjenta = imie + nazwisko;
+                            mainLekPanel mainPanelLek = new mainLekPanel(imie, nazwisko, pesel123);
+                            scene.setRoot(mainPanelLek.getView());
 
-                                String IDLekarza = daneLekarza.getIdLekarza() != null && !daneLekarza.getIdLekarza().isEmpty() ? daneLekarza.getIdLekarza() : lekarzService.getIdLekarza(PESEL);
-                                String recepta = lekarzService.getReceptyString(IDLekarza);
-                                String historia = lekarzService.getHistoriaString(IDLekarza);
-                                String adres1 = daneLekarza.getAdres();
-                                String telefon1 = daneLekarza.getTelefon();
-                                String email1 = daneLekarza.getEmail();
-                                String wiek1 = daneLekarza.getWiek();
-                                String plec1 = daneLekarza.getPlec();
-                                nazwaPacjenta = imie + nazwisko;
-                                mainLekPanel mainPanelLek = new mainLekPanel(imie, nazwisko, pesel123);
-                                scene.setRoot(mainPanelLek.getView());
+                            mainPanelLek.getWyloguj().setOnAction(event -> {
+                                logFX1.getLoginTextField().clear();
+                                logFX1.getPasswordField().clear();
+                                scene.setRoot(logFX1.getView());
+                            });
 
-                                mainPanelLek.getWyloguj().setOnAction(event -> {
-                                    logFX1.getLoginTextField().clear();
-                                    logFX1.getPasswordField().clear();
-                                    scene.setRoot(logFX1.getView());
-                                });
+                            mainPanelLek.getWczytajBtn().setOnAction(event -> {
+                                try {
+                                    String PESELp = mainPanelLek.getSearchField().getText();
+                                    PacjentDaneResponse danePacjenta = lekarzService.szukajDanePacjenta(String.valueOf(PESELp));
+                                    String imiePacjenta = danePacjenta.getImie();
+                                    String nazwiskoPacjenta = danePacjenta.getNazwisko();
+                                    String adresPacjenta = danePacjenta.getAdres();
+                                    Integer wiekPacjenta = danePacjenta.getWiek();
+                                    String plecPacjenta = danePacjenta.getPlec();
+                                    List<String> alergieTablica = danePacjenta.getAlergie();
 
-                                mainPanelLek.getWczytajBtn().setOnAction(event -> {
-                                    try {
-                                        String PESELp = mainPanelLek.getSearchField().getText();
-                                        PacjentDaneResponse danePacjenta = lekarzService.szukajDanePacjenta(String.valueOf(PESELp));
-                                        String imiePacjenta = danePacjenta.getImie();
-                                        String nazwiskoPacjenta = danePacjenta.getNazwisko();
-                                        String adresPacjenta = danePacjenta.getAdres();
-                                        Integer wiekPacjenta = danePacjenta.getWiek();
-                                        String plecPacjenta = danePacjenta.getPlec();
-                                        List<String> alergieTablica = danePacjenta.getAlergie();
+                                    mainPanelLek.getImieINazwiskoPacjenta().setText(imiePacjenta + " " + nazwiskoPacjenta);
+                                    mainPanelLek.getPESELPacjenta().setText(PESELp);
+                                    mainPanelLek.getAdresPacjenta().setText(adresPacjenta);
+                                    mainPanelLek.getPlec().setText(plecPacjenta);
+                                    mainPanelLek.getWiek().setText(wiekPacjenta.toString());
 
-                                        mainPanelLek.getImieINazwiskoPacjenta().setText(imiePacjenta + " " + nazwiskoPacjenta);
-                                        mainPanelLek.getPESELPacjenta().setText(PESELp);
-                                        mainPanelLek.getAdresPacjenta().setText(adresPacjenta);
-                                        mainPanelLek.getPlec().setText(plecPacjenta);
-                                        mainPanelLek.getWiek().setText(wiekPacjenta.toString());
+                                    for (String alergia : alergieTablica) {
+                                        HBox allergyChip1 = new HBox(10);
 
-                                        for (String alergia : alergieTablica) {
-                                            HBox allergyChip1 = new HBox(10);
+                                        Label alergieLabel = new Label(alergia);
 
-                                            Label alergieLabel = new Label(alergia);
+                                        allergyChip1.getChildren().add(alergieLabel);
+                                        allergyChip1.getStyleClass().add("allergy-chip1");
+                                        allergyChip1.setAlignment(Pos.CENTER);
 
-                                            allergyChip1.getChildren().add(alergieLabel);
-                                            allergyChip1.getStyleClass().add("allergy-chip1");
-                                            allergyChip1.setAlignment(Pos.CENTER);
+                                        mainPanelLek.getAllergyList().getChildren().add(allergyChip1);
+                                    }
 
-                                            mainPanelLek.getAllergyList().getChildren().add(allergyChip1);
-                                        }
+                                    mainPanelLek.getNowaRecepta().setOnAction(a -> {
+                                        nowaRecepta Recepta = new nowaRecepta(imiePacjenta, nazwiskoPacjenta, PESELp, PESEL);
+                                        scene.setRoot(Recepta.getView());
 
-                                        mainPanelLek.getNowaRecepta().setOnAction(a -> {
-                                            nowaRecepta Recepta = new nowaRecepta(imiePacjenta, nazwiskoPacjenta, PESELp, PESEL);
-                                            scene.setRoot(Recepta.getView());
+                                        Recepta.getDodaj().setOnAction(actionEvent -> {
+                                            String lek = Recepta.getNazwaLeku().getText();
+                                            String opakowania = Recepta.getLiczbaOpakowan().getText();
+                                            String odplatnosci = Recepta.getOdplatnosc().getText();
+                                            String dawkowanie = Recepta.getDawkowanie().getText();
 
-                                            Recepta.getDodaj().setOnAction(actionEvent -> {
-                                                String lek = Recepta.getNazwaLeku().getText();
-                                                String opakowania = Recepta.getLiczbaOpakowan().getText();
-                                                String odplatnosci = Recepta.getOdplatnosc().getText();
-                                                String dawkowanie = Recepta.getDawkowanie().getText();
+                                            ReceptaRequest request = new ReceptaRequest(
+                                                    Integer.valueOf(PESEL),
+                                                    Integer.valueOf(opakowania),
+                                                    lek,
+                                                    Integer.valueOf(odplatnosci),
+                                                    Integer.valueOf(dawkowanie)
+                                            );
 
-                                                //serverConnection.getUpdateRec("updateWszystkoRec", PESELp, lek, opakowania, odplatnosci, PESEL, dawkowanie);
-                                                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                                                alert.initOwner(primaryStage);
-                                                alert.setTitle("UWAGA!");
-                                                alert.setHeaderText(null);
-                                                alert.setContentText("Dodano Lek do recepty!");
-                                                alert.showAndWait();
-                                            });
-                                        });
-
-                                        mainPanelLek.getZobaczWszystko().setOnAction(a -> {
-                                            VBox historiaPane = new VBox(10);
-
-                                            for (WizytyResponse wizyta : danePacjenta.getWizyty()) {
-
-                                                VBox wizytaPane = new VBox(5);
-
-                                                Label dataLabel = new Label("Data wizyty: " + wizyta.getDataWizyty());
-                                                Label lekarzLabel = new Label("Lekarz: " + wizyta.getNazwaLekarza());
-                                                Label receptaLabel = new Label("Nr recepty: " + wizyta.getNrRecepty());
-
-                                                wizytaPane.getChildren().addAll(
-                                                        dataLabel,
-                                                        lekarzLabel,
-                                                        receptaLabel,
-                                                        new Separator()
-                                                );
-
-                                                wizytaPane.getStyleClass().add("historia");
-                                                historiaPane.getChildren().add(wizytaPane);
-                                            }
-
-                                            historiaPane.setAlignment(Pos.TOP_CENTER);
-
-                                            mainPanelLek.getContentPane().setContent(historiaPane);
-                                        });
-
-                                        mainPanelLek.getDodajLekBtn().setOnAction(e1 -> {
-                                            String tekst = mainPanelLek.getLekField().getText();
-                                            if (!mainPanelLek.getLekField().getText().isEmpty()) {
-                                                mainPanelLek.getMedList().add(tekst);
-                                                mainPanelLek.getNowyLek().getChildren().add(new Label(mainPanelLek.getMedList().size() + ". " + tekst + " (1 Op.)"));
-                                                mainPanelLek.getLekField().clear();
-                                            } else {
-                                                Alert alert = new Alert(Alert.AlertType.WARNING);
-                                                alert.initOwner(primaryStage);
-                                                alert.setTitle("Błąd danych");
-                                                alert.setHeaderText(null);
-                                                alert.setContentText("Pole leku nie może być puste!");
-                                                alert.showAndWait();
-                                            }
-                                        });
-
-                                        mainPanelLek.getWypiszBtn().setOnAction(e2 -> {
-                                            for (int i = 0; i < mainPanelLek.getMedList().size(); i++) {
-                                                //serverConnection.getUpdateRec("updateWszystkoRec", PESELp, mainPanelLek.getMedList().get(i), "1", "0", PESEL, "1");
+                                            try {
+                                                lekarzService.dodajRecepte(PESELp, request);
+                                            } catch (Exception ex) {
+                                                throw new RuntimeException(ex);
                                             }
                                             Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                            alert.initOwner(primaryStage);
                                             alert.setTitle("UWAGA!");
                                             alert.setHeaderText(null);
-                                            alert.setContentText("Dodano Lek!");
+                                            alert.setContentText("Dodano Lek do recepty!");
                                             alert.showAndWait();
-                                            mainPanelLek.getSearchField().setText("");
                                         });
-                                    } catch (Exception ex) {
-                                        throw new RuntimeException(ex);
-                                    }
-                                });
-
-                                mainPanelLek.getPomoc().setOnAction(e1 -> {
-                                    pomoc pomocPanel = new pomoc();
-                                    scene.setRoot(pomocPanel.getView());
-
-                                    pomocPanel.getWyjdz().setOnAction(a -> {
-                                        scene.setRoot(mainPanelLek.getView());
                                     });
-                                });
 
-                                mainPanelLek.getUstawieniaLek().setOnAction(a -> {
-                                    ustawieniaLek ustawieniaLekarz = new ustawieniaLek(
-                                            imie,
-                                            nazwisko,
-                                            PESEL,
-                                            adres1,
-                                            telefon1,
-                                            email1,
-                                            wiek1,
-                                            plec1
-                                    );
-                                    scene.setRoot(ustawieniaLekarz.getView());
+                                    mainPanelLek.getZobaczWszystko().setOnAction(a -> {
+                                        VBox historiaPane = new VBox(10);
 
-                                    ustawieniaLekarz.getWyjdzBtn().setOnAction(actionEvent -> {
-                                        scene.setRoot(mainPanelLek.getView());
+                                        for (WizytyResponse wizyta : danePacjenta.getWizyty()) {
+
+                                            VBox wizytaPane = new VBox(5);
+
+                                            Label dataLabel = new Label("Data wizyty: " + wizyta.getDataWizyty());
+                                            Label lekarzLabel = new Label("Lekarz: " + wizyta.getNazwaLekarza());
+                                            Label receptaLabel = new Label("Nr recepty: " + wizyta.getNrRecepty());
+
+                                            wizytaPane.getChildren().addAll(
+                                                    dataLabel,
+                                                    lekarzLabel,
+                                                    receptaLabel,
+                                                    new Separator()
+                                            );
+
+                                            wizytaPane.getStyleClass().add("historia");
+                                            historiaPane.getChildren().add(wizytaPane);
+                                        }
+
+                                        historiaPane.setAlignment(Pos.TOP_CENTER);
+
+                                        mainPanelLek.getContentPane().setContent(historiaPane);
                                     });
-                                });
 
-                                mainPanelLek.getMojeReceptaBtn().setOnAction(actionEvent -> {
-                                    mojeRecepty mr = new mojeRecepty(recepta);
-                                    scene.setRoot(mr.getView());
-
-                                    mr.getWyjdz().setOnAction(a -> {
-                                        scene.setRoot(mainPanelLek.getView());
+                                    mainPanelLek.getDodajLekBtn().setOnAction(e1 -> {
+                                        String tekst = mainPanelLek.getLekField().getText();
+                                        if (!mainPanelLek.getLekField().getText().isEmpty()) {
+                                            mainPanelLek.getMedList().add(tekst);
+                                            mainPanelLek.getNowyLek().getChildren().add(new Label(mainPanelLek.getMedList().size() + ". " + tekst + " (1 Op.)"));
+                                            mainPanelLek.getLekField().clear();
+                                        } else {
+                                            Alert alert = new Alert(Alert.AlertType.WARNING);
+                                            alert.initOwner(primaryStage);
+                                            alert.setTitle("Błąd danych");
+                                            alert.setHeaderText(null);
+                                            alert.setContentText("Pole leku nie może być puste!");
+                                            alert.showAndWait();
+                                        }
                                     });
-                                });
 
-                                mainPanelLek.getHistoryBtn().setOnAction(actionEvent -> {
-                                    historiaPac hp = new historiaPac(historia);
-                                    scene.setRoot(hp.getView());
+                                    mainPanelLek.getWypiszBtn().setOnAction(e2 -> {
+                                        List<LekItemRequest> listaLekow = new ArrayList<>();
+                                        for (int i = 0; i < mainPanelLek.getMedList().size(); i++) {
+                                            listaLekow.add(new LekItemRequest(
+                                                    mainPanelLek.getMedList().get(i),
+                                                    1,
+                                                    0,
+                                                    1
+                                            ));
+                                        }
 
-                                    hp.getWyjdz().setOnAction(a -> {
-                                        scene.setRoot(mainPanelLek.getView());
+                                        ReceptaZbiorczaRequest request = new ReceptaZbiorczaRequest(
+                                                PESEL,
+                                                listaLekow
+                                        );
+
+                                        try {
+                                            lekarzService.dodajRecepte(PESELp, request);
+                                        } catch (Exception ex) {
+                                            throw new RuntimeException(ex);
+                                        }
+
+                                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                                        alert.setTitle("UWAGA!");
+                                        alert.setHeaderText(null);
+                                        alert.setContentText("Dodano Lek!");
+                                        alert.showAndWait();
+                                        mainPanelLek.getSearchField().setText("");
                                     });
-                                });
+                                } catch (Exception ex) {
+                                    throw new RuntimeException(ex);
+                                }
+                            });
 
-                                nowaRecepta.getWyjdzBtn().setOnAction(a1 -> {
+                            mainPanelLek.getPomoc().setOnAction(e1 -> {
+                                pomoc pomocPanel = new pomoc();
+                                scene.setRoot(pomocPanel.getView());
+
+                                pomocPanel.getWyjdz().setOnAction(a -> {
                                     scene.setRoot(mainPanelLek.getView());
                                 });
-                            }
+                            });
+
+                            LekarzDaneResponse daneLekarza = lekarzService.getDaneLekarza(String.valueOf(PESEL));
+                            String IDLekarza = daneLekarza.getIdLekarza() != null && !daneLekarza.getIdLekarza().isEmpty() ? daneLekarza.getIdLekarza() : lekarzService.getIdLekarza(PESEL);
+                            String recepta = lekarzService.getReceptyString(IDLekarza);
+                            String historia = lekarzService.getHistoriaString(IDLekarza);
+                            String adres1 = daneLekarza.getAdres();
+                            String telefon1 = daneLekarza.getTelefon();
+                            String email1 = daneLekarza.getEmail();
+                            String wiek1 = daneLekarza.getWiek();
+                            String plec1 = daneLekarza.getPlec();
+
+                            mainPanelLek.getUstawieniaLek().setOnAction(a -> {
+                                ustawieniaLek ustawieniaLekarz = new ustawieniaLek(
+                                        imie,
+                                        nazwisko,
+                                        PESEL,
+                                        adres1,
+                                        telefon1,
+                                        email1,
+                                        wiek1,
+                                        plec1
+                                );
+                                scene.setRoot(ustawieniaLekarz.getView());
+
+                                ustawieniaLekarz.getWyjdzBtn().setOnAction(actionEvent -> {
+                                    scene.setRoot(mainPanelLek.getView());
+                                });
+                            });
+
+                            mainPanelLek.getMojeReceptaBtn().setOnAction(actionEvent -> {
+                                mojeRecepty mr = new mojeRecepty(recepta);
+                                scene.setRoot(mr.getView());
+
+                                mr.getWyjdz().setOnAction(a -> {
+                                    scene.setRoot(mainPanelLek.getView());
+                                });
+                            });
+
+                            mainPanelLek.getHistoryBtn().setOnAction(actionEvent -> {
+                                historiaPac hp = new historiaPac(historia);
+                                scene.setRoot(hp.getView());
+
+                                hp.getWyjdz().setOnAction(a -> {
+                                    scene.setRoot(mainPanelLek.getView());
+                                });
+                            });
+
+                            nowaRecepta.getWyjdzBtn().setOnAction(a1 -> {
+                                scene.setRoot(mainPanelLek.getView());
+                            });
                         } catch (Exception ex) {
                             throw new RuntimeException(ex);
                         }

@@ -1,6 +1,8 @@
 package com.example.erecepta.backend.client;
 
 import com.example.erecepta.backend.dto.request.LekarzDaneRequest;
+import com.example.erecepta.backend.dto.request.ReceptaRequest;
+import com.example.erecepta.backend.dto.request.ReceptaZbiorczaRequest;
 import com.example.erecepta.backend.dto.response.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,9 +28,7 @@ public class LekarzService {
                 PacjentDaneResponse.class
         );
     }
-    /**
-     * Pobiera pełne dane lekarza na podstawie numeru PESEL.
-     */
+
     public LekarzDaneResponse getDaneLekarza(String pesel) throws Exception {
         String response = apiClient.get("/lekarz/" + pesel + "/dane");
         String trimmed = response.trim();
@@ -78,9 +78,6 @@ public class LekarzService {
         return new LekarzDaneResponse();
     }
 
-    /**
-     * Pobiera identyfikator ID lekarza po PESEL.
-     */
     public String getIdLekarza(String pesel) throws Exception {
         try {
             String response = apiClient.get("/lekarz/" + pesel + "/id");
@@ -94,15 +91,16 @@ public class LekarzService {
             }
             return trimmed;
         } catch (Exception e) {
-            // W razie braku osobnego endpointu /id, pobieramy z profilu
             LekarzDaneResponse dane = getDaneLekarza(pesel);
             return dane != null && dane.getIdLekarza() != null ? dane.getIdLekarza() : "";
         }
     }
 
-
     public List<ReceptaResponse> getRecepty(String idLekarza) throws Exception {
         String response = apiClient.get("/lekarz/" + idLekarza + "/recepty");
+        if (response == null || response.isBlank()) {
+            return new ArrayList<>();
+        }
         String trimmed = response.trim();
 
         if (trimmed.startsWith("[")) {
@@ -110,15 +108,12 @@ public class LekarzService {
             return new ArrayList<>(Arrays.asList(array));
         } else if (trimmed.startsWith("{")) {
             ReceptaResponse single = mapper.readValue(trimmed, ReceptaResponse.class);
-            return List.of(single);
+            return new ArrayList<>(List.of(single));
         } else {
-            return List.of(new ReceptaResponse(trimmed));
+            return new ArrayList<>();
         }
     }
 
-    /**
-     * Zwraca recepty lekarza w formacie tekstowym dla widoku 'mojeRecepty'.
-     */
     public String getReceptyString(String idLekarza) throws Exception {
         List<ReceptaResponse> recepty = getRecepty(idLekarza);
         StringBuilder sb = new StringBuilder();
@@ -128,10 +123,6 @@ public class LekarzService {
         return sb.toString();
     }
 
-
-    /**
-     * Pobiera historię wizyt lekarza na podstawie ID lekarza.
-     */
     public List<WizytyResponse> getHistoria(String idLekarza) throws Exception {
         String response = apiClient.get("/lekarz/" + idLekarza + "/historia");
         String trimmed = response.trim();
@@ -147,9 +138,6 @@ public class LekarzService {
         }
     }
 
-    /**
-     * Zwraca historię wizyt w formacie tekstowym dla widoku 'historiaPac'.
-     */
     public String getHistoriaString(String idLekarza) throws Exception {
         List<WizytyResponse> historia = getHistoria(idLekarza);
 
@@ -191,8 +179,20 @@ public class LekarzService {
                 .toList();
     }
 
-    public void updateDaneLekarza(LekarzDaneRequest request) throws Exception {
+    public void aktualizujDaneLekarza(String pesel, LekarzDaneRequest request) throws Exception {
         String json = mapper.writeValueAsString(request);
-        apiClient.post("/lekarz/update", json);
+        apiClient.patch("/lekarz/" + pesel + "/aktualizuj", json);
+    }
+
+    public void dodajRecepte(String pesel, ReceptaRequest request) throws Exception {
+        String json = mapper.writeValueAsString(request);
+        System.out.println("WYSYŁANY JSON: " + json);
+        apiClient.put("/lekarz/" + pesel + "/dodajRecepte", json);
+    }
+
+    public void dodajRecepte(String pesel, ReceptaZbiorczaRequest request) throws Exception {
+        String json = mapper.writeValueAsString(request);
+        System.out.println("WYSYŁANY JSON: " + json);
+        apiClient.put("/lekarz/" + pesel + "/dodajRecepte", json);
     }
 }

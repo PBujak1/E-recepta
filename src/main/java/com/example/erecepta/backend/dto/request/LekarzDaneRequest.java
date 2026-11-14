@@ -8,6 +8,7 @@ public class LekarzDaneRequest {
     private String pesel;
     private String imie;
     private String nazwisko;
+    private String nowyPesel;
     private String adres;
     private String telefon;
     private String email;
@@ -21,10 +22,12 @@ public class LekarzDaneRequest {
         this.pesel = pesel;
     }
 
-    public LekarzDaneRequest(String pesel, String imie, String nazwisko, String adres, String telefon, String email, String wiek, String plec) {
+    public LekarzDaneRequest(String pesel, String imie, String nazwisko, String nowyPesel,
+                             String adres, String telefon, String email, String wiek, String plec) {
         this.pesel = pesel;
         this.imie = imie;
         this.nazwisko = nazwisko;
+        this.nowyPesel = nowyPesel;
         this.adres = adres;
         this.telefon = telefon;
         this.email = email;
@@ -54,6 +57,14 @@ public class LekarzDaneRequest {
 
     public void setNazwisko(String nazwisko) {
         this.nazwisko = nazwisko;
+    }
+
+    public String getNowyPesel() {
+        return nowyPesel;
+    }
+
+    public void setNowyPesel(String nowyPesel) {
+        this.nowyPesel = nowyPesel;
     }
 
     public String getAdres() {
