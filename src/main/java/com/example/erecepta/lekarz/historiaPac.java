@@ -1,5 +1,6 @@
 package com.example.erecepta.lekarz;
 
+import com.example.erecepta.backend.dto.response.WizytyResponse;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -7,34 +8,75 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class historiaPac {
 
     private BorderPane root = new BorderPane();
-    private String historiaString;
     private Label titleLabel = new Label("Moja Historia Wizyt");
-    private Label informationLabel = new Label("Ze względu na rodo wszystkie dane zapisane są za pomocą ID");
-    private Label daneLabel = new Label("Dane pokazują poszczególno IDWizyty, Datę wizyty, IDLekarza, IDPacjenta, IDRecepty");
     private Button wyjdz = new Button("Wyjdź");
 
-    public historiaPac(String historia) {
+    private List<Label> dataWizyty  = new ArrayList<>();
+    private List<Label> nazwaLekarza =  new ArrayList<>();
+    private List<Label> nazwaPacjenta  = new ArrayList<>();
+    private List<Label> nrRecepty = new ArrayList<>();
 
-        this.historiaString = historia;
+    public historiaPac(List<WizytyResponse> response) {
+
+        dataWizyty.add(new Label("Data Wystawienia"));
+        nazwaLekarza.add(new Label("Nazwa Lekarza"));
+        nazwaPacjenta.add(new Label("Nazwa Pacjenta"));
+        nrRecepty.add(new Label("Nr. Recepty"));
+        for (int i = 0; i < response.size(); i++) {
+            dataWizyty.add(new Label(response.get(i).getDataWizyty()));
+            nazwaLekarza.add(new Label(response.get(i).getNazwaLekarza()));
+            nazwaPacjenta.add(new Label(response.get(i).getNazwaPacjenta()));
+            nrRecepty.add(new Label(response.get(i).getNrRecepty()));
+        }
 
         root.setPadding(new Insets(50 , 50 , 50 , 50));
 
         VBox titleBox = new VBox(10);
         Region spacer = new Region();
         titleBox.setAlignment(Pos.TOP_CENTER);
-        titleBox.getChildren().addAll(titleLabel, informationLabel,spacer, daneLabel);
+        titleBox.getChildren().addAll(titleLabel,spacer);
 
-        VBox receptyPane = new VBox(new Label(historiaString));
-        receptyPane.setAlignment(Pos.TOP_CENTER);
+        GridPane receptyPane = new GridPane();
+        //receptyPane.setPadding(new Insets(30));
+        receptyPane.gridLinesVisibleProperty().set(true);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setPercentWidth(25);
+        ColumnConstraints col2 = new ColumnConstraints();
+        col2.setPercentWidth(25);
+        ColumnConstraints col3 = new ColumnConstraints();
+        col3.setPercentWidth(25);
+        ColumnConstraints col4 = new ColumnConstraints();
+        col4.setPercentWidth(25);
+        receptyPane.getColumnConstraints().addAll(col1, col2, col3, col4);
+
+        // Niebieskie tło pierwszego wiersza (nagłówka) - dodane przed etykietami, aby było pod nimi
+        Pane headerBackground = new Pane();
+        headerBackground.getStyleClass().add("historiaPac-header-row");
+        receptyPane.add(headerBackground, 0, 0, 4, 1);
+
+        for (int i = 0; i < dataWizyty.size(); i++) {
+
+            receptyPane.add(dataWizyty.get(i), 0, i);
+            GridPane.setMargin(dataWizyty.get(i), new Insets(30));
+
+            receptyPane.add(nazwaLekarza.get(i), 1, i);
+            GridPane.setMargin(nazwaLekarza.get(i), new Insets(30));
+
+            receptyPane.add(nazwaPacjenta.get(i), 2, i);
+            GridPane.setMargin(nazwaPacjenta.get(i), new Insets(30));
+
+            receptyPane.add(nrRecepty.get(i), 3, i);
+            GridPane.setMargin(nrRecepty.get(i), new Insets(30));
+        }
 
         ScrollPane contentPane = new ScrollPane();
         contentPane.setFitToWidth(true);
@@ -52,8 +94,7 @@ public class historiaPac {
 
         contentPane.getStyleClass().add("historiaPac-main-panel-content");
         titleLabel.getStyleClass().add("historiaPac-titleLabel");
-        informationLabel.getStyleClass().add("historiaPac-informationLabel");
-        daneLabel.getStyleClass().add("historiaPac-daneLabel");
+        receptyPane.getStyleClass().add("historiaPac-gridPane");
         wyjdz.getStyleClass().add("historiaPac-exit-btn");
     }
 

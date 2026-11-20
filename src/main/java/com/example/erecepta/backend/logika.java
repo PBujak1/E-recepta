@@ -1,12 +1,10 @@
 package com.example.erecepta.backend;
 import com.example.erecepta.backend.client.LekarzService;
 import com.example.erecepta.backend.client.PacjentController;
-import com.example.erecepta.backend.client.ServerConnection;
 import com.example.erecepta.backend.dto.request.LekItemRequest;
 import com.example.erecepta.backend.dto.request.ReceptaRequest;
 import com.example.erecepta.backend.dto.request.ReceptaZbiorczaRequest;
 import com.example.erecepta.backend.dto.response.*;
-import com.example.erecepta.backend.dto.request.LekarzRequest;
 import com.example.erecepta.backend.client.Authorization;
 import com.example.erecepta.lekarz.*;
 import com.example.erecepta.logFX;
@@ -231,6 +229,8 @@ public class logika extends Application {
                                 scene.setRoot(logFX1.getView());
                             });
 
+                            //dodanie pozniej patrzenie który pacjent składał wniosek o recepte a przeniesienie wypisywanie tego panelu recept
+
                             mainPanelLek.getWczytajBtn().setOnAction(event -> {
                                 try {
                                     String PESELp = mainPanelLek.getSearchField().getText();
@@ -381,7 +381,6 @@ public class logika extends Application {
                             LekarzDaneResponse daneLekarza = lekarzService.getDaneLekarza(String.valueOf(PESEL));
                             String IDLekarza = daneLekarza.getIdLekarza() != null && !daneLekarza.getIdLekarza().isEmpty() ? daneLekarza.getIdLekarza() : lekarzService.getIdLekarza(PESEL);
                             String recepta = lekarzService.getReceptyString(IDLekarza);
-                            String historia = lekarzService.getHistoriaString(IDLekarza);
                             String adres1 = daneLekarza.getAdres();
                             String telefon1 = daneLekarza.getTelefon();
                             String email1 = daneLekarza.getEmail();
@@ -416,12 +415,17 @@ public class logika extends Application {
                             });
 
                             mainPanelLek.getHistoryBtn().setOnAction(actionEvent -> {
-                                historiaPac hp = new historiaPac(historia);
-                                scene.setRoot(hp.getView());
+                                try {
+                                    List<WizytyResponse> historiaLekPac = lekarzService.getHistoria(PESEL);
+                                    historiaPac hp = new historiaPac(historiaLekPac);
+                                    scene.setRoot(hp.getView());
 
-                                hp.getWyjdz().setOnAction(a -> {
-                                    scene.setRoot(mainPanelLek.getView());
-                                });
+                                    hp.getWyjdz().setOnAction(a -> {
+                                        scene.setRoot(mainPanelLek.getView());
+                                    });
+                                } catch (Exception e12) {
+
+                                }
                             });
 
                             nowaRecepta.getWyjdzBtn().setOnAction(a1 -> {

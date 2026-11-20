@@ -292,13 +292,37 @@ public class mainLekPanel {
         contentPane.setMaxHeight(Double.MAX_VALUE);
         contentPane.setContent(emptyPane);
 
-        VBox rightPanel = new VBox(20);
-        rightPanel.getChildren().addAll(
-                titleBoxP,
-                contentPane2, new Separator(),
-                historyBox,
-                contentPane
-        );
+        // Sekcja alergii (40% wysokości panelu)
+        VBox allergySection = new VBox(20, titleBoxP, contentPane2);
+        VBox.setVgrow(contentPane2, Priority.ALWAYS);
+        allergySection.setMinHeight(0);
+        contentPane2.setMinHeight(0);
+
+        // Sekcja historii (60% wysokości panelu)
+        VBox historySection = new VBox(20, new Separator(), historyBox, contentPane);
+        historySection.setMinHeight(0);
+        contentPane.setMinHeight(0);
+
+        RowConstraints allergyRow = new RowConstraints();
+        allergyRow.setPercentHeight(40);
+        allergyRow.setVgrow(Priority.ALWAYS);
+        allergyRow.setFillHeight(true);
+
+        RowConstraints historyRow = new RowConstraints();
+        historyRow.setPercentHeight(60);
+        historyRow.setVgrow(Priority.ALWAYS);
+        historyRow.setFillHeight(true);
+
+        ColumnConstraints rightCol = new ColumnConstraints();
+        rightCol.setPercentWidth(100);
+        rightCol.setFillWidth(true);
+
+        GridPane rightPanel = new GridPane();
+        rightPanel.setVgap(20);
+        rightPanel.getRowConstraints().addAll(allergyRow, historyRow);
+        rightPanel.getColumnConstraints().add(rightCol);
+        rightPanel.add(allergySection, 0, 0);
+        rightPanel.add(historySection, 0, 1);
 
 
         /*

@@ -138,24 +138,6 @@ public class LekarzService {
         }
     }
 
-    public String getHistoriaString(String idLekarza) throws Exception {
-        List<WizytyResponse> historia = getHistoria(idLekarza);
-
-        StringBuilder sb = new StringBuilder();
-
-        for (WizytyResponse w : historia) {
-            if (w.getIdWizyty() != null) sb.append(w.getIdWizyty()).append(" ");
-            if (w.getDataWizyty() != null) sb.append(w.getDataWizyty()).append(" ");
-            if (w.getIdLekarza() != null) sb.append(w.getIdLekarza()).append(" ");
-            if (w.getIdPacjenta() != null) sb.append(w.getIdPacjenta()).append(" ");
-            if (w.getNrRecepty() != null) sb.append(w.getNrRecepty());
-
-            sb.append("\n");
-        }
-
-        return sb.toString();
-    }
-
     public List<LekarzResponse> szukajLekarzy(String fraza) throws Exception {
         String encoded = URLEncoder.encode(fraza, StandardCharsets.UTF_8);
         String response = apiClient.get("/pacjent/lekarze/szukaj?fraza=" + encoded + "&limit=10");

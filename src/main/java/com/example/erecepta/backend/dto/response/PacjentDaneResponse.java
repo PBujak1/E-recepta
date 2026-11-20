@@ -5,7 +5,7 @@ import java.util.List;
 public class PacjentDaneResponse {
     String imie;
     String nazwisko;
-    Integer pesel;
+    String pesel;
     String plec;
     Integer wiek;
     String adres;
@@ -15,7 +15,7 @@ public class PacjentDaneResponse {
     public PacjentDaneResponse() {
     }
 
-    public PacjentDaneResponse(String imie, String nazwisko, Integer pesel, Integer wiek, String plec, String adres, List<WizytyResponse> wizyty, List<String> alergie) {
+    public PacjentDaneResponse(String imie, String nazwisko, String pesel, Integer wiek, String plec, String adres, List<WizytyResponse> wizyty, List<String> alergie) {
         this.imie = imie;
         this.nazwisko = nazwisko;
         this.pesel = pesel;
@@ -42,11 +42,11 @@ public class PacjentDaneResponse {
         this.nazwisko = nazwisko;
     }
 
-    public Integer getPesel() {
+    public String getPesel() {
         return pesel;
     }
 
-    public void setPesel(Integer pesel) {
+    public void setPesel(String pesel) {
         this.pesel = pesel;
     }
 
