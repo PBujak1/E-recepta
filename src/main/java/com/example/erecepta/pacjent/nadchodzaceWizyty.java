@@ -20,18 +20,20 @@ public class nadchodzaceWizyty {
     private List<Label> dataWizyty  = new ArrayList<>();
     private List<Label> nazwaLekarza =  new ArrayList<>();
     private List<Label> nazwaPacjenta  = new ArrayList<>();
-    private List<Label> nrRecepty = new ArrayList<>();
 
     private Label titleLabel = new Label("Nadchodzące Wizyty");
     private Button wyjdz = new Button("Wyjdź");
 
     public nadchodzaceWizyty(List<WizytyResponse> response) {
 
+        dataWizyty.add(new Label("Data Wizyty"));
+        nazwaLekarza.add(new Label("Lekarz Sprawdzający"));
+        nazwaPacjenta.add(new Label("Nazwa Pacjenta"));
+
         for (int i = 0; i < response.size(); i++) {
             dataWizyty.add(new Label(response.get(i).getDataWizyty()));
             nazwaLekarza.add(new Label(response.get(i).getNazwaLekarza()));
             nazwaPacjenta.add(new Label(response.get(i).getNazwaPacjenta()));
-            nrRecepty.add(new Label(response.get(i).getNrRecepty()));
         }
 
         root.setPadding(new Insets(50 , 50 , 50 , 50));
@@ -45,16 +47,18 @@ public class nadchodzaceWizyty {
         //receptyPane.setPadding(new Insets(30));
         receptyPane.gridLinesVisibleProperty().set(true);
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(30);
+        col1.setPercentWidth(33);
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(30);
+        col2.setPercentWidth(34);
         ColumnConstraints col3 = new ColumnConstraints();
-        col3.setPercentWidth(30);
-        ColumnConstraints col4 = new ColumnConstraints();
-        col4.setPercentWidth(10);
-        receptyPane.getColumnConstraints().addAll(col1, col2, col3, col4);
+        col3.setPercentWidth(33);
+        receptyPane.getColumnConstraints().addAll(col1, col2, col3);
 
-        for (int i = 0; i < response.size(); i++) {
+        Pane headerBackground = new Pane();
+        headerBackground.getStyleClass().add("historiaPac-header-row");
+        receptyPane.add(headerBackground, 0, 0, 4, 1);
+
+        for (int i = 0; i <= response.size(); i++) {
 
             receptyPane.add(dataWizyty.get(i), 0, i);
             GridPane.setMargin(dataWizyty.get(i), new Insets(30));
@@ -64,9 +68,6 @@ public class nadchodzaceWizyty {
 
             receptyPane.add(nazwaPacjenta.get(i), 2, i);
             GridPane.setMargin(nazwaPacjenta.get(i), new Insets(30));
-
-            receptyPane.add(nrRecepty.get(i), 3, i);
-            GridPane.setMargin(nrRecepty.get(i), new Insets(30));
         }
 
         ScrollPane contentPane = new ScrollPane();

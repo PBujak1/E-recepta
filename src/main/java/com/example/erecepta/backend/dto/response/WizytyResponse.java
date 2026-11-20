@@ -32,7 +32,7 @@ public class WizytyResponse {
     private String idPacjenta;
 
     @JsonProperty("nrRecepty")
-    @JsonAlias({"IDRecepty", "idRecepty", "receptaId", "NrRecepty"})
+    @JsonAlias({"IDRecepty", "idRecepty", "receptaId", "NrRecepty", "idPozycji"})
     private String nrRecepty;
 
     public WizytyResponse() {

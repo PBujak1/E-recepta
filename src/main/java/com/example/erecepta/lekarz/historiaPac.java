@@ -63,7 +63,7 @@ public class historiaPac {
         headerBackground.getStyleClass().add("historiaPac-header-row");
         receptyPane.add(headerBackground, 0, 0, 4, 1);
 
-        for (int i = 0; i < dataWizyty.size(); i++) {
+        for (int i = 0; i <= dataWizyty.size(); i++) {
 
             receptyPane.add(dataWizyty.get(i), 0, i);
             GridPane.setMargin(dataWizyty.get(i), new Insets(30));

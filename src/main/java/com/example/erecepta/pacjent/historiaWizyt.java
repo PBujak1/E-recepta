@@ -25,6 +25,11 @@ public class historiaWizyt {
 
     public historiaWizyt(List<WizytyResponse> response) {
 
+        dataWizyty.add(new Label("Data Wizyty"));
+        nazwaLekarza.add(new Label("Nazwa Lekarza"));
+        nazwaPacjenta.add(new Label("Nazwa Pacjenta"));
+        nrRecepty.add(new Label("Nr. Recepty"));
+
         for (int i = 0; i < response.size(); i++) {
             dataWizyty.add(new Label(response.get(i).getDataWizyty()));
             nazwaLekarza.add(new Label(response.get(i).getNazwaLekarza()));
@@ -43,16 +48,20 @@ public class historiaWizyt {
         //receptyPane.setPadding(new Insets(30));
         receptyPane.gridLinesVisibleProperty().set(true);
         ColumnConstraints col1 = new ColumnConstraints();
-        col1.setPercentWidth(30);
+        col1.setPercentWidth(25);
         ColumnConstraints col2 = new ColumnConstraints();
-        col2.setPercentWidth(30);
+        col2.setPercentWidth(25);
         ColumnConstraints col3 = new ColumnConstraints();
-        col3.setPercentWidth(30);
+        col3.setPercentWidth(25);
         ColumnConstraints col4 = new ColumnConstraints();
-        col4.setPercentWidth(10);
+        col4.setPercentWidth(25);
         receptyPane.getColumnConstraints().addAll(col1, col2, col3, col4);
 
-        for (int i = 0; i < response.size(); i++) {
+        Pane headerBackground = new Pane();
+        headerBackground.getStyleClass().add("historiaPac-header-row");
+        receptyPane.add(headerBackground, 0, 0, 4, 1);
+
+        for (int i = 0; i <= response.size(); i++) {
 
             receptyPane.add(dataWizyty.get(i), 0, i);
             GridPane.setMargin(dataWizyty.get(i), new Insets(30));

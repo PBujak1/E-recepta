@@ -50,6 +50,10 @@ public class dawkowanie {
         col3.setPercentWidth(30);
         receptyPane.getColumnConstraints().addAll(col1, col2, col3);
 
+        Pane headerBackground = new Pane();
+        headerBackground.getStyleClass().add("historiaPac-header-row");
+        receptyPane.add(headerBackground, 0, 0, 4, 1);
+
         for (int i = 0; i < response.size(); i++) {
 
             receptyPane.add(nazwaLeku.get(i), 0, i);
